@@ -1,0 +1,5 @@
+# Conservar las descargas byte por byte, incluidos espacios y finales de línea.
+data/** -text -whitespace
+*.py text eol=lf
+*.md text eol=lf
+*.ipynb text eol=lf

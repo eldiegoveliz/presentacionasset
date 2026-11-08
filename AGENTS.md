@@ -26,6 +26,10 @@ Los requisitos del profesor, las instrucciones del usuario y las propuestas del 
 
 ## Alcance actual
 
-El usuario autorizó crear documentación permanente con las instrucciones proporcionadas. Esta autorización no implica elegir una metodología definitiva, producir resultados empíricos ni completar el proyecto sin nuevas indicaciones. No instalar herramientas o iniciar análisis únicamente para completar estas notas.
+El usuario amplió la autorización para investigar las reglas del FEES, descargar datos reales y desarrollar un análisis sencillo de sus cuatro hipótesis. No modificar la política para habilitar nuevas inversiones. No usar GitHub Actions.
 
-Estos archivos sirven como referencia en futuras sesiones que accedan al repositorio; no constituyen memoria externa. Su publicación o respaldo remoto requiere guardarlos mediante Git.
+Las reglas verificadas están en `docs/reglas-fees.md`. El código compara proxies del bloque USD de 69%, sin presentarlos como réplica del fondo. Preservar los pesos estratégicos no certifica elegibilidad de instrumentos ni cumplimiento ex ante. Los supuestos están en `config.json` y `docs/metodologia.md`.
+
+Al cambiar el análisis, regenerar el notebook con `python crear_notebook.py` y ejecutar `python analisis.py` y `python verificar.py`. Conservar los datos congelados y su trazabilidad. No reemplazar los archivos de datos sin solicitud explícita o uso deliberado de `datos.py --actualizar`.
+
+El análisis del FRP y el memo académico final quedan fuera de esta etapa. No atribuir revisiones o firmas al equipo.

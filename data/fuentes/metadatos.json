@@ -1,0 +1,22 @@
+{
+  "directrices.pdf": {
+    "url_publica": "https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/politica-de-inversion/pauta-de-inversion-vigente",
+    "consulta": "2026-11-08",
+    "sha256": "4329c2647beae4dd9083e0c70ae2c41726ecacb19801795c343b39e258e3f841"
+  },
+  "politica.html": {
+    "url_publica": "https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/politica-de-inversion",
+    "consulta": "2026-11-08",
+    "sha256": "d66e823e4997408aef29e835c8cbb5c74adffe366738033927dca8a592d885be"
+  },
+  "composicion.html": {
+    "url_publica": "https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/informacion-financiera/composicion-actual",
+    "consulta": "2026-11-08",
+    "sha256": "9eecf079b5c1ed22717019a0174e34f0448040bcd060a5145d2c22eef7807bb8"
+  },
+  "rentabilidad.html": {
+    "url_publica": "https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/informacion-financiera/rentabilidad",
+    "consulta": "2026-11-08",
+    "sha256": "ef17e8d89802bc9d0f2ea3f1872a9b9ffd85833c8b4ff3cf76591941d047b76a"
+  }
+}

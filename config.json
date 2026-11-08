@@ -1,0 +1,12 @@
+{
+  "inicio_descarga": "2013-12-01",
+  "inicio_analisis": "2020-01-01",
+  "corte": "2026-10-31",
+  "etfs": ["BIL", "SHY", "IEI", "IEF", "STIP", "MBB", "SPY"],
+  "tipo_cambio": "CLP=X",
+  "pesos_fondo_usd": {"BIL": 0.10, "SHY": 0.13333333333333333, "IEI": 0.13333333333333333, "IEF": 0.13333333333333333, "STIP": 0.04, "MBB": 0.15},
+  "traspasos_ief_a_shy": {"Referencia proxy USD": 0.0, "Duracion -1 pp": 0.01, "Duracion -2 pp": 0.02, "Duracion -4 pp": 0.04},
+  "costo_por_dolar_transado": 0.0005,
+  "bootstrap_repeticiones": 2000,
+  "semilla": 20261108
+}

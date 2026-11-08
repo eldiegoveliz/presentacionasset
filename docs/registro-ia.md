@@ -24,6 +24,45 @@ estoy pensando en hacer portafolios de prueba para ver opciones de instrumentos 
 esas son las dos instrucciones que tenemos, juegue
 ```
 
+## Continuación del análisis, 8 de noviembre de 2026
+
+| Herramienta, modelo y versión | Prompts utilizados | Qué se incorporó al entregable | Errores detectados en el output | Cómo se verificó el resultado | Qué cambió el equipo | Limitaciones que persisten |
+| --- | --- | --- | --- | --- | --- | --- |
+| T3 Code mediante Codex, modelo `gpt-6.1-sol`, esfuerzo high. Sin identificador de revisión adicional informado por el proveedor. | P3, mensaje literal de continuación transcrito abajo. El prompt anterior citado por el usuario está incluido en él. | `datos.py`, `analisis.py`, `config.json`, `verificar.py`, notebook, reglas, metodología, guía, datos y resultados. `crear_notebook.py` genera el mismo análisis visible en Colab. | Se supuso inicialmente que los ETFs no tenían splits; BIL tiene un reverse split 1:2 en 2017 y Yahoo ya ajusta sus cierres. Se consideró por error DEXCHUS como CLP, pero es yuan chino: se detectó antes de generar resultados CLP y se reemplazó por CLP=X, validando moneda y tipo de instrumento. Un mismo User-Agent funcionaba con Yahoo y demoraba FRED: se diferenciaron por host. Los primeros intentos de análisis se iniciaron antes de terminar las descargas y fallaron por archivos ausentes; la entrega final usa archivos completos. Una edición de documentación fue rechazada por el formato del parche y se reaplicó correctamente. | PDF oficial guardado y cotejado por páginas; composición publicada de septiembre de 2026; eventos y cierres diarios frente a ajustes Yahoo; URLs y hashes de datos; pruebas de costos, capital inicial, CAGR, pesos, moneda y resultados reales. Ver `docs/validacion.md` para la ejecución efectivamente comprobada. | El usuario autorizó continuar; no hay revisiones del código, cambios de interpretación ni firmas comunicadas por integrantes. Las elecciones técnicas son del asistente y requieren revisión del equipo. | Cobertura proxy del bloque USD 69%, no FEES completo. Faltan índices oficiales y verificación de TE ex ante. ETFs no son una cartera elegible certificada. Hipótesis y política aplicadas retrospectivamente; bootstrap descriptivo sin ajuste múltiple. Conversión Yahoo no es dólar observado. No se estudia FRP, ni se produce el memo académico final. |
+
+### P3 — continuación con autorización de datos y código
+
+Se transcribe el mensaje relevante literalmente. La instrucción de preferencia de modelo y el contexto de entorno se conservan en la sesión de la herramienta; no se delegó trabajo.
+
+```text
+https://github.com/eldiegoveliz/presentacionasset/tree/main
+
+tu eres el proximo agente este fue le prompt de antes:
+1. mucha correlacion entre bonos y acciones recientemente (o sea no hay hedge por usar bonos)
+2. puts sobre futuros del cobre
+3. bonos del tesoro de menos duracion
+4. menos o mas ponderacion a los mbs
+
+que se sigan cumpliendo las reglas del fees: buscalas y dejalas en algun archivo en el repo
+
+
+
+dale con la busqueda de datos (yahoo o fred y en la tarea instrucciones hay cosas sobre donde buscar datos). dale con el codigo: NO HAGAS ALGO COMPLICADO, TENEMOS QUE EXPLICAR EL CODIGO.&#x20;
+
+
+
+No pares hasta que termines, si tienes dudas, creeme no voy a saber mas que tu.
+
+
+
+GODSPEED.
+
+
+tuvimos problemas con api por restricciones del entorno del otro agente, tu no deberias tenerlo. porfa salvanos
+```
+
+Se conservó `&#x20;` tal como aparece en el mensaje recibido. No se atribuye al equipo la verificación efectuada únicamente por el asistente.
+
 ## Cierre del anexo para el entregable final
 
 Completar y firmar solamente después de revisar todos los usos de IA del entregable, incluidos los de los demás integrantes y herramientas. No atribuir a los integrantes verificaciones hechas únicamente por el asistente.

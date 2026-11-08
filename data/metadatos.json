@@ -1,0 +1,107 @@
+{
+  "archivos": {
+    "BIL": {
+      "fuente": "Yahoo Finance chart",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/BIL?period1=1385856000&period2=1793491200&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "descarga_utc": "2026-11-08T03:20:03.852263+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3248
+    },
+    "SHY": {
+      "fuente": "Yahoo Finance chart",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SHY?period1=1385856000&period2=1793491200&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "descarga_utc": "2026-11-08T03:20:03.852263+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3248
+    },
+    "IEI": {
+      "fuente": "Yahoo Finance chart",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/IEI?period1=1385856000&period2=1793491200&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "descarga_utc": "2026-11-08T03:20:03.852263+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3248
+    },
+    "IEF": {
+      "fuente": "Yahoo Finance chart",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/IEF?period1=1385856000&period2=1793491200&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "descarga_utc": "2026-11-08T03:20:03.852263+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3248
+    },
+    "STIP": {
+      "fuente": "Yahoo Finance chart",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/STIP?period1=1385856000&period2=1793491200&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "descarga_utc": "2026-11-08T03:20:03.852263+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3248
+    },
+    "MBB": {
+      "fuente": "Yahoo Finance chart",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/MBB?period1=1385856000&period2=1793491200&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "descarga_utc": "2026-11-08T03:20:03.852263+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3248
+    },
+    "SPY": {
+      "fuente": "Yahoo Finance chart",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1385856000&period2=1793491200&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "descarga_utc": "2026-11-08T03:20:03.852263+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3248
+    },
+    "CLP=X": {
+      "fuente": "Yahoo Finance chart",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/CLP=X?period1=1385856000&period2=1793491200&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+      "descarga_utc": "2026-11-08T03:21:19.020411+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3370,
+      "cierres_faltantes": 8
+    },
+    "DGS2": {
+      "fuente": "FRED",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2",
+      "descarga_utc": "2026-11-08T03:23:42.545593+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3370,
+      "faltantes": 140
+    },
+    "DGS10": {
+      "fuente": "FRED",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10",
+      "descarga_utc": "2026-11-08T03:23:42.545593+00:00",
+      "primera_fecha": "2013-12-02",
+      "ultima_fecha": "2026-10-30",
+      "filas": 3370,
+      "faltantes": 140
+    }
+  },
+  "sha256": {
+    "data/raw/BIL.csv": "340f19062ec8a4d9669b0a4c698905d5ef98584db64552af2dc0339a74654c09",
+    "data/raw/BIL.json": "f179f4b20abc474d83994f4de40d6b9434ad9ab9c9ead24b71235b394008dab4",
+    "data/raw/CLP=X.csv": "c1f0805b6b395561b77e146e5cde06dc28f6b3fe8784d027ba1492e44a867e20",
+    "data/raw/CLP=X.json": "3c18ed1c477719757e57c16b0b75af8bf176f7010e2f5c7f85b099c334afa44d",
+    "data/raw/DGS10.csv": "f98df8339035950722eb276f6039b4b6632d7e0a7078fed6fe10c959f9d5489c",
+    "data/raw/DGS2.csv": "8b2b6fe3bee1cef4f6977fd61b6293316a7f646635ac571ed8138d3ead7cf4de",
+    "data/raw/IEF.csv": "792e04228d8c02afa524c98eae477694ae322c3c4c21c932dc876a8893114757",
+    "data/raw/IEF.json": "5915ebe5ebe8865266dffcbded8a551c13b50a5e9ff3c1b6aea0987d1e2bbc2d",
+    "data/raw/IEI.csv": "b6c1e21e9cb92a25e8ddbba37e19e580ae96552d08346aca0c36fd27e04b8e21",
+    "data/raw/IEI.json": "2c7c592fd4f154a14171a8cd543ab2d65f67a571c0f607972201be40ee919131",
+    "data/raw/MBB.csv": "920f58c421e00f8dbc57992742d42cfe1a722ba086ca6da10262ed85c16e4d39",
+    "data/raw/MBB.json": "f44648cf62bb901a1702147d744625baa828e518687b2da6c21ceb46b763e83d",
+    "data/raw/SHY.csv": "085448e182a71c3a67c8abd3e94b860468aea45efcbbb1d65502af5d8771351b",
+    "data/raw/SHY.json": "77e6bd62a54e28f6de647f33d85d33d1ac34dd39992f8816c9333875950cc7b2",
+    "data/raw/SPY.csv": "c0fb938f06f1941cd28f300b30db0b584890ad1c49f1e1aad12bd0f20d5ed23b",
+    "data/raw/SPY.json": "1c5f9c7a272eb925d85921a5eef8c562af02a4812f33366c8d683fba3cc6a8de",
+    "data/raw/STIP.csv": "804b782c3a00eff27d3a3d0856f24ef1f045ca8404fb3565b0a8bccf09c7365b",
+    "data/raw/STIP.json": "8091e4004ca13eca3e8c34afc2b831abc7af065d65ccb11e6fdc6a92a89507dc"
+  }
+}
