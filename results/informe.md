@@ -1,42 +1,97 @@
-# FEES: resultados exploratorios para el Comité Financiero
+# FEES: una cartera por hipótesis
 
-Ejecución reproducible: `python analisis.py`. Corte solicitado: 2026-10-31; último cierre mensual: 2026-10-31; 82 retornos mensuales desde enero de 2020. Consulta de reglas: 8 de noviembre de 2026.
+Se comparan **una referencia y cuatro carteras distintas**, una por idea del usuario. Datos hasta 2026-10-31, 82 meses desde enero de 2020. Ejecutar `python analisis.py` para regenerar todas las cifras.
 
-## Qué permite concluir este ejercicio
+La referencia aproxima el bloque USD de **69%** de la asignación estratégica. Faltan Europa 19%, Japón 9% y China 3%. Las métricas son por 100 invertidos en ese bloque y no representan el retorno del FEES completo. La política actual aplicada al pasado es un contrafactual, incluso antes de noviembre de 2023.
 
-La política defensiva del FEES es coherente con disponer de recursos líquidos durante estrés fiscal. Este análisis parcial no prueba que su cartera completa sea óptima. Mantener el 15% estratégico de MBS y excluir puts de cobre respeta las directrices consultadas. Acortar duración merece evaluar el presupuesto de riesgo ex ante; estos resultados por sí solos no autorizan una operación.
+**H2 incluye primas y pagos teóricos de puts, no precios históricos observados de opciones.** Se incorpora para estudiar la idea, con su costo y sus límites. Simularla no significa que esté autorizada por la política vigente.
 
-La referencia es una **aproximación del bloque USD, que representa 69% de la asignación estratégica**. No es el retorno efectivo del FEES ni su benchmark oficial. No se modelan Europa (19%), Japón (9%) ni China (3%). Los resultados se expresan por 100 invertidos en ese bloque, sin multiplicarlos y presentarlos como retornos del fondo completo.
+## Diseño de las cuatro carteras
 
-## Las cuatro ideas
+- **H1, más letras:** mover 10 pp del fondo desde Treasury 7–10 años (IEF) hacia letras (BIL). Es la traducción propuesta por el asistente de reducir exposición a bonos largos cuando su correlación con acciones preocupa. No incorpora acciones ni activa señales según correlaciones futuras. Cambia la asignación estratégica.
+- **H2, puts de cobre:** conservar la cartera de referencia y comprar puts hipotéticas cada mes. Nocional equivalente a 10% del fondo, strike 95% del precio inicial y plazo 1/12 de año. La prima y fricción se financian reduciendo BIL ese mes. No se posee un futuro descubierto.
+- **H3, menor duración:** mover 2 pp desde IEF hacia SHY (Treasury 1–3 años). Conservar el 40% total de Treasuries, el 10% de letras y el 15% MBS.
+- **H4, menos MBS:** reducir MBB del 15% al 10% y subir BIL del 10% al 15%. La sensibilidad también prueba 20% MBS. Estos cambios requieren modificar la asignación.
 
-1. **Bonos y acciones:** la tabla siguiente muestra cuándo aumentó la correlación y cuánto depende del bono y del período. Correlación positiva no equivale a ausencia total de diversificación. SPY es solo diagnóstico y no integra ninguna cartera.
-2. **Puts sobre futuros del cobre:** excluidas porque no figuran en la lista de instrumentos elegibles. No se simulan primas ni se presenta un backtest de opciones inexistente.
-3. **Treasuries más cortos:** se comparan traspasos de 1, 2 y 4 puntos porcentuales del fondo desde la proxy 7–10 años a 1–3 años. Se conservan el 40% de Treasuries y los demás pesos estratégicos. El tracking error realizado solo permite un diagnóstico preliminar.
-4. **Más o menos MBS:** no se cambia el 15% de la asignación estratégica. Las directrices no ofrecen una banda táctica general para esta decisión. Una investigación sobre un cambio de política queda fuera de la restricción del usuario.
+Pesos sobre el fondo completo, **no normalizados**. Suman 69%; el 31% no modelado se supone idéntico entre escenarios. La última columna es nocional subyacente de la opción y no se suma a los pesos de activos. La prima efectiva de H2 varía cada mes y se descuenta de BIL.
 
-## Retorno y riesgo del bloque USD
+|                        |   BIL |    SHY |    IEI |    IEF |   STIP |   MBB |   nocional_put_pct |
+|:-----------------------|------:|-------:|-------:|-------:|-------:|------:|-------------------:|
+| Referencia proxy USD   |    10 | 13.333 | 13.333 | 13.333 |      4 |    15 |                  0 |
+| H1 Mas letras          |    20 | 13.333 | 13.333 |  3.333 |      4 |    15 |                  0 |
+| H2 Puts cobre (modelo) |    10 | 13.333 | 13.333 | 13.333 |      4 |    15 |                 10 |
+| H3 Treasury corto      |    10 | 15.333 | 13.333 | 11.333 |      4 |    15 |                  0 |
+| H4 Menos MBS           |    15 | 13.333 | 13.333 | 13.333 |      4 |    10 |                  0 |
 
-Porcentajes anuales salvo caída máxima y peor mes. La caída se mide en cierres mensuales e incluye el capital inicial. La diferencia es entre retornos geométricos anualizados. El TE es un diagnóstico anualizado en puntos base sobre el bloque soberano 85%, suponiendo idéntico el resto de las exposiciones.
+## Filtro normativo
 
-|                      |   retorno_anual_pct |   volatilidad_anual_pct |   caida_max_mensual_pct |   peor_mes_pct |   diferencia_cagr_pp |   te_proxy_soberano_pb | filtro_te_realizado_25pb   |
-|:---------------------|--------------------:|------------------------:|------------------------:|---------------:|---------------------:|-----------------------:|:---------------------------|
-| Referencia proxy USD |               1.268 |                   4.018 |                 -11.088 |         -2.965 |                0     |                  0     | pasa solo diagnostico      |
-| Duracion -1 pp       |               1.297 |                   3.939 |                 -10.852 |         -2.914 |                0.029 |                  6.783 | pasa solo diagnostico      |
-| Duracion -2 pp       |               1.326 |                   3.861 |                 -10.617 |         -2.863 |                0.058 |                 13.566 | pasa solo diagnostico      |
-| Duracion -4 pp       |               1.384 |                   3.704 |                 -10.144 |         -2.76  |                0.115 |                 27.132 | supera 25 pb               |
+| cartera                | hipotesis                            | estado_normativo                                                | evidencia                                  |
+|:-----------------------|:-------------------------------------|:----------------------------------------------------------------|:-------------------------------------------|
+| Referencia proxy USD   | Referencia                           | Referencia proxy; cumplimiento no certificado                   | Retornos ETF proxy                         |
+| H1 Mas letras          | 1. Menor dependencia de bonos largos | Requiere cambiar asignacion y evaluar riesgo ex ante            | Retornos ETF proxy                         |
+| H2 Puts cobre (modelo) | 2. Cobertura con puts de cobre       | Instrumento fuera de la politica consultada; simulacion teorica | Primas teoricas, subyacente continuo proxy |
+| H3 Treasury corto      | 3. Menor duracion Treasury           | Pesos de clases conservados; TE ex ante no verificado           | Retornos ETF proxy                         |
+| H4 Menos MBS           | 4. Menor ponderacion MBS             | Requiere cambiar el 15% estrategico de MBS                      | Retornos ETF proxy                         |
 
-La referencia devuelve 1.27% anual, con volatilidad 4.02% y caída máxima mensual -11.09%. Revisar todas las alternativas; no escoger la mejor como pronóstico. Incluso un TE realizado inferior a 25 pb **no demuestra** cumplimiento ex ante, ni elegibilidad legal de ETFs.
+Las restricciones se mantienen como criterio de decisión: las carteras fuera de política se muestran como hipótesis y no se recomiendan para ejecución bajo las reglas actuales. Los ETFs son proxies, no órdenes elegibles certificadas. El TE realizado aproximado no reemplaza el cálculo ex ante del custodio. H2 y H4 no reciben un TE soberano, porque ese número no decidiría su admisibilidad.
 
-Como ejemplo intermedio fijado en el diseño, el traspaso de 2 pp devuelve 1.33% anual y reduce la caída máxima mensual a -10.62%. Su mejora de CAGR es 5.78 pb anuales del bloque USD. El intervalo de la diferencia de medias, con bloques de seis meses, va de -0.065 a 0.157 pp anuales e incluye cero. La evidencia no basta para recomendar el cambio por retorno esperado. Se descartan preliminarmente los escenarios que superan el diagnóstico de 25 pb: Duracion -4 pp: 27.13 pb. Los demás siguen requiriendo comprobación oficial ex ante.
+## Comparación del bloque USD
 
-![Evolución de riqueza](figuras/riqueza.png)
+Retorno compuesto y volatilidad anual en %, caída y peor mes en %. La caída incluye el capital inicial y solo observa cierres mensuales. Diferencia CAGR en puntos porcentuales; TE proxy en puntos base anuales del mandato soberano 85%, suponiendo idéntico el resto.
+
+|                        |   retorno_anual_pct |   volatilidad_anual_pct |   caida_max_mensual_pct |   peor_mes_pct |   diferencia_cagr_pp |   te_proxy_soberano_pb |
+|:-----------------------|--------------------:|------------------------:|------------------------:|---------------:|---------------------:|-----------------------:|
+| Referencia proxy USD   |               1.268 |                   4.018 |                 -11.088 |         -2.965 |                0     |                  0     |
+| H1 Mas letras          |               1.695 |                   3.01  |                  -7.904 |         -2.249 |                0.426 |                 85.21  |
+| H2 Puts cobre (modelo) |              -1.009 |                   4.146 |                 -16.47  |         -3.342 |               -2.277 |                nan     |
+| H3 Treasury corto      |               1.326 |                   3.861 |                 -10.617 |         -2.863 |                0.058 |                 13.566 |
+| H4 Menos MBS           |               1.426 |                   3.587 |                  -9.94  |         -2.581 |                0.157 |                nan     |
+
+![Referencia y cuatro carteras](figuras/riqueza.png)
 
 ![Caídas mensuales](figuras/caidas.png)
 
-## Correlación de bonos con acciones
+## Qué produce la simulación de puts
 
-Correlaciones entre retornos totales mensuales en USD. Tamaños de muestra, meses con pérdidas conjuntas y retornos de bonos cuando SPY cae están en `correlaciones.csv`. La muestra de 2022 solo tiene 12 meses.
+Con los supuestos centrales, H2 devuelve -1.01% anual del bloque, con caída máxima mensual de -16.47%. La prima media anualizada es 2.02% del capital total hipotético tras el costo de rebalanceo de cada mes y los pagos medios anualizados son 0.66%. Son promedios mensuales por 12, no sumas de caja sobre un capital inicial constante.
+
+Hubo 14 meses de caída del proxy del cobre superior a 5%. En ellos, la diferencia media H2 menos referencia fue 0.22 pp mensuales del bloque. Esto describe la protección frente a ese subyacente y el costo del seguro. **No demuestra cobertura de ingresos fiscales ni de todas las pérdidas de bonos.** No se modelan ingresos tributarios, producción ni retiros del FEES.
+
+![Primas y pagos de puts teóricas](figuras/puts.png)
+
+El CSV `puts_auditoria.csv` guarda para cada mes precio inicial y final, strike, volatilidad histórica conocida al entrar, volatilidad del modelo, tasa, prima, fricción, pago y retorno. Permite seguir el cálculo de un mes sin una caja negra.
+
+La valoración usa **Black-76 europeo**, con volatilidad de los 63 retornos diarios anteriores multiplicada por 1.25. Ese multiplicador es un supuesto, no volatilidad implícita observada. Se añade fricción del 10% de la prima. Se descuenta el rendimiento BIL sacrificado al pagar prima y fricción. El programa rechaza una prima superior a las letras disponibles.
+
+`HG=F` es un proxy continuo: el precio inicial y final pueden corresponder a vencimientos distintos. Por ello se simula una **opción europea hipotética sobre ese proxy**, no contratos COMEX históricos identificados. No se replica el rollover de un contrato negociable, el ejercicio americano, la entrega del futuro, la malla de strikes, el spread real ni contratos enteros de 25.000 libras. Los resultados son condicionales y no constituyen un backtest ejecutable de opciones reales.
+
+## Sensibilidad del seguro y de MBS
+
+La siguiente tabla mantiene el nocional de 10% y varía strike y multiplicador de volatilidad. `sensibilidad_puts.csv` contiene las 27 combinaciones de strikes 90/95/100%, volatilidad histórica por 1/1,25/1,5 y nocionales 5/10/20%. Se muestran todas sin elegir la mejor.
+
+|   retorno_anual_pct |   volatilidad_anual_pct |   caida_max_mensual_pct |   peor_mes_pct |   strike |   multiplicador_vol |   nocional |
+|--------------------:|------------------------:|------------------------:|---------------:|---------:|--------------------:|-----------:|
+|               0.824 |                   4.015 |                 -11.58  |         -3.049 |     0.9  |                1    |        0.1 |
+|               0.196 |                   4.026 |                 -12.719 |         -3.13  |     0.9  |                1.25 |        0.1 |
+|              -0.592 |                   4.043 |                 -14.719 |         -3.225 |     0.9  |                1.5  |        0.1 |
+|               0.119 |                   4.126 |                 -13.339 |         -3.218 |     0.95 |                1    |        0.1 |
+|              -1.009 |                   4.146 |                 -16.47  |         -3.342 |     0.95 |                1.25 |        0.1 |
+|              -2.198 |                   4.171 |                 -20.041 |         -3.471 |     0.95 |                1.5  |        0.1 |
+|              -1.002 |                   4.25  |                 -16.243 |         -3.229 |     1    |                1    |        0.1 |
+|              -2.398 |                   4.273 |                 -21.727 |         -3.373 |     1    |                1.25 |        0.1 |
+|              -3.775 |                   4.3   |                 -28.748 |         -3.517 |     1    |                1.5  |        0.1 |
+
+Para MBS, cada cambio se financia con letras. El 15% es la referencia oficial; 10% y 20% son alternativas hipotéticas que cambian la asignación.
+
+|   retorno_anual_pct |   volatilidad_anual_pct |   caida_max_mensual_pct |   peor_mes_pct |   peso_mbs_sobre_fondo |
+|--------------------:|------------------------:|------------------------:|---------------:|-----------------------:|
+|               1.426 |                   3.587 |                  -9.94  |         -2.581 |                   0.1  |
+|               1.268 |                   4.018 |                 -11.088 |         -2.965 |                   0.15 |
+|               1.109 |                   4.453 |                 -12.224 |         -3.349 |                   0.2  |
+
+## Correlación, estrés e incertidumbre
+
+La primera hipótesis se evalúa con su propia cartera y con el diagnóstico de correlación. SPY solo se usa para diagnóstico. Una correlación positiva no implica ausencia total de diversificación.
 
 | periodo    |    IEF |    IEI |    MBB |    SHY |
 |:-----------|-------:|-------:|-------:|-------:|
@@ -47,66 +102,42 @@ Correlaciones entre retornos totales mensuales en USD. Tamaños de muestra, mese
 
 ![Correlación móvil](figuras/correlacion.png)
 
-## Sensibilidad e incertidumbre
+Retornos acumulados en episodios fijados por calendario. H2 sigue dependiendo de primas teóricas.
 
-Las ventanas se fijan por calendario, sin buscar el punto de quiebre más favorable. Cada ventana reinicia la inversión y cobra su compra inicial. Son comparaciones retrospectivas; los datos recientes ya inspiraron las hipótesis. No constituyen una prueba fuera de muestra.
+|         |   Referencia proxy USD |   H1 Mas letras |   H2 Puts cobre (modelo) |   H3 Treasury corto |   H4 Menos MBS |
+|:--------|-----------------------:|----------------:|-------------------------:|--------------------:|---------------:|
+| 2020 T1 |                  4.289 |           2.85  |                    5.778 |               4.067 |          4.125 |
+| 2022    |                 -8.134 |          -5.729 |                   -9.853 |              -7.802 |         -7.201 |
 
-| cartera              |   retorno_anual_pct |   volatilidad_anual_pct |   caida_max_mensual_pct |   peor_mes_pct | periodo    |   meses |
-|:---------------------|--------------------:|------------------------:|------------------------:|---------------:|:-----------|--------:|
-| Referencia proxy USD |               2.239 |                   2.207 |                  -2.403 |         -1.776 | 2014-2019  |      72 |
-| Duracion -1 pp       |               2.2   |                   2.145 |                  -2.316 |         -1.721 | 2014-2019  |      72 |
-| Duracion -2 pp       |               2.161 |                   2.083 |                  -2.229 |         -1.667 | 2014-2019  |      72 |
-| Duracion -4 pp       |               2.082 |                   1.959 |                  -2.057 |         -1.558 | 2014-2019  |      72 |
-| Referencia proxy USD |               1.831 |                   2.126 |                  -2.02  |         -0.859 | 2020-2021  |      24 |
-| Duracion -1 pp       |               1.801 |                   2.061 |                  -1.911 |         -0.825 | 2020-2021  |      24 |
-| Duracion -2 pp       |               1.772 |                   1.998 |                  -1.801 |         -0.792 | 2020-2021  |      24 |
-| Duracion -4 pp       |               1.713 |                   1.871 |                  -1.582 |         -0.725 | 2020-2021  |      24 |
-| Referencia proxy USD |              -8.18  |                   5.631 |                  -9.745 |         -2.965 | 2022       |      12 |
-| Duracion -1 pp       |              -8.014 |                   5.526 |                  -9.566 |         -2.914 | 2022       |      12 |
-| Duracion -2 pp       |              -7.848 |                   5.422 |                  -9.387 |         -2.863 | 2022       |      12 |
-| Duracion -4 pp       |              -7.516 |                   5.213 |                  -9.027 |         -2.76  | 2022       |      12 |
-| Referencia proxy USD |               3.563 |                   4.056 |                  -3.672 |         -1.898 | 2023-corte |      46 |
-| Duracion -1 pp       |               3.582 |                   3.977 |                  -3.541 |         -1.858 | 2023-corte |      46 |
-| Duracion -2 pp       |               3.602 |                   3.898 |                  -3.411 |         -1.817 | 2023-corte |      46 |
-| Duracion -4 pp       |               3.64  |                   3.74  |                  -3.15  |         -1.736 | 2023-corte |      46 |
+Bootstrap pareado circular con 2000 repeticiones y semilla 20261108. Aquí se muestran bloques de seis meses; `incertidumbre.csv` también incluye 3 y 12. Intervalos individuales del 95% para diferencias de **medias mensuales por 12**, en pp anuales, no diferencias de CAGR. No corrigen comparaciones múltiples ni la selección retrospectiva. En H2 tampoco incorporan error de valoración de opciones.
 
-Bootstrap pareado por bloques circulares, 2000 repeticiones y semilla 20261108. Los intervalos describen la **diferencia de medias mensuales multiplicada por 12**, en puntos porcentuales anuales; no la diferencia de CAGR. Se muestran bloques de 3, 6 y 12 meses. Son intervalos individuales del 95%, sin ajuste por comparaciones múltiples. No se usan para declarar ganadores ni significancia conjunta.
+| cartera                |   bloque_meses |   media_anualizada_pp |   ic95_inferior_pp |   ic95_superior_pp |
+|:-----------------------|---------------:|----------------------:|-------------------:|-------------------:|
+| H1 Mas letras          |              6 |                 0.386 |             -0.366 |              1.081 |
+| H2 Puts cobre (modelo) |              6 |                -2.269 |             -3.132 |             -1.427 |
+| H3 Treasury corto      |              6 |                 0.051 |             -0.065 |              0.157 |
+| H4 Menos MBS           |              6 |                 0.139 |             -0.109 |              0.412 |
 
-| cartera        |   bloque_meses |   media_anualizada_pp |   ic95_inferior_pp |   ic95_superior_pp |
-|:---------------|---------------:|----------------------:|-------------------:|-------------------:|
-| Duracion -1 pp |              3 |                 0.025 |             -0.038 |              0.092 |
-| Duracion -1 pp |              6 |                 0.025 |             -0.033 |              0.079 |
-| Duracion -1 pp |             12 |                 0.025 |             -0.026 |              0.077 |
-| Duracion -2 pp |              3 |                 0.051 |             -0.076 |              0.185 |
-| Duracion -2 pp |              6 |                 0.051 |             -0.065 |              0.157 |
-| Duracion -2 pp |             12 |                 0.051 |             -0.052 |              0.153 |
-| Duracion -4 pp |              3 |                 0.102 |             -0.152 |              0.369 |
-| Duracion -4 pp |              6 |                 0.102 |             -0.13  |              0.314 |
-| Duracion -4 pp |             12 |                 0.102 |             -0.104 |              0.306 |
+`sensibilidad_periodos.csv` compara 2015–2019, 2020–2021, 2022 y 2023–corte con las mismas cinco carteras. La ventana anterior a 2020 comienza en 2015 para asegurar calentamiento de volatilidad del cobre. `sensibilidad_costos.csv` prueba 0/5/10 pb de costos de activos; la fricción propia de puts se mantiene separada.
 
-## Moneda relevante para el Fisco
+## Moneda y límites
 
-Conversión ilustrativa: `(1 + retorno USD) × (1 + variación CLP por USD) − 1`, usando CLP=X (USD/CLP) de Yahoo. El cierre cambiario disponible puede diferir del horario del ETF y del dólar observado del Banco Central. Esto muestra la importancia del peso, pero no mide la cobertura de retiros fiscales ni de ingresos del cobre.
+Conversión ilustrativa a CLP: `(1 + retorno USD) × (1 + cambio CLP por USD) − 1`, con Yahoo CLP=X. No es dólar observado y sus horarios pueden diferir del cierre de ETF.
 
-|                      |   retorno_anual_pct |   volatilidad_anual_pct |   caida_max_mensual_pct |   peor_mes_pct |
-|:---------------------|--------------------:|------------------------:|------------------------:|---------------:|
-| Referencia proxy USD |               5.806 |                  12.934 |                 -17.981 |         -7.76  |
-| Duracion -1 pp       |               5.836 |                  12.931 |                 -17.914 |         -7.74  |
-| Duracion -2 pp       |               5.866 |                  12.93  |                 -17.848 |         -7.721 |
-| Duracion -4 pp       |               5.926 |                  12.928 |                 -17.715 |         -7.683 |
+|                        |   retorno_anual_pct |   volatilidad_anual_pct |   caida_max_mensual_pct |   peor_mes_pct |
+|:-----------------------|--------------------:|------------------------:|------------------------:|---------------:|
+| Referencia proxy USD   |               5.806 |                  12.934 |                 -17.981 |         -7.76  |
+| H1 Mas letras          |               6.251 |                  12.96  |                 -17.355 |         -7.474 |
+| H2 Puts cobre (modelo) |               3.426 |                  13.498 |                 -20.132 |         -7.979 |
+| H3 Treasury corto      |               5.866 |                  12.93  |                 -17.848 |         -7.721 |
+| H4 Menos MBS           |               5.97  |                  13.009 |                 -18.028 |         -7.665 |
 
-## Supuestos que afectan la interpretación
+Rebalanceo mensual, sin aportes ni retiros, con costo de 5 pb por dólar comprado o vendido, incluida la compra inicial. Los cierres ajustados aproximan reinversión de distribuciones y ya incluyen gastos internos de ETF. FRED DGS1MO se usa solo como proxy de descuento para la prima; DGS2/DGS10 dan contexto. Ninguna variación de tasas se interpreta como retorno de bonos.
 
-- La distribución actual se aplica al pasado como contrafactual, incluso antes de su implementación en noviembre de 2023. No se afirma que regía en 2020.
-- Treasuries: un tercio de cada tramo SHY, IEI e IEF dentro del 40%, supuesto explícito. No son los pesos por capitalización del índice oficial. STIP cubre 0–5 años y no replica TIPS 1–10 años. MBB y BIL tampoco replican exactamente sus comparadores oficiales. Los ETFs son instrumentos de medición, no órdenes propuestas para el FEES.
-- Cierres ajustados de Yahoo aproximan retorno total con distribuciones reinvertidas, netos de gastos internos del ETF. La validación contrasta cada retorno diario con cierre y distribución. No se suman dividendos otra vez.
-- Rebalanceo mensual a pesos fijos, sin aportes ni retiros, costo de 5 pb por dólar comprado o vendido, incluida compra inicial. No hay impuesto, spread dinámico, deslizamiento ni comisión oficial FEES. `sensibilidad_costos.csv` muestra 0, 5 y 10 pb. La norma exige al menos un rebalanceo anual sin flujos, no este calendario mensual.
-- El TE proxy usa la volatilidad histórica de la diferencia SHY–IEF, multiplicada por el traspaso y dividida por 85%. No incorpora el riesgo de réplica de la referencia frente al índice oficial. No reemplaza la matriz de riesgo ni el cálculo diario del custodio.
-- Frecuencia mensual: volatilidad anualizada con raíz de 12 y observaciones equiponderadas. Los máximos intrames y los costos de liquidación en crisis pueden ser mayores.
-- Cambios en tasas FRED solo sirven de contexto; nunca se usan como retornos de bonos. Datos originales, fechas y SHA-256 están en `data/metadatos.json`.
+La referencia divide el 40% Treasury en tercios SHY/IEI/IEF, supuesto que no replica ponderaciones por capitalización. STIP es TIPS 0–5 años, distinto del comparador 1–10. Los demás ETF también tienen desajustes de índice, gastos y gestión. Sin índices oficiales ni cartera global no se certifica rendimiento efectivo ni cumplimiento del FEES. Las hipótesis se diseñaron con conocimiento del pasado; no hay validación independiente fuera de muestra.
 
-## Fuentes y archivos para revisar
+## Fuentes
 
-[Política y asignación oficial](https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/politica-de-inversion), [directrices vigentes, oficio 1085/2023](https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/politica-de-inversion/pauta-de-inversion-vigente), [composición oficial de septiembre de 2026](https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/informacion-financiera/composicion-actual), [Yahoo USD/CLP](https://finance.yahoo.com/quote/CLP=X/), [FRED DGS2](https://fred.stlouisfed.org/series/DGS2), [FRED DGS10](https://fred.stlouisfed.org/series/DGS10). Los enlaces de cada descarga Yahoo están en el manifiesto. Las reglas con páginas y la tabla de proxies están en `docs/reglas-fees.md` y `docs/metodologia.md`.
+[Política FEES](https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/politica-de-inversion), [directrices vigentes](https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/politica-de-inversion/pauta-de-inversion-vigente), [Yahoo cobre](https://finance.yahoo.com/quote/HG=F/), [FRED DGS1MO](https://fred.stlouisfed.org/series/DGS1MO), [Black (1976)](https://doi.org/10.1016/0304-405X(76)90024-6), [CME: opciones de cobre](https://www.cmegroup.com/markets/metals/base/copper.contractSpecs.options.html), [CME: datos históricos DataMine](https://www.cmegroup.com/datamine.html). Las URLs exactas y hashes de las descargas están en `data/metadatos.json`.
 
-Este trabajo cubre FEES parcialmente. El FRP sigue pendiente y el encargo del curso requiere ambos fondos. La revisión y defensa del equipo, el memo final y las firmas del anexo de IA siguen pendientes.
+El alcance académico completo también requiere FRP. Siguen pendientes la revisión y defensa del equipo, el memo final y las firmas del anexo IA.

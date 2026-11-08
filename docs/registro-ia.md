@@ -63,6 +63,28 @@ tuvimos problemas con api por restricciones del entorno del otro agente, tu no d
 
 Se conservó `&#x20;` tal como aparece en el mensaje recibido. No se atribuye al equipo la verificación efectuada únicamente por el asistente.
 
+## Corrección: una cartera por hipótesis
+
+Esta actualización reemplaza el diseño de la primera implementación. Las filas anteriores documentan lo ocurrido en esa etapa, no describen el alcance final corregido.
+
+| Herramienta, modelo y versión | Prompts utilizados | Qué se incorporó al entregable | Errores detectados en el output | Cómo se verificó el resultado | Qué cambió el equipo | Limitaciones que persisten |
+| --- | --- | --- | --- | --- | --- | --- |
+| T3 Code mediante Codex, `gpt-6.1-sol`, esfuerzo high. Sin revisión de modelo adicional informada. | P4 y P5, transcritos abajo. | Referencia y cuatro carteras H1/H2/H3/H4; primas Black-76, financiación desde BIL, pagos y auditoría mensual; sensibilidad de puts y MBS; datos HG=F y DGS1MO; notebook y documentación corregidos. | El usuario detectó que la primera entrega no simulaba una cartera por hipótesis: solo variantes de duración. El asistente había confundido el filtro normativo con excluir las simulaciones. Se corrigió el diseño completo. Durante implementación se corrigió el rebalanceo de H2 para incorporar las tenencias reales tras los pagos de opciones en lugar de reutilizar el costo de la base sin esos flujos. | Dieciocho pruebas de cálculos, cinco carteras, prima financiada, pagos, datos de entrada rezagados, cobertura cero equivalente a referencia, hashes y moneda. Fórmula cotejada con caso numérico cerrado. La ejecución del notebook y comparación de salidas se registran en docs/validacion.md. | El usuario corrigió explícitamente el objetivo a una cartera por hipótesis y autorizó commit/push. Los pesos concretos, la interpretación de H1 como más letras y los parámetros de valoración son del asistente; no hay revisión académica ni firmas comunicadas por el equipo. | Las primas no son cotizaciones observadas. HG=F continuo puede cambiar de contrato. Modelo europeo sin ejercicio americano, entrega física ni contratos enteros. H1/H2/H4 requieren cambios de política. Bloque USD 69%, sin réplica del 31% extranjero ni ingresos fiscales. Sesgo retrospectivo e incertidumbre no incluida del modelo de opciones. |
+
+### P4 — autorización de guardado
+
+```text
+commit y push cuando termines, el repo es tuyo
+```
+
+### P5 — corrección del diseño
+
+```text
+Pero y la idea de puts? No es solo una simulación con 4 hipótesis. Una simulación con una cartera ñra cada hipótesis.
+```
+
+La inclusión de escenarios hipotéticos no se registra como autorización real para cambiar las directrices del FEES. El filtro normativo se conserva junto a la comparación económica.
+
 ## Cierre del anexo para el entregable final
 
 Completar y firmar solamente después de revisar todos los usos de IA del entregable, incluidos los de los demás integrantes y herramientas. No atribuir a los integrantes verificaciones hechas únicamente por el asistente.

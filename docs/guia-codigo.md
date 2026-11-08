@@ -1,45 +1,48 @@
-# Cómo explicar el código
+# Cómo explicar las cuatro carteras
 
-El análisis responde una pregunta acotada: qué habría ocurrido al reducir un poco la duración del componente Treasury en dólares, manteniendo los pesos estratégicos de clases. No busca una cartera óptima.
+La unidad del análisis es una cartera por hipótesis, más una referencia. Todas parten de la misma asignación del bloque USD. No son tres tamaños del mismo cambio de duración.
 
-## Datos y retornos
+## Qué cambia en cada hipótesis
 
-`datos.py` descarga precios diarios, distribuciones y tasas. Guarda los archivos y las URLs utilizadas. `analisis.py` lee esos archivos sin red.
+H1 mueve bonos de 7–10 años hacia letras: busca reducir exposición a bonos largos. H3 mueve una cantidad menor desde 7–10 hacia 1–3 años: conserva la clase Treasury. H4 reduce MBS y pone la diferencia en letras. H2 conserva la base y paga un seguro mensual sobre cobre. La tabla `estado_carteras.csv` muestra qué exige cambiar la política del FEES.
 
-`cargar_mensuales` toma el último precio ajustado observado de cada mes. Calcula `precio_actual / precio_anterior − 1`. Si un precio pasa de 100 a 102, el retorno es 2%. El cierre ajustado aproxima la reinversión de las distribuciones; sumarlas de nuevo contaría ese ingreso dos veces.
+`config.json` contiene esos cambios. `pesos_escenario` construye los pesos de activos sobre el fondo total. Suman 69%, porque no se modela el 31% extranjero restante. Para el retorno del bloque, `cartera` divide por 0,69. No se presenta ese retorno como el del FEES completo.
 
-Se comprueba que no falten meses y que los ETF tengan el mismo calendario. Las tasas FRED de 2 y 10 años solo aparecen en un gráfico de contexto. Una tasa de 4% no es un retorno mensual de 4%.
+## La put, paso a paso
 
-## Pesos y rebalanceo
+Una put paga si el subyacente termina bajo el strike. No es gratis: se paga una prima aunque termine sin valor. Para explicar un mes, abrir `results/puts_auditoria.csv`.
 
-`pesos_escenario` empieza con los pesos sobre el FEES completo. El bloque estudiado suma 69%. Para calcular el retorno de ese bloque, `cartera` divide cada peso por 0,69. Así los pesos del cálculo suman uno.
+1. Tomar F, el cierre del cobre del mes anterior. Fijar strike en 95% de F.
+2. Calcular la volatilidad con los últimos 63 retornos diarios conocidos. Multiplicarla por 1,25, supuesto explícito de valoración.
+3. Tomar la tasa Treasury de un mes conocida al entrar y usar Black-76 para la prima europea.
+4. Comprar cobertura nocional de 10% del capital total hipotético. Restar prima y fricción de BIL.
+5. Aplicar los retornos de activos del mes. El dinero usado para la prima deja de ganar retorno BIL.
+6. Al final, sumar a BIL `nocional/F × max(strike − precio final, 0)`. Rebalancear al iniciar el mes siguiente.
 
-El retorno bruto mensual es la suma de `peso × retorno de cada activo`. Los pesos se fijan al inicio del mes; ningún retorno futuro modifica esa decisión. Al terminar el mes, los activos que subieron pesan más. Antes del siguiente mes se vuelve al objetivo y se cobra el costo de las compras y ventas necesarias.
+Ejemplo solo para entender el pago: si F = 100, strike = 95 y precio final = 80, la put paga 15 por unidad. Con nocional 10% del fondo, eso equivale a 1,5% del capital total antes de restar prima y costos. Si termina en 110, paga cero y se pierde la prima. Estos números son ilustrativos, no datos de un contrato real.
 
-El modelo cobra 5 pb por dólar planeado de transacción sobre el capital antes de comisiones. Con pesos 50/50 y retornos +20%/−20%, se termina 60/40. Para volver a 50/50 se vende 10% y se compra 10%: se cobra sobre 20%, no sobre 10%. Al inicio se cobra la compra de 100% del capital.
+`precio_put_black76` implementa la fórmula de valoración. `preparar_insumos_puts` desplaza los datos para usar información del cierre anterior. `cartera_puts` lleva las tenencias, descuenta la prima y suma el pago. Con nocional cero debe producir la referencia; una prueba lo verifica.
 
-La referencia dedica 40 pp del fondo a Treasuries, repartidos en tres tramos. El escenario de 2 pp mueve 2 del tramo 7–10 al tramo 1–3 años. No reduce el 40% total ni cambia MBS. Una pérdida menor en una subida de tasas puede acompañarse de una ganancia menor cuando las tasas caen.
+## Qué es dato y qué es supuesto
 
-## Métricas
+Los cierres de HG=F son datos descargados. La prima es teórica. La volatilidad implícita no se observó: se aproxima con volatilidad histórica multiplicada por un factor. HG=F puede cambiar de contrato, así que no se reproduce una opción COMEX identificada. Se simula un instrumento europeo hipotético sobre un proxy continuo. No se modela ejercicio americano ni entrega física.
 
-`riqueza_y_caida` multiplica sucesivamente `1 + retorno`. Una pérdida de 10% seguida de una ganancia de 10% deja 99 por cada 100 iniciales. No deja 100.
+El nocional de la opción mide exposición al subyacente, no dinero invertido. No debe sumarse como otro 10% a los pesos del 69%. El dinero invertido es la prima, que sale de letras y cambia cada mes. El código rechaza una compra que requiera más letras de las disponibles.
 
-`metricas` calcula el retorno geométrico anual equivalente, la desviación estándar mensual multiplicada por raíz de 12 y la mayor caída desde un máximo. La caída incluye el capital inicial: no se esconde una pérdida del primer mes. Se usan cierres mensuales y pueden omitirse pérdidas mayores dentro del mes.
+## Retornos, costos y riesgo
 
-El tracking error mide cuánto varía la diferencia contra una referencia. Aquí solo se estima la diferencia producida por cambiar de tramo. El cálculo usa el denominador 85% del mandato soberano, distinto del 69% del bloque medido. El presupuesto oficial es ex ante y exige otra información; este diagnóstico no certifica una cartera.
+Los retornos ETF salen de cocientes de cierres ajustados. El ajuste aproxima distribuciones reinvertidas; sumarlas otra vez duplicaría el ingreso. Las tasas FRED no son retornos de bonos.
 
-## Correlación e incertidumbre
+`cartera` calcula la suma de pesos por retornos, con rebalanceo mensual. Cobra compras más ventas: pasar de 60/40 a 50/50 exige vender 10% y comprar 10%, por lo que el costo se cobra sobre 20%. H2 también incluye el cambio de tenencias causado por los pagos del seguro al calcular el rebalanceo siguiente.
 
-Una correlación positiva significa que dos retornos tendieron a moverse juntos durante esa ventana. No significa que fueran iguales, ni que ambos perdieran siempre. Por eso también se guardan los meses de pérdidas conjuntas y el retorno de bonos en meses de caída de SPY.
+`riqueza_y_caida` multiplica sucesivamente uno más cada retorno. Incluye el capital inicial al medir caídas. `metricas` calcula el retorno compuesto anual equivalente, volatilidad y peor caída mensual. No detecta máximos o pérdidas dentro del mes.
 
-`bootstrap_media` toma diferencias de retorno entre cada escenario y la referencia en las mismas fechas. Remuestrea grupos de meses consecutivos para conservar parte de la dependencia temporal. Cada muestra produce una media anualizada; los percentiles 2,5 y 97,5 delimitan el intervalo descriptivo del 95%.
+## Cómo defender la interpretación
 
-Si el intervalo incluye cero, no hay evidencia firme de una mejora de media con este procedimiento. Incluso si no incluyera cero, seguirían el sesgo de diseño dentro de muestra y las comparaciones múltiples. El intervalo es para la media aritmética anualizada, no para el retorno compuesto.
+La correlación con acciones es un diagnóstico: SPY no integra las carteras. Una correlación positiva no significa pérdidas simultáneas en todos los meses.
 
-## Preguntas para practicar
+Una put puede proteger frente a una caída de cobre sin mejorar el retorno medio de la cartera financiera. Su motivo fiscal es distinto del seguro de una cartera que ya posee cobre. Aquí no se modelan ingresos del Estado, producción ni retiros: no se afirma haber demostrado cobertura fiscal.
 
-- ¿Por qué no llamamos a esta cartera el FEES? Faltan tres componentes extranjeros y los índices se aproximan con ETFs.
-- ¿Por qué no probamos puts de cobre? Las directrices consultadas no las incluyen entre los instrumentos elegibles.
-- ¿Por qué no subimos MBS al 20%? La referencia fija 15%. El 20% que aparece en las pautas tiene otro alcance: deuda permitida dentro del mandato MBS.
-- ¿Por qué usar pesos si medimos en USD? El Fisco gasta en CLP. La conversión muestra la exposición al dólar, pero no demuestra cobertura de sus necesidades de caja.
-- ¿Qué significa una mejora histórica de pocos puntos base? Es pequeña frente a la incertidumbre, los desajustes de proxies y los costos. No basta para recomendar ejecución.
+Los intervalos bootstrap remuestrean bloques de diferencias mensuales pareadas. Describen incertidumbre de medias bajo los supuestos elegidos. No incluyen incertidumbre sobre la prima real, no corrigen múltiples pruebas y no eliminan el diseño retrospectivo.
+
+Simular H1, H2 y H4 permite estudiar las ideas del usuario; no las vuelve admisibles bajo la política actual. H3 conserva clases pero también requiere TE ex ante y revisión de instrumentos. Un mejor CAGR histórico no basta para recomendar ninguna ejecución.

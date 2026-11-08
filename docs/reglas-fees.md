@@ -50,13 +50,15 @@ La [composición efectiva publicada para septiembre de 2026](https://www.haciend
 
 Este resumen recoge las reglas necesarias para el ejercicio, no sustituye el PDF ni constituye una auditoría de todos los límites operativos.
 
-## Decisión para cada hipótesis
+## Tratamiento de las cuatro carteras
 
-| Hipótesis | Estado bajo las reglas publicadas | Tratamiento en el código |
+La aclaración posterior del usuario exige simular una cartera por hipótesis. Se amplía el ejercicio económico sin reinterpretar los permisos legales del fondo. El filtro de esta tabla determina qué sería ejecutable bajo las reglas actuales, aunque todas las hipótesis se calculen.
+
+| Cartera | Estado bajo las reglas publicadas | Tratamiento en el código |
 | --- | --- | --- |
-| Correlación bonos y acciones | Compatible como diagnóstico externo. Acciones no integran la asignación vigente. | SPY solo sirve para calcular correlaciones con bonos. Peso SPY en carteras: cero. |
-| Puts de futuros de cobre | Incompatible con las listas de instrumentos elegibles consultadas. Autorizar futuros de tasas o monedas no autoriza opciones de materias primas. | Excluidas. No se cambia la política ni se inventa un historial de primas. |
-| Menor duración del Tesoro | Los bonos cortos pueden ser elegibles por madurez. Una desviación relevante debe cumplir gestión pasiva y TE ex ante. **Cumplimiento de las carteras proxy no verificado.** | Escenarios pequeños, sin variar 40% estratégico. TE realizado se muestra como diagnóstico, nunca como certificación. |
-| Más o menos peso estratégico MBS | Incompatible como libre modificación permanente de 15%. No se halló una banda táctica general. | Peso estratégico MBS se conserva. No se usan tolerancias de duración como si fueran bandas de asignación. |
+| H1 Más letras | Subir letras de 10% a 20% y reducir Treasury de 40% a 30% cambia la asignación estratégica; TE ex ante también pendiente. | Se simula como alternativa de política, no como una desviación automáticamente permitida. Acciones siguen con peso cero. |
+| H2 Puts de cobre | Incompatible con las listas de instrumentos elegibles consultadas. Futuros de tasas o monedas no autorizan opciones de materias primas. | Se incorpora una simulación de puts europeas con primas teóricas, financiadas desde letras. Estado fuera de política visible. No se presume autorización ni se inventan primas observadas. |
+| H3 Treasury corto | Elegibilidad por madurez puede ser posible, pero exige gestión pasiva y TE ex ante. | Se conserva el 40% Treasury y el resto de clases. Cumplimiento de la cartera proxy no certificado. |
+| H4 Menos MBS | Reducir 15% estratégico a 10% cambia la asignación. Subirlo a 20% en sensibilidad también. | Se simulan ambos sentidos, con la diferencia financiada por letras, y se marcan como cambios hipotéticos de política. |
 
-Los ETFs usados no aparecen como tales en la lista de instrumentos elegibles. Son proxies estadísticos para estudiar exposiciones, no una cartera ejecutable ni una recomendación de adquirir ETFs con recursos del FEES.
+Los ETFs no aparecen como tales en la lista de instrumentos elegibles. Son proxies estadísticos y no órdenes para el FEES. La simulación no modifica ninguna regla real ni recomienda ejecutar carteras fuera de las directrices actuales.

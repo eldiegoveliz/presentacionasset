@@ -1,53 +1,76 @@
-# Metodología del análisis FEES
+# Metodología: una cartera por hipótesis
 
-Estado al 8 de noviembre de 2026. La autorización posterior del usuario permite investigar y escribir código. El texto anterior que restringía el trabajo a documentación ya no describe el alcance vigente. Se conserva en el historial Git.
+Actualización del 8 de noviembre de 2026 tras la corrección del usuario. La primera implementación comparaba solo tres variantes de duración y dejaba puts y MBS fuera del cálculo. Ese diseño no correspondía a la solicitud y fue reemplazado.
 
-## Requisitos y decisiones del usuario
+## Alcance e interpretación
 
-El curso exige evaluar FEES y FRP, justificar supuestos y reproducir cifras en Colab. Este análisis cubre las cuatro hipótesis FEES del usuario; el FRP queda para otra etapa. El usuario exige respetar las reglas del FEES, buscar datos reales y mantener código explicable. No autoriza modificar la política para incorporar cobre.
+El usuario pide una simulación con una cartera por cada una de sus cuatro hipótesis, más una referencia. También exige documentar y respetar las reglas del FEES. Para conservar ambas cosas, el análisis calcula los escenarios económicos y muestra el filtro normativo: una hipótesis fuera de la política vigente no se presenta como cartera ejecutable autorizada.
 
-## Supuestos técnicos del asistente
+El curso exige FEES y FRP; esta etapa solo aborda FEES. La referencia sigue cubriendo el bloque USD de 69% de la asignación. Europa 19%, Japón 9% y China 3% no se replican. Sus exposiciones se suponen iguales entre escenarios, pero no se inventan retornos ni métricas del fondo completo.
 
-Estos supuestos se fijaron en `config.json` antes de calcular resultados. Son propuestas de trabajo autorizadas para desarrollar el análisis, no decisiones ya revisadas por el equipo.
+## Cinco carteras
 
-| Decisión | Especificación y razón |
-| --- | --- |
-| Regla de referencia | Política publicada como vigente en Hacienda al 8/11/2026; asignación corroborada en composición de septiembre de 2026. |
-| Cobertura del análisis | Bloque USD de 69% del fondo, normalizado a 100 para sus métricas. Faltan Europa 19%, Japón 9% y China 3%. No es una réplica del FEES. |
-| Historia | Descargar desde diciembre de 2013 para obtener retornos desde enero de 2014. Muestra principal enero de 2020 a octubre de 2026. Se excluye noviembre incompleto. |
-| Frecuencia | Cierres mensuales ajustados, retornos simples entre cierres. Riesgo y medias se anualizan con 12 meses. |
-| Referencia proxy | 10% BIL, 40% dividido en tercios entre SHY/IEI/IEF, 4% STIP y 15% MBB, sobre el fondo total. Para el bloque, dividir por 69%. |
-| Escenarios | Transferir 1, 2 o 4 pp del fondo desde IEF hacia SHY. Mantener 40% Treasury, 10% letras, 4% TIPS y 15% MBS. No se optimizan pesos ni fechas. |
-| Rebalanceo | Mensual al inicio de cada período. Sin flujos fiscales. La norma oficial tiene otro calendario: al menos anual sin flujos y cuando Hacienda instruye por aportes o retiros. |
-| Costos | 5 pb por dólar transado, sumando compras y ventas sin dividir por dos; compra inicial incluida. Sensibilidad 0 y 10 pb. Gastos internos de ETFs ya están en el ajuste de precios. |
-| Correlación | SPY contra SHY, IEI, IEF y MBB; ventanas móviles de 12 meses y subperíodos 2014–2019, 2020–2021, 2022 y 2023–corte. |
-| Incertidumbre | Bootstrap pareado circular con bloques de 3, 6 y 12 meses, 2.000 repeticiones y semilla fija. Intervalos individuales para diferencias de medias, no de CAGR. |
-| Cumplimiento | Preservar pesos estratégicos no certifica cumplimiento. El TE proxy histórico es un filtro descriptivo. Faltan índices licenciados y modelo ex ante del custodio. |
+Los cambios se expresan como puntos porcentuales sobre el FEES completo. Los cálculos del bloque dividen los pesos de activos por 0,69.
 
-## Proxies y fuentes
+| Cartera | Diseño propuesto por el asistente | Estado normativo |
+| --- | --- | --- |
+| Referencia | BIL 10%, Treasury 40% en tercios SHY/IEI/IEF, STIP 4%, MBB 15% | Proxy de asignación, no réplica ni elegibilidad certificada |
+| H1 Más letras | Mover 10 pp de IEF a BIL | Cambia letras a 20% y Treasury a 30%; requiere cambiar asignación y evaluar riesgo |
+| H2 Puts de cobre | Mantener la base y comprar puts mensuales de nocional 10%, strike 95%, pagadas con BIL | Instrumento fuera de la política consultada; resultado teórico |
+| H3 Treasury corto | Mover 2 pp de IEF a SHY | Conserva clases; cumplimiento ex ante no verificado |
+| H4 Menos MBS | Mover 5 pp de MBB a BIL: MBS 10%, letras 15% | Cambia el 15% estratégico MBS |
 
-| Serie | Exposición o unidad | Desajuste frente al FEES | Fuente del instrumento |
-| --- | --- | --- | --- |
-| BIL | Letras Treasury 1–3 meses | Índice y gastos distintos de ICE BofA; no es efectivo bancario | [State Street BIL](https://www.ssga.com/us/en/individual/etfs/state-street-spdr-bloomberg-1-3-month-t-bill-etf-bil) |
-| SHY | Treasuries 1–3 años | Tramo de curva, no índice 1–10 completo | [iShares SHY](https://www.ishares.com/us/products/239452/ishares-13-year-treasury-bond-etf) |
-| IEI | Treasuries 3–7 años | Tramo intermedio; peso equiponderado supuesto | [iShares IEI](https://www.ishares.com/us/products/239455/ishares-37-year-treasury-bond-etf) |
-| IEF | Treasuries 7–10 años | Tramo largo del universo elegible | [iShares IEF](https://www.ishares.com/us/products/239456/ishares-710-year-treasury-bond-etf) |
-| STIP | TIPS 0–5 años | El comparador FEES es 1–10: duración y madurez distintas | [iShares STIP](https://www.ishares.com/us/products/239450/ishares-tips-bond-etf) |
-| MBB | MBS de agencias EE.UU. | Gastos, muestreo y gestión del ETF distintos del mandato del FEES | [iShares MBB](https://www.ishares.com/us/products/239465/ishares-mbs-etf) |
-| SPY | Acciones S&P 500 | Diagnóstico externo; nunca forma parte de las carteras | [State Street SPY](https://www.ssga.com/us/en/individual/etfs/spdr-sp-500-etf-trust-spy) |
-| CLP=X | Pesos chilenos por USD | Cotización de mercado Yahoo, no dólar observado oficial. Horarios y días pueden diferir | [Yahoo USD/CLP](https://finance.yahoo.com/quote/CLP=X/) |
-| DGS2 y DGS10 | Tasas Treasury anualizadas en %, diarias | Solo contexto. No son índices de retorno total | [FRED DGS2](https://fred.stlouisfed.org/series/DGS2), [DGS10](https://fred.stlouisfed.org/series/DGS10) |
+H1 traduce la inquietud sobre correlación en menor exposición a bonos largos y más letras. Es una operacionalización del asistente, no una cartera definida expresamente por el usuario. SPY sigue siendo solo diagnóstico; no se añaden acciones al FEES. H1 cambia la clase asignada, mientras H3 cambia el tramo de madurez manteniendo 40% Treasury.
 
-Los cierres ajustados se descargan desde Yahoo chart con datos diarios y eventos de distribución. Los CSV conservan cierre, ajustado y dividendo por fecha; los JSON conservan la respuesta original. Se contrasta cada retorno ajustado con `(cierre + distribución) / cierre anterior − 1`. Yahoo ya ajusta cierre y distribuciones por splits. BIL tiene un reverse split en 2017 y no se aplica por segunda vez. Se exige discrepancia máxima menor a 10 pb diarios y se publican los errores observados.
+Los parámetros son supuestos exploratorios, no estimaciones óptimas ni decisiones ya revisadas por el equipo. Se conocía la historia de los ETF al corregir el diseño. Por eso no se presenta como una preregistración ni validación fuera de muestra.
 
-No se interpola ningún ETF. Se exige el mismo calendario para todos y observaciones mensuales completas hasta el corte, con última cotización a no más de siete días del fin de mes. FX conserva días sin cotización como NA y usa el último cierre observado de cada mes con la misma restricción de antigüedad. FRED conserva NA por días sin tasa. No se rellenan con ceros ni se usan como retornos.
+## Datos
 
-La columna `ajustado` puede reflejar ajustes del proveedor por distribuciones posteriores al corte en su escala. Se calculan razones entre fechas dentro del corte; no se usan valores absolutos para decidir. La selección retrospectiva de instrumentos, la política de 2023 aplicada desde 2020 y las hipótesis motivadas por datos recientes mantienen sesgo de selección.
+| Series | Uso | Limitación |
+| --- | --- | --- |
+| BIL, SHY, IEI, IEF, STIP, MBB | Letras, tres tramos Treasury, TIPS y MBS; cierre ajustado Yahoo | No replican exactamente los índices oficiales. STIP es 0–5 años frente a TIPS oficial 1–10. Los tercios Treasury son supuestos. |
+| SPY | Correlación con bonos | Diagnóstico externo, nunca pesa en carteras |
+| HG=F | Cierre diario continuo del cobre para el modelo | Puede cambiar de contrato entre fechas; no es un futuro identificado ni retorno de una posición negociable |
+| DGS1MO | Proxy de tasa anual de descuento para la put | Tasa cotizada Treasury aproximada como continua; no es retorno de inversión |
+| DGS2, DGS10 | Contexto de tasas | No se convierten sus variaciones en retornos |
+| CLP=X | Conversión ilustrativa USD/CLP | Cotización Yahoo distinta del dólar observado oficial y con otro horario |
 
-## Alcance de las conclusiones
+Se descargan datos desde diciembre de 2013 hasta octubre de 2026. La muestra principal tiene 82 meses, enero de 2020 a octubre de 2026. La correlación anterior a 2020 usa 2014–2019. Para comparar las cinco carteras en un período anterior se usa 2015–2019, con suficiente calentamiento de volatilidad del cobre.
 
-La correlación positiva es una propiedad de la muestra y del instrumento. No demuestra que todos los bonos hayan dejado de diversificar. La necesidad del FEES es disponer de recursos en CLP cuando el Fisco los necesita. Evaluarla por completo requiere retiros, exposición a ingresos fiscales, moneda y cartera global, que aquí no se modelan.
+Los ETF conservan las descargas congeladas de la primera versión. Se añadieron HG=F y DGS1MO sin reemplazarlas. Los JSON originales, CSV, URLs y hashes están en `data/`. No se rellenan precios de ETF ni se inventan primas. Las fechas ETF deben coincidir y cada mes exige un cierre observado a no más de siete días del fin de mes. FX, cobre y tasas conservan sus calendarios propios, sin interpolación.
 
-El TE de los escenarios se aproxima con `std(retorno SHY − retorno IEF) × sqrt(12) × traspaso / 0.85`. La división por 85% corresponde al bloque soberano administrado por el Banco Central. El 69% solo normaliza el bloque USD para sus métricas. No intercambiar esos denominadores. El cálculo omite el error de réplica contra el benchmark oficial; por eso ni siquiera un resultado inferior a 25 pb certifica elegibilidad.
+Yahoo ya ajusta cierres y distribuciones por splits. Se valida el retorno ajustado con cierre más distribución; BIL tuvo un reverse split en 2017 y no se aplica dos veces. Los cocientes de ajustados aproximan distribuciones reinvertidas, netas de gastos internos del ETF.
 
-El bootstrap no elimina el diseño dentro de muestra. Los intervalos no se corrigen por pruebas múltiples y no permiten declarar un ganador. La sensibilidad temporal y de costos muestra cuánto depende el resultado del régimen, sin transformar el ejercicio en una estrategia validada para el futuro.
+## Prima y financiación de puts
+
+La cartera H2 es una simulación paramétrica de opciones europeas hipotéticas sobre el proxy continuo. No se descargaron primas históricas observadas por contrato, strike y vencimiento. Las especificaciones negociables de COMEX no se reemplazan por estos supuestos.
+
+Para cada mes se usa el precio al cierre del mes anterior como futuro inicial F, strike K = 0,95 × F y plazo T = 1/12. La volatilidad histórica usa los últimos 63 cambios logarítmicos diarios disponibles a ese cierre, anualizados con raíz de 252. Se multiplica por 1,25 para la volatilidad de valoración. Ese incremento de 25% es un supuesto, no una observación de volatilidad implícita. Se usa la última DGS1MO del mes anterior, dividida por 100.
+
+La prima se calcula con [Black (1976)](https://doi.org/10.1016/0304-405X(76)90024-6):
+
+```text
+d1 = [ln(F/K) + 0,5 × sigma² × T] / [sigma × raíz(T)]
+d2 = d1 − sigma × raíz(T)
+prima = exp(−rT) × [K × N(−d2) − F × N(−d1)]
+```
+
+Con h = 10% de nocional sobre el capital total hipotético, la prima relativa es `h × prima/F` y el pago relativo es `h × max(K − F_final, 0)/F`. Se asumen cantidades fraccionarias; no se redondea a contratos enteros de 25.000 libras. No se mantiene una posición descubierta en futuros.
+
+La fricción adicional es 10% de la prima, supuesto separado de los 5 pb por dólar transado en ETF. Prima y fricción salen de BIL, con lo que dejan de ganar el retorno de letras durante el mes. El pago al vencimiento se suma a BIL. El siguiente mes se rebalancea desde las tenencias efectivas, incluidos los pagos o pérdidas del seguro. El código rechaza primas que superen las letras disponibles y evita endeudamiento.
+
+El nocional se mide sobre el capital posterior al costo de rebalanceo de activos de ese mes. No es un peso de capital que se sume al 69%. El CSV `puts_auditoria.csv` muestra cada flujo y la diferencia final frente a la referencia. Con nocional cero se reproduce la cartera base, comprobado en pruebas.
+
+El cambio de vencimientos del proxy continuo puede crear o borrar pagos que no existirían en un contrato real. Tampoco se modelan ejercicio americano, entrega física, strikes negociados, estructura de volatilidad, spreads reales ni vencimientos oficiales. El modelo europeo no estima esos efectos. Sus retornos e intervalos no prueban desempeño histórico ejecutable de puts reales.
+
+## Comparación y sensibilidad
+
+Rebalanceo mensual a objetivos fijos y sin flujos fiscales. Costos de activos: 5 pb por dólar de compras más ventas, incluida la inversión inicial; sensibilidad 0 y 10 pb. No se divide el volumen por dos. El calendario es un supuesto del ejercicio: la norma oficial instruye rebalanceos por flujos y al menos uno anual sin ellos.
+
+Se reportan CAGR, volatilidad anualizada con raíz de 12, caída máxima desde cierres mensuales incluyendo capital inicial y peor mes. Se convierten las mismas cinco series a CLP. Para H1 y H3 se muestra el TE histórico incremental del mandato soberano, dividiendo el retorno activo por 85%. No es el TE ex ante del custodio ni incorpora error de réplica del índice.
+
+Para puts se calculan todas las 27 combinaciones de strikes 90/95/100%, multiplicadores de volatilidad 1/1,25/1,5 y nocionales 5/10/20%. Para MBS se muestran 10/15/20%, con la diferencia en BIL. No se elige un ganador para redefinir las carteras principales.
+
+El bootstrap pareado por bloques circulares usa 2.000 repeticiones, semilla 20261108 y bloques de 3, 6 y 12 meses. Sus intervalos son individuales para diferencias de medias mensuales multiplicadas por 12, no diferencias de CAGR. No corrigen pruebas múltiples, sesgo de diseño ni error de modelo de opciones.
+
+La protección fiscal del cobre requiere ingresos tributarios, producción y retiros del fondo, que aquí no se modelan. Una put puede pagar en meses de caída del cobre y aun así reducir el retorno promedio o aumentar pérdidas de la cartera financiera. Esa distinción forma parte de la conclusión.

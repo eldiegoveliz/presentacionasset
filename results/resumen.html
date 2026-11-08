@@ -1,15 +1,12 @@
-<!doctype html><html lang="es"><meta charset="utf-8">
-<style>:root{font-family:var(--font-sans)}body{margin:0;color:var(--foreground)}
-h3{font-size:17px;margin:0 0 8px}.nota{font-size:13px;color:var(--muted-foreground);line-height:1.5}
-.fila{display:grid;grid-template-columns:105px minmax(0,1fr) 52px;align-items:center;gap:10px;height:42px;font-size:14px}
-.fila strong{text-align:right;font-family:var(--font-mono);font-size:14px}
+<!doctype html><html lang="es"><meta charset="utf-8"><style>
+body{margin:0;color:var(--foreground);font-family:var(--font-sans)}h3{font-size:17px;margin:0 0 10px}
+.nota{font-size:13px;color:var(--muted-foreground);line-height:1.5}
+.fila{display:grid;grid-template-columns:170px minmax(0,1fr) 56px;align-items:center;gap:8px;height:43px;font-size:13px}
 .pista{position:relative;height:26px;background:var(--secondary);border-radius:var(--radius)}
 .cero{position:absolute;left:50%;height:100%;width:1px;background:var(--foreground);opacity:.4}
-.barra{position:absolute;top:4px;height:18px;border-radius:3px}
-.eje{margin:0 62px 8px 115px;display:flex;justify-content:space-between;font-size:11px;color:var(--muted-foreground)}
-</style><body><h3>Bonos y acciones: la relación cambió según el período</h3>
-<p class="nota">Correlación de retornos mensuales: Treasury 7–10 años (IEF) con S&amp;P 500 (SPY).</p>
-<div class="eje"><span>−1</span><span>0</span><span>+1</span></div><div class="fila"><span>2014-2019</span><div class="pista"><i class="cero"></i><i class="barra" style="left:33.09%;width:16.91%;background:var(--chart-2)"></i></div><strong>-0.34</strong></div><div class="fila"><span>2020-2021</span><div class="pista"><i class="cero"></i><i class="barra" style="left:31.33%;width:18.67%;background:var(--chart-2)"></i></div><strong>-0.37</strong></div><div class="fila"><span>2022</span><div class="pista"><i class="cero"></i><i class="barra" style="left:50.00%;width:30.34%;background:var(--chart-1)"></i></div><strong>+0.61</strong></div><div class="fila"><span>2023-corte</span><div class="pista"><i class="cero"></i><i class="barra" style="left:50.00%;width:22.01%;background:var(--chart-1)"></i></div><strong>+0.44</strong></div>
-<p class="nota">2023–corte termina en octubre de 2026. 2022 contiene solo 12 meses.
-Correlación positiva no demuestra ausencia total de diversificación. SPY no integra las carteras.
-Fuente: Yahoo, cálculos de analisis.py; results/correlaciones.csv.</p></body></html>
+.barra{position:absolute;top:4px;height:18px;background:var(--chart-1);border-radius:3px}
+strong{text-align:right;font-family:var(--font-mono)}
+</style><body><h3>Referencia y una cartera por hipótesis</h3>
+<p class="nota">Retorno compuesto anual del bloque USD (69% de la asignación), enero 2020–octubre 2026.</p><div class="fila"><span>Referencia proxy USD</span><div class="pista"><i class="cero"></i><i class="barra" style="left:50.0%;width:35.9%"></i></div><strong>1.27%</strong></div><div class="fila"><span>H1 Mas letras</span><div class="pista"><i class="cero"></i><i class="barra" style="left:50.0%;width:48.0%"></i></div><strong>1.69%</strong></div><div class="fila"><span>H2 Puts cobre (modelo)</span><div class="pista"><i class="cero"></i><i class="barra" style="left:21.4%;width:28.6%"></i></div><strong>-1.01%</strong></div><div class="fila"><span>H3 Treasury corto</span><div class="pista"><i class="cero"></i><i class="barra" style="left:50.0%;width:37.6%"></i></div><strong>1.33%</strong></div><div class="fila"><span>H4 Menos MBS</span><div class="pista"><i class="cero"></i><i class="barra" style="left:50.0%;width:40.4%"></i></div><strong>1.43%</strong></div><p class="nota">H2 usa primas teóricas y un proxy continuo de cobre.
+H1, H2 y H4 requieren cambios de política. Ninguna cartera tiene cumplimiento certificado.
+Fuente: analisis.py, results/metricas.csv.</p></body></html>

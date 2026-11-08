@@ -2,7 +2,20 @@
 
 Análisis exploratorio de las cuatro ideas del usuario: correlación bonos/acciones, puts de cobre, menor duración del Tesoro y peso de MBS. Las reglas oficiales están en [reglas-fees.md](docs/reglas-fees.md). Los resultados calculados están en [informe.md](results/informe.md).
 
-Las puts de cobre quedan excluidas y se conserva el 15% estratégico de MBS. Se comparan tres reducciones pequeñas de duración con una referencia proxy del **bloque USD, 69% de la asignación del FEES**. Los ETFs no replican el fondo completo ni constituyen instrumentos recomendados para su ejecución. El cumplimiento ex ante no puede certificarse con estas series públicas.
+Se comparan una referencia y **cuatro carteras distintas**, una por hipótesis:
+
+| Cartera | Cambio sobre la referencia |
+| --- | --- |
+| H1 Más letras | 10 pp desde Treasury 7–10 años hacia letras del Tesoro |
+| H2 Puts de cobre | Cobertura mensual, nocional 10%, strike 95%, prima pagada desde letras |
+| H3 Treasury corto | 2 pp desde Treasury 7–10 años hacia 1–3 años |
+| H4 Menos MBS | MBS baja de 15% a 10%; letras sube de 10% a 15% |
+
+H2 usa **primas teóricas de Black-76 y el proxy continuo HG=F**, no primas históricas observadas de contratos identificados. Se guardan prima, pago y financiación por mes; se prueban 27 combinaciones de supuestos. La sensibilidad de H4 incluye más MBS, con 20%.
+
+H1, H2 y H4 requieren cambios de política y se rotulan como simulaciones hipotéticas. La comparación conserva el filtro de admisibilidad: un resultado favorable no habilita ejecutarlas bajo las reglas actuales. H3 tampoco tiene cumplimiento ex ante certificado.
+
+La referencia cubre el **bloque USD, 69% de la asignación del FEES**. Faltan Europa, Japón y China. Los ETFs son proxies; no replican el retorno efectivo ni un portafolio ejecutable del fondo.
 
 ## Ejecutar localmente
 
@@ -16,7 +29,7 @@ python analisis.py
 python verificar.py
 ```
 
-En Windows, activar con `.venv\Scripts\activate` y usar `python` en lugar de `python3`. El análisis usa los CSV entregados: no llama a Yahoo ni a FRED. Genera tablas, cuatro gráficos y el mini informe en `results/`.
+En Windows, activar con `.venv\Scripts\activate` y usar `python` en lugar de `python3`. El análisis usa los CSV entregados: no llama a Yahoo ni a FRED. Genera tablas, cinco gráficos y el mini informe en `results/`.
 
 Para descargar nuevamente los datos hasta el corte fijo del 31 de octubre de 2026:
 
@@ -38,6 +51,14 @@ El notebook muestra el mismo código de análisis, dividido en funciones con exp
 python crear_notebook.py
 ```
 
+Para comprobarlo desde el ZIP en un kernel nuevo, con resultados previos eliminados:
+
+```bash
+python validar_notebook.py
+```
+
+Esta comprobación compara nueve salidas con el script, conserva el notebook ejecutado y actualiza el ZIP. Usa el entorno Python instalado y no descarga precios.
+
 Para preparar el ZIP con código, datos, documentación y notebook:
 
 ```bash
@@ -53,9 +74,9 @@ python preparar_entrega.py
 | [Metodología](docs/metodologia.md) | Pesos, períodos, costos, proxies y decisiones del asistente que requieren revisión del equipo |
 | [Guía del código](docs/guia-codigo.md) | Qué hace cada cálculo y cómo explicarlo en la presentación |
 | `config.json` | Supuestos fijados antes de comparar resultados |
-| `datos.py` | Descargas, CSV, originales Yahoo y metadatos |
+| `datos.py` | Descargas de ETF, cobre y tasas, CSV, originales Yahoo y metadatos |
 | `analisis.py` | Retornos, carteras, métricas, bootstrap y mini informe |
-| `verificar.py` | Pruebas de cálculos, moneda, integridad y ejecución sin red |
+| `verificar.py` | Pruebas de cinco carteras, prima financiada, pagos, datos rezagados e integridad |
 | `data/raw/` y `data/metadatos.json` | Datos reproducibles, URLs, fechas y hashes SHA-256 |
 | `data/fuentes/` | PDF oficial y páginas de Hacienda guardadas |
 | [Registro de IA](docs/registro-ia.md) | Prompts, aportes, errores y verificaciones del asistente |

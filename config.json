@@ -5,7 +5,15 @@
   "etfs": ["BIL", "SHY", "IEI", "IEF", "STIP", "MBB", "SPY"],
   "tipo_cambio": "CLP=X",
   "pesos_fondo_usd": {"BIL": 0.10, "SHY": 0.13333333333333333, "IEI": 0.13333333333333333, "IEF": 0.13333333333333333, "STIP": 0.04, "MBB": 0.15},
-  "traspasos_ief_a_shy": {"Referencia proxy USD": 0.0, "Duracion -1 pp": 0.01, "Duracion -2 pp": 0.02, "Duracion -4 pp": 0.04},
+  "cobre": "HG=F",
+  "carteras": [
+    {"nombre": "Referencia proxy USD", "hipotesis": "Referencia", "tipo": "referencia", "origen": null, "destino": null, "traspaso": 0.0},
+    {"nombre": "H1 Mas letras", "hipotesis": "1. Menor dependencia de bonos largos", "tipo": "liquidez", "origen": "IEF", "destino": "BIL", "traspaso": 0.10},
+    {"nombre": "H2 Puts cobre (modelo)", "hipotesis": "2. Cobertura con puts de cobre", "tipo": "puts", "origen": null, "destino": null, "traspaso": 0.0},
+    {"nombre": "H3 Treasury corto", "hipotesis": "3. Menor duracion Treasury", "tipo": "duracion", "origen": "IEF", "destino": "SHY", "traspaso": 0.02},
+    {"nombre": "H4 Menos MBS", "hipotesis": "4. Menor ponderacion MBS", "tipo": "mbs", "origen": "MBB", "destino": "BIL", "traspaso": 0.05}
+  ],
+  "puts": {"nocional_sobre_fondo": 0.10, "strike_sobre_futuro": 0.95, "plazo_anios": 0.08333333333333333, "ventana_vol_dias": 63, "multiplicador_vol": 1.25, "friccion_sobre_prima": 0.10},
   "costo_por_dolar_transado": 0.0005,
   "bootstrap_repeticiones": 2000,
   "semilla": 20261108

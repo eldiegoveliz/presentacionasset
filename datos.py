@@ -70,7 +70,7 @@ def bajar_yahoo(ticker, config):
     # analisis.py contrasta retornos diarios, incluido ese día, antes de usarlos.
     # FX conserva días sin cotización como NA; el análisis exige un cierre
     # observado a no más de 7 días del fin de mes. No interpola esos días.
-    faltantes_etf = ticker != config["tipo_cambio"] and tabla.isna().any().any()
+    faltantes_etf = ticker in config["etfs"] and tabla.isna().any().any()
     if faltantes_etf or tabla.index.has_duplicates or (tabla[["cierre", "ajustado"]] <= 0).any().any():
         raise ValueError(f"Datos faltantes, duplicados o precios inválidos en {ticker}.")
     return tabla, r.content, r.url
@@ -89,7 +89,7 @@ def descargar(actualizar=False):
                 raise ValueError(f"Caché alterada: {archivo}. Restaure los archivos o use --actualizar.")
     registros = anterior.get("archivos", {})
     momento = datetime.now(timezone.utc).isoformat()
-    for ticker in config["etfs"] + [config["tipo_cambio"]]:
+    for ticker in config["etfs"] + [config["tipo_cambio"], config["cobre"]]:
         ruta = carpeta / f"{ticker}.csv"
         if ruta.exists() and ticker in registros and not actualizar:
             print(f"Caché: {ticker}")
@@ -103,7 +103,7 @@ def descargar(actualizar=False):
                               "filas": len(tabla), "cierres_faltantes": int(tabla.cierre.isna().sum())}
         print(f"Descargado: {ticker}, {len(tabla)} observaciones")
         ruta_manifiesto.write_text(json.dumps({"archivos": registros}, indent=2))
-    for serie in ("DGS2", "DGS10"):
+    for serie in ("DGS1MO", "DGS2", "DGS10"):
         ruta = carpeta / f"{serie}.csv"
         if ruta.exists() and serie in registros and not actualizar:
             print(f"Caché: {serie}")
