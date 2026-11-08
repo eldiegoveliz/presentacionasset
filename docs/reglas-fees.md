@@ -26,7 +26,7 @@ Fuente: directrices, sección II.2.1, tabla 1, página 9. El anexo A, página 11
 
 Europa excluye Luxemburgo del subíndice Aaa, y Estonia e Irlanda del Aa; ambos se agregan por capitalización relativa. La tabla del anexo A identifica el componente estadounidense como Bloomberg US Treasury Intermediate, `LT08TRUU`; el índice TIPS como `LTI1TRUU`. La página web y el cuerpo del oficio emplean nombres distintos de los del anexo. Se conservan esas denominaciones, sin afirmar una equivalencia exacta no comprobada de proveedores.
 
-El 81% nominal, 4% indexado y 15% MBS aparece también en la web. Para administración, el bloque soberano incluye TIPS y suma **85%**, gestionado por el Banco Central; MBS corresponde a administradores externos. No confundir el 15% de MBS con un límite máximo opcional: es la asignación de referencia.
+El 81% nominal, 4% indexado y 15% MBS aparece también en la web. Para administración, el bloque soberano incluye TIPS y suma **85%**, gestionado por el Banco Central; MBS corresponde a administradores externos. El 15% de MBS es la asignación de referencia. Los informes anuales 2023 y 2024 publican además una banda 13%–17%, descrita abajo; esta comprobación corrige la afirmación inicial del asistente de que no había una banda publicada.
 
 La [composición efectiva publicada para septiembre de 2026](https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/fondo-de-estabilizacion-economica-y-social/informacion-financiera/composicion-actual) informa 81,0%, 4,0% y 15,0%, respectivamente. Reporta duraciones de 3,4, 4,4 y 5,6 años, y 3,8 años para el total. Estos datos de un cierre no son límites normativos ni una historia de duración. No se usan como información disponible para decisiones en 2020.
 
@@ -50,15 +50,29 @@ La [composición efectiva publicada para septiembre de 2026](https://www.haciend
 
 Este resumen recoge las reglas necesarias para el ejercicio, no sustituye el PDF ni constituye una auditoría de todos los límites operativos.
 
-## Tratamiento de las cuatro carteras
+## Bandas publicadas y rebalanceos
 
-La aclaración posterior del usuario exige simular una cartera por hipótesis. Se amplía el ejercicio económico sin reinterpretar los permisos legales del fondo. El filtro de esta tabla determina qué sería ejecutable bajo las reglas actuales, aunque todas las hipótesis se calculen.
+El [informe anual 2024](https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/informe-anual/informe-anual-fondos-soberanos-2024), página 33, cuadro 3, publica renta fija soberana 85% con rango 83%–87% y MBS 15% con rango 13%–17%. Indica converger ante aportes/retiros o cuando una clase sobrepasa ±2 pp durante treinta días consecutivos. El informe anual 2023, página 32, publica la misma banda. Se conserva una copia de la página 33 en `data/fuentes/fees_anual2024_p33.pdf`.
 
-| Cartera | Estado bajo las reglas publicadas | Tratamiento en el código |
+La pauta enlazada como vigente, oficio 1085/2023, sección II.5, página 9, describe rebalanceos por flujos y al menos anuales sin ellos, pero no incluye esa banda en el apartado leído. Las fuentes no tienen idéntico contenido. No se presume una autorización operativa ni se reemplaza la pauta completa por un resumen del informe anual. El análisis documenta ambas fuentes y no certifica cumplimiento ex ante.
+
+La afirmación anterior de que no existían bandas publicadas era demasiado fuerte y fue corregida. Un peso MBS de 10% o 20% permanece fuera de 13%–17%, mientras 13% o 17% no equivale por sí solo a una orden autorizada: importan gestión pasiva, riesgo, instrumentos y reglas de rebalanceo.
+
+## Estado de las estrategias actuales
+
+El usuario autorizó evaluar económicamente FEES, cuatro alternativas y una quinta combinación. Las estrategias actuales usan el FEES observado completo como núcleo, para no mezclar un fondo completo con proxies del 69%.
+
+| Estrategia | Qué se simula | Estado normativo |
 | --- | --- | --- |
-| H1 Más letras | Subir letras de 10% a 20% y reducir Treasury de 40% a 30% cambia la asignación estratégica; TE ex ante también pendiente. | Se simula como alternativa de política, no como una desviación automáticamente permitida. Acciones siguen con peso cero. |
-| H2 Puts de cobre | Incompatible con las listas de instrumentos elegibles consultadas. Futuros de tasas o monedas no autorizan opciones de materias primas. | Se incorpora una simulación de puts europeas con primas teóricas, financiadas desde letras. Estado fuera de política visible. No se presume autorización ni se inventan primas observadas. |
-| H3 Treasury corto | Elegibilidad por madurez puede ser posible, pero exige gestión pasiva y TE ex ante. | Se conserva el 40% Treasury y el resto de clases. Cumplimiento de la cartera proxy no certificado. |
-| H4 Menos MBS | Reducir 15% estratégico a 10% cambia la asignación. Subirlo a 20% en sensibilidad también. | Se simulan ambos sentidos, con la diferencia financiada por letras, y se marcan como cambios hipotéticos de política. |
+| FEES histórico | Rentabilidades oficiales, con políticas y operaciones de su propia fecha | Observado, no reconstrucción ni certificación de holdings |
+| H1 Más letras | 90% FEES + 10% BIL | Cambia exposición agregada y divisas; instrumentos y TE ex ante no verificados |
+| H2 Puts largas | Put sintética de 12 meses sobre cobre, financiada vendiendo FEES | Fuera de la lista de instrumentos elegibles consultada; primas y futuro teóricos |
+| H3 Treasury corto | 80% FEES + 20% SHY | Cambia composición del fondo; no conserva automáticamente cada peso estratégico ni presupuesto ex ante |
+| H4 Más MBS | 90% FEES + 10% MBB | Aumenta exposición MBS; puede sobrepasar la banda según la composición del núcleo |
+| H5 | Asignación de presupuesto entre las cinco estrategias | Hereda exposiciones y restricciones; optimización económica no autoriza su ejecución |
 
-Los ETFs no aparecen como tales en la lista de instrumentos elegibles. Son proxies estadísticos y no órdenes para el FEES. La simulación no modifica ninguna regla real ni recomienda ejecutar carteras fuera de las directrices actuales.
+La sensibilidad de reducción MBS desde diciembre de 2023 es atribución marginal con proxies, no una réplica observada o certificada. No se usan exposiciones MBS negativas en períodos donde el fondo no había incorporado esa clase.
+
+El FEES incluyó acciones antes del fin de la gestión de UBS el 27 de septiembre de 2021; comenzó MBS el 2 de noviembre de 2023, según notas de sus informes. El análisis no reescribe ese pasado como una cartera que siempre fue solo bonos.
+
+Los ETFs son proxies y no órdenes recomendadas para el FEES. El cálculo histórico de una mezcla, incluso favorable, no verifica TE ex ante, liquidez ejecutable, instrumentos elegibles, reglas de deuda ni autorizaciones ministeriales.

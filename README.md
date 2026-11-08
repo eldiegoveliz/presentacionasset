@@ -1,25 +1,27 @@
-# FEES: datos, reglas y análisis reproducible
+# FEES: protección anticíclica en pesos
 
-Análisis exploratorio de las cuatro ideas del usuario: correlación bonos/acciones, puts de cobre, menor duración del Tesoro y peso de MBS. Las reglas oficiales están en [reglas-fees.md](docs/reglas-fees.md). Los resultados calculados están en [informe.md](results/informe.md).
+El análisis compara el FEES histórico observado, cuatro alternativas y una quinta mezcla optimizada. La pregunta es cuánto poder adquisitivo conserva el fondo durante contracciones del PIB chileno. El usuario delimitó el alcance a FEES; FRP queda fuera de este trabajo.
 
-Se comparan una referencia y **cuatro carteras distintas**, una por hipótesis:
+[Informe generado](results/informe.md) · [Notebook](notebooks/fees.ipynb) · [Reglas y fuentes](docs/reglas-fees.md) · [Guía del código](docs/guia-codigo.md)
 
-| Cartera | Cambio sobre la referencia |
+## Carteras y objetivo
+
+| Estrategia | Construcción |
 | --- | --- |
-| H1 Más letras | 10 pp desde Treasury 7–10 años hacia letras del Tesoro |
-| H2 Puts de cobre | Cobertura mensual, nocional 10%, strike 95%, prima pagada desde letras |
-| H3 Treasury corto | 2 pp desde Treasury 7–10 años hacia 1–3 años |
-| H4 Menos MBS | MBS baja de 15% a 10%; letras sube de 10% a 15% |
+| FEES histórico | Retornos oficiales mensuales netos de Hacienda, 2014–septiembre 2026 |
+| H1 Más letras | 90% FEES y 10% BIL, rebalanceo anual |
+| H2 Puts largas | FEES con puts teóricas de 12 meses, nocional 10%, financiadas vendiendo parte del FEES |
+| H3 Treasury corto | 80% FEES y 20% SHY, rebalanceo anual |
+| H4 Más MBS | 90% FEES y 10% MBB, rebalanceo anual; sensibilidad de reducción MBS posterior a su introducción |
+| H5 Mezcla optimizada | Asigna presupuesto entre FEES y H1–H4; pesos suman 100%, sin cortos ni deuda |
 
-H2 usa **primas teóricas de Black-76 y el proxy continuo HG=F**, no primas históricas observadas de contratos identificados. Se guardan prima, pago y financiación por mes; se prueban 27 combinaciones de supuestos. La sensibilidad de H4 incluye más MBS, con 20%.
+H5 maximiza el peor retorno trimestral real en CLP durante contracciones del PIB, buscando en pasos de 5%. Se permite concentrar una estrategia sin puts en lugar de forzar una mezcla; se conserva como sensibilidad un mínimo de 20% FEES explícito y máximo de 60% por estrategia. Los pesos finales describen una decisión posterior a la muestra. La curva histórica de H5 usa elecciones anteriores a cada año, con al menos 90 días de rezago para el PIB. Las estrategias comparten el núcleo FEES: sus pesos no representan cinco activos independientes.
 
-H1, H2 y H4 requieren cambios de política y se rotulan como simulaciones hipotéticas. La comparación conserva el filtro de admisibilidad: un resultado favorable no habilita ejecutarlas bajo las reglas actuales. H3 tampoco tiene cumplimiento ex ante certificado.
+Las puts se valoran mensualmente manteniendo contrato sintético, strike y cantidad hasta vencer. No se dispone de primas ni curvas históricas de contratos COMEX identificados. Se conserva el riesgo de base del proxy continuo usado para construir el futuro sintético. La simulación no certifica ejecutabilidad ni cumplimiento de las directrices.
 
-La referencia cubre el **bloque USD, 69% de la asignación del FEES**. Faltan Europa, Japón y China. Los ETFs son proxies; no replican el retorno efectivo ni un portafolio ejecutable del fondo.
+## Ejecutar sin APIs
 
-## Ejecutar localmente
-
-Se requiere Python 3.10 o posterior. Desde la carpeta del repositorio:
+Desde esta carpeta, con Python 3.10 o posterior:
 
 ```bash
 python3 -m venv .venv
@@ -27,59 +29,44 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 python analisis.py
 python verificar.py
-```
-
-En Windows, activar con `.venv\Scripts\activate` y usar `python` en lugar de `python3`. El análisis usa los CSV entregados: no llama a Yahoo ni a FRED. Genera tablas, cinco gráficos y el mini informe en `results/`.
-
-Para descargar nuevamente los datos hasta el corte fijo del 31 de octubre de 2026:
-
-```bash
-python datos.py --actualizar
-python analisis.py
-python verificar.py
-```
-
-`python datos.py` usa la caché cuando existe. `--actualizar` reemplaza los archivos y su manifiesto. Se requiere acceso público a Yahoo y FRED, sin claves. Si una API falla, el análisis sigue disponible con los datos entregados; no se crean series artificiales. Las descargas pueden revisarse con el tiempo y cambiar cifras por redondeo o revisiones del proveedor.
-
-## Abrir el notebook en Colab
-
-Abrir [notebooks/fees.ipynb](notebooks/fees.ipynb) en Google Colab y ejecutar todas las celdas. La primera celda busca el proyecto local o descarga su archivo público desde la rama `analisis-fees`. También acepta `entrega_fees.zip` si se sube al runtime antes de ejecutar. No necesita claves ni carpetas privadas.
-
-El notebook muestra el mismo código de análisis, dividido en funciones con explicaciones económicas. La descarga de precios está separada: Colab usa los datos congelados incluidos. Para regenerar el notebook después de editar el análisis:
-
-```bash
-python crear_notebook.py
-```
-
-Para comprobarlo desde el ZIP en un kernel nuevo, con resultados previos eliminados:
-
-```bash
 python validar_notebook.py
 ```
 
-Esta comprobación compara nueve salidas con el script, conserva el notebook ejecutado y actualiza el ZIP. Usa el entorno Python instalado y no descarga precios.
+En Windows, activar con `.venv\Scripts\activate` y usar `python` en lugar de `python3`. El análisis usa los datos entregados. La última orden ejecuta el notebook en un kernel temporal desde el ZIP, elimina resultados previos y compara doce salidas con el script. También guarda el notebook ejecutado y actualiza `entrega_fees.zip`.
 
-Para preparar el ZIP con código, datos, documentación y notebook:
+## Datos oficiales y descargas
+
+- FEES: 153 retornos mensuales oficiales y saldo efectivo en USD. Se conserva la extracción de cada informe, URL, página y hash del PDF. Cada retorno se coteja contra la prosa del mismo informe.
+- Tipo de cambio: dólar observado diario BCCh, serie F073.TCO.PRE.Z.D. Se toma el último valor publicado disponible por mes; no se usa Yahoo CLP=X.
+- Ciclo e inflación: PIB real trimestral desestacionalizado BCCh, serie F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T, e IPC mensual BCCh con fuente INE. Se usan trimestres completos publicados, sin interpolar el PIB.
+- Satélites: cierres ajustados Yahoo BIL, SHY y MBB. Cobre HG=F y tasas FRED para la valoración teórica; volatilidad conocida al comprar.
+
+Para reproducir adquisición y extracción:
 
 ```bash
-python preparar_entrega.py
+python datos_oficiales.py
+python datos.py
 ```
 
-## Qué revisar
+Ambos usan caché. `python datos.py --actualizar --solo-cobre` amplía únicamente el cobre desde 2010 para el calentamiento de volatilidad. Una descarga nueva puede contener revisiones y exige repetir el análisis. No se necesitan claves ni GitHub Actions. Las páginas y extracciones oficiales están en `data/oficial/`; los PDF descargados completos se guardan en una caché local excluida de Git y del ZIP.
 
-| Archivo | Para qué sirve |
+Se detectó un enlace de Hacienda de julio 2016 que devolvía junio. El script utiliza el informe correcto de DIPRES y valida la portada. Los informes anuales 2023/2024 publican bandas MBS 13%–17%; esta información corrige la conclusión anterior de que no existían bandas publicadas.
+
+## Colab y archivos
+
+Abrir `notebooks/fees.ipynb` en Google Colab y ejecutar todo. La primera celda encuentra el proyecto local, acepta `entrega_fees.zip` subido al runtime o descarga la rama pública `analisis-fees`. No requiere rutas privadas ni llamadas a APIs de mercado para calcular resultados.
+
+| Archivo | Función |
 | --- | --- |
-| [Informe generado](results/informe.md) | Resultados, gráficos, incertidumbre y límites de las conclusiones |
-| [Reglas verificadas](docs/reglas-fees.md) | Mandato, pesos, restricciones y admisibilidad por hipótesis, con páginas oficiales |
-| [Metodología](docs/metodologia.md) | Pesos, períodos, costos, proxies y decisiones del asistente que requieren revisión del equipo |
-| [Guía del código](docs/guia-codigo.md) | Qué hace cada cálculo y cómo explicarlo en la presentación |
-| `config.json` | Supuestos fijados antes de comparar resultados |
-| `datos.py` | Descargas de ETF, cobre y tasas, CSV, originales Yahoo y metadatos |
-| `analisis.py` | Retornos, carteras, métricas, bootstrap y mini informe |
-| `verificar.py` | Pruebas de cinco carteras, prima financiada, pagos, datos rezagados e integridad |
-| `data/raw/` y `data/metadatos.json` | Datos reproducibles, URLs, fechas y hashes SHA-256 |
-| `data/fuentes/` | PDF oficial y páginas de Hacienda guardadas |
-| [Registro de IA](docs/registro-ia.md) | Prompts, aportes, errores y verificaciones del asistente |
-| [Encargo del curso](docs/encargo.md) | Requisitos oficiales y fechas |
+| `datos_oficiales.py` | Extraer FEES, dólar observado, PIB, IPC y saldo con trazabilidad |
+| `datos.py` | Descargar precios de mercado y tasas con caché |
+| `carteras.py` | Rebalanceo anual, puts largas y cálculos de riqueza |
+| `optimizacion.py` | Rejilla de pesos, simulación anual y elección temporal |
+| `analisis.py` | Unir datos, evaluar contracciones, generar gráficos e informe |
+| `config.json` | Pesos, costos y límites del experimento |
+| `crear_notebook.py` | Mostrar los mismos tres módulos de cálculo en el notebook |
+| `verificar.py` | Verificar datos oficiales y cálculos económicos |
+| `validar_notebook.py` | Probar una ejecución completa en kernel nuevo |
+| `preparar_entrega.py` | Crear el ZIP sin Git, entorno, secretos ni caché de PDF |
 
-Este trabajo aborda el FEES parcialmente. El encargo académico completo también exige analizar el FRP. La revisión del equipo, el memo final y las firmas siguen pendientes. El [traspaso anterior](docs/traspaso-anterior.md) se conserva como antecedente, no como instrucciones de ejecución vigentes.
+Los resultados anteriores de la proxy parcial de 69% fueron retirados para evitar confusiones; se conservan en el historial Git. El memo académico, la revisión del equipo y sus firmas siguen pendientes. El informe explica que el PIB es revisado y que una mejora pequeña no demuestra protección anticíclica futura.

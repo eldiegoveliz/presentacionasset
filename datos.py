@@ -76,7 +76,7 @@ def bajar_yahoo(ticker, config):
     return tabla, r.content, r.url
 
 
-def descargar(actualizar=False):
+def descargar(actualizar=False, solo_cobre=False):
     config = leer_config()
     carpeta = RAIZ / "data/raw"
     carpeta.mkdir(parents=True, exist_ok=True)
@@ -89,12 +89,14 @@ def descargar(actualizar=False):
                 raise ValueError(f"Caché alterada: {archivo}. Restaure los archivos o use --actualizar.")
     registros = anterior.get("archivos", {})
     momento = datetime.now(timezone.utc).isoformat()
-    for ticker in config["etfs"] + [config["tipo_cambio"], config["cobre"]]:
+    tickers = [config["cobre"]] if solo_cobre else config["etfs"] + [config["tipo_cambio"], config["cobre"]]
+    for ticker in tickers:
         ruta = carpeta / f"{ticker}.csv"
         if ruta.exists() and ticker in registros and not actualizar:
             print(f"Caché: {ticker}")
             continue
-        tabla, original, url = bajar_yahoo(ticker, config)
+        cfg_serie = dict(config, inicio_descarga="2010-01-01") if ticker == config["cobre"] else config
+        tabla, original, url = bajar_yahoo(ticker, cfg_serie)
         (carpeta / f"{ticker}.json").write_bytes(original)
         tabla.to_csv(ruta, float_format="%.12g")
         registros[ticker] = {"fuente": "Yahoo Finance chart", "url": url, "descarga_utc": momento,
@@ -103,7 +105,7 @@ def descargar(actualizar=False):
                               "filas": len(tabla), "cierres_faltantes": int(tabla.cierre.isna().sum())}
         print(f"Descargado: {ticker}, {len(tabla)} observaciones")
         ruta_manifiesto.write_text(json.dumps({"archivos": registros}, indent=2))
-    for serie in ("DGS1MO", "DGS2", "DGS10"):
+    for serie in ([] if solo_cobre else config["series_fred"]):
         ruta = carpeta / f"{serie}.csv"
         if ruta.exists() and serie in registros and not actualizar:
             print(f"Caché: {serie}")
@@ -113,7 +115,8 @@ def descargar(actualizar=False):
         r = pedir("https://fred.stlouisfed.org/graph/fredgraph.csv", {"id": serie})
         tabla = pd.read_csv(io.StringIO(r.text), index_col=0, parse_dates=True, na_values=["."])
         tabla.index.name = "fecha"
-        tabla = tabla.loc[config["inicio_descarga"]:config["corte"]]
+        inicio = "2010-01-01" if serie == "PCOPPUSDM" else config["inicio_descarga"]
+        tabla = tabla.loc[inicio:config["corte"]]
         tabla[serie] = pd.to_numeric(tabla[serie], errors="raise")
         tabla.to_csv(ruta)
         registros[serie] = {"fuente": "FRED", "url": r.url, "descarga_utc": momento,
@@ -131,4 +134,6 @@ def descargar(actualizar=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--actualizar", action="store_true", help="Reemplazar explícitamente la descarga guardada")
-    descargar(parser.parse_args().actualizar)
+    parser.add_argument("--solo-cobre", action="store_true", help="Ampliar solo el cobre, preservando los demás datos")
+    args = parser.parse_args()
+    descargar(args.actualizar, args.solo_cobre)

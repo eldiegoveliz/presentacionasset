@@ -1,0 +1,1849 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html class="ltr notranslate" dir="ltr" lang="es-CL" translate="no">
+<head>
+    <meta charset="utf-8" />
+    <meta name="google" content="notranslate" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta content="initial-scale=1.0, width=device-width" name="viewport" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Base de Datos Estad&#237;sticos (BDE) </title>
+
+    <link rel="shortcut icon" href="/Siete/favicon.ico" />
+
+    <link rel="stylesheet" href="/Siete/Includes/jquery-ui-1.13.2/jquery-ui.min.css">
+    <link rel="stylesheet" href="/Siete/Includes/css/custom.min.css">
+    <link rel="stylesheet" href="/Siete/Includes/bootstrap-table-1.16/bootstrap-table.min.css">
+    <link rel="stylesheet" href="/Siete/Includes/bootstrap-table-1.16/extensions/fixed-columns/bootstrap-table-fixed-columns.min.css">
+    <link rel="stylesheet" href="/Siete/Includes/datepicker/bootstrap-datepicker.min.css">
+
+    <link href="/Siete/Includes/css/base.css" rel="stylesheet"/>
+<link href="/Siete/Includes/css/app.css" rel="stylesheet"/>
+<link href="/Siete/Includes/datatables/datatables.min.css" rel="stylesheet"/>
+
+
+    <link rel="stylesheet" href="/Siete/Includes/css/fontawesome-5.9.0/css/all.min.css">
+
+    <link rel="stylesheet" href="/Siete/Includes/css/bcch/cssv2.css">
+    <link rel="stylesheet" href="/Siete/Includes/js/slick/slick.css">
+    <link rel="stylesheet" href="/Siete/Includes/js/slick/slick-theme.css">
+    <link rel="stylesheet" href="/Siete/Includes/css/ux.css">
+
+
+
+
+    <script>
+        var ExceptionPages = {
+            Default: '/Exception',
+            ExceptionPage400: '/ES/Exception/Error400',
+            ExceptionPage403: '/ES/Exception/Error403',
+            ExceptionPage404: '/ES/Exception/Error404',
+            ExceptionPage500: '/ES/Exception/Error500'
+        }
+
+        var Labels = {
+            _aceptar: "Aceptar",
+            _cancelar: "Cancelar",
+        }
+
+        var Config = {
+            SeparadorDecimales: ",",
+            SeparadorMiles: ".",
+            HomeSistemas: "https://si3.bcentral.cl/siete/",
+            IntMaxValue: parseInt("2147483647"),
+            IntMinValue: parseInt("-2147483648"),
+            lngDate: "es",
+            formatDate: "dd-mm-yyyy"
+
+        }
+    </script>
+
+    <style>
+
+        .x-icon-loading
+        {
+          width: 32px; height: 32px;
+          background-image: url('https://si3.bcentral.cl/siete/Includes/css/images/ajax-loader_2.gif');
+          display: inline-block;
+        }
+
+    </style>
+    <!-- Google Tag Manager -->
+    <script>
+            (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-K4X5MWB');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ldk7hstAAAAADUEovM6RfhoAw1qcSxKLIRIaYWV" async defer></script>
+
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4X5MWB"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+
+    <div class="topBar">
+        <ul class="ar">
+            
+            <li><a href="https://si3.bcentral.cl/Siete/es/Siete/API?respuesta=" target="_blank">API BDE</a></li>
+            <li class="separa">|</li>
+            <li><a href="https://www.bcentral.cl/es" name="homeBCCh">Web BCCh</a></li>
+            <li class="separa">|</li>
+            <li><a href="javascript:void(0)" onclick="ChangeLang()">English</a></li>
+            <li class="separa">|</li>
+            <li><a href="https://contactocentral.bcentral.cl/" target="_blank">Cont&#225;ctenos</a></li>
+            <li class="separa">|</li>
+            <li><a target="_blank" href="https://si3.bcentral.cl/estadisticas/Principal1/enlaces/aplicaciones/index.html">Glosario</a></li>
+            <li class="separa">|</li>
+            <li><a target="_blank" href="https://si3.bcentral.cl/estadisticas/Principal1/enlaces/aplicaciones/index_faq.html">Preguntas Frecuentes</a></li>
+            <li class="separa">|</li>
+            <li><a target="_blank" href="https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terminos_condiciones.html">Condiciones uso BDE</a></li>
+        </ul>
+    </div>
+
+    <div class="header-main">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="justify-content: flex-end;">
+
+
+            <button class="navbar-toggler first-button" type="button" data-toggle="collapse" data-target="#navbar01"
+                    aria-controls="navbar01" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="animated-icon1"><span></span><span></span><span></span></div>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbar01">
+                <a class="navbar-brand" href="https://www.bcentral.cl/es"><img src="/Siete/Includes/css/images/layout_set_logo.png" /></a>
+                <div class="mainTitle">
+                    <h4>Base de Datos Estad&#237;sticos (BDE)</h4>
+                </div>
+
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="https://si3.bcentral.cl/siete/">Inicio</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://si3.bcentral.cl/Indicadoressiete/secure/Indicadoresdiarios.aspx">Indicadores Diarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://si3.bcentral.cl/SetGraficos">Set de Gr&#225;ficos</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+
+                <ul class="navbar-nav mt-2 mt-lg-0">
+                    <li class="nav-item vam ar" style="margin-left: 10px">
+                        <div class="row ar">
+                            <form class="form-inline" method="post" action="/Siete/ES/Siete/Search" onsubmit="return validateSearch();" id="frmBusca" autocomplete="off">
+                                <input name="__RequestVerificationToken" type="hidden" value="-f-_c2Wfxqoubor4l8nNYtlXClwt0HtBQxa6baSP7HbGXEAxIR37JLeY91wNidTGr7MVo1yqTpKDAjuzdBXJsG-H77w1" />
+
+                                
+                                
+                                        <div class="nav-item" style="">
+                                            <div class=" nav-link">
+                                                Nuevo buscador de datos estad&#237;sticos
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="criterio" id="criterio" class="form-control" placeholder="Escriba aqu&#237;" onkeypress="return buscar_cross_browser(event);"
+                                                       aria-label="Escriba aqu&#237;">
+                                                <div class="input-group-append">
+                                                    <button id="buttonBuscar" class="btn btn-danger" style="background-color: #9b814d;border-color: #9b814d;" type="button" onclick="link_ir();">
+                                                        <i class="iconBase iconBuscar"></i>
+                                                    </button>
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+</form>
+
+                                <div class="nav-item" style="">
+                                    <div class=" nav-link">&nbsp;</div>
+                                    <div class="row ar">
+                                        <div class="col-sm-6 ac bt"><button id="btnIngresar" style="width: 125px" class="btn btn-corp btn-green" type="button">Iniciar sesi&#243;n</button></div>
+                                        <div class="col-sm-6 ac bt"><button id="btnRegistro" style="width: 125px; margin-left: 5px" class="btn btn-corp btn-reset" type="button">Registrarse</button></div>
+
+
+                                    </div>
+                                </div>
+                        </div>
+
+                    </li>
+                </ul>
+
+
+
+                <input name="__RequestVerificationToken" type="hidden" value="J4L36zsjkkIlQRz-mojmhOYwiyFDrAeDLnDGwjhtakAMZla0VbPHJmDMuVX1kYAFA7YrQ6iCBLdhWPbCupWg3E2dPL01" />
+
+
+            </div>
+        </nav>
+    </div>
+
+    <script src="/Siete/Includes/js/jquery-3.6.0.min.js"></script>
+<script src="/Siete/Includes/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+<script src="/Siete/Includes/js/popper.min.js"></script>
+<script src="/Siete/Includes/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+<script src="/Siete/Includes/bootstrap-table-1.16/bootstrap-table.min.js"></script>
+<script src="/Siete/Includes/bootstrap-table-1.16/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js"></script>
+<script src="/Siete/Includes/js/plugins.js"></script>
+<script src="/Siete/Includes/js/vendor/underscore-min.js"></script>
+<script src="/Siete/Includes/js/vendor/store.json2.min.js"></script>
+<script src="/Siete/Includes/datatables/datatables.js"></script>
+
+    <script src="/Siete/Includes/js/utils.js"></script>
+<script src="/Siete/Includes/js/app.js"></script>
+<script src="/Siete/Includes/js/site.js"></script>
+
+
+    <script src="/Siete/Includes/js/slick/slick.min.js"></script>
+
+    
+
+
+
+<script type="text/javascript">
+
+    var $table;
+    const KeySave = "/********/";
+    var valuesGraph = [];
+
+    $(document).ready(function () {
+
+        $("#chkSeries").prop("checked", true);
+        $.saveItemV2($("#chkSeries"));
+        $("#chkSeries").hide();
+
+        GraficarCuadroSearch('line');
+
+        document.getElementById('btnChangeTypeGraph').addEventListener('click', function () {
+            actualizarGraficoPorTipo();
+            actualizarBotonGrafico();
+        });
+
+        // Inicializa un temporizador
+        let resizeTimer;
+
+        // Event listener para el evento resize
+        window.addEventListener('resize', () => {
+            // Limpia el temporizador si ya existe
+            clearTimeout(resizeTimer);
+
+            // Establece un nuevo temporizador
+            resizeTimer = setTimeout(onResizeComplete, 300);
+        });
+
+    });
+
+    function onResizeComplete() {
+        var chart = window.myChart;
+
+        // SI YA EXISTE EL CHART -> SOLO RESIZE
+        if (chart) {
+            return;
+        }
+
+        // SOLO SI NO EXISTE EL CHART -> CREARLO
+        var imgElement = document.getElementById('iconChangeTypeGraph');
+
+        if (imgElement && imgElement.src.includes("cart_graficar.png")) {
+            GraficarCuadroSearch('line');
+        } else {
+            GraficarCuadroSearch('column');
+        }
+    }
+
+    function ShowAllObs() {
+
+        $('#modalMostrarAllObs').modal('toggle');
+
+    }
+
+    function actualizarGraficoPorTipo() {
+        var chart = $('#container').highcharts();
+        var imgElement = document.getElementById('iconChangeTypeGraph');
+        var typeGraph = '';
+
+        if (!chart || !imgElement) return;
+
+        if (imgElement.src.includes('cart_graficar.png')) {
+            // El botón muestra barras => al hacer clic debe pintar barras
+            typeGraph = 'column';
+        } else if (imgElement.src.includes('cart_graficar_area.png')) {
+            // El botón muestra área => al hacer clic debe pintar área
+            typeGraph = 'area';
+        } else if (imgElement.src.includes('cart_graficar_lineas.png')) {
+            // El botón muestra líneas => al hacer clic debe pintar líneas
+            typeGraph = 'line';
+        } else {
+            return;
+        }
+
+        chart.series[0].update({ type: typeGraph }, true);
+    }
+
+    function actualizarBotonGrafico() {
+        var imgElement = document.getElementById('iconChangeTypeGraph');
+        var title = '';
+
+        if (!imgElement) return;
+
+        if (imgElement.src.includes('cart_graficar.png')) {
+            // Se acaba de usar BARRA -> el siguiente debe ser ÁREA
+            imgElement.src = "/Siete/Includes/css/images/cart_graficar_area.png";
+            title = "Gr&#225;fico de &#225;rea";
+
+        } else if (imgElement.src.includes('cart_graficar_area.png')) {
+            // Se acaba de usar ÁREA -> el siguiente debe ser LÍNEA
+            imgElement.src = "/Siete/Includes/css/images/cart_graficar_lineas.png";
+            title = "Gr&#225;fico de l&#237;nea";
+
+        } else if (imgElement.src.includes('cart_graficar_lineas.png')) {
+            // Se acaba de usar LÍNEA -> el siguiente debe ser BARRA
+            imgElement.src = "/Siete/Includes/css/images/cart_graficar.png";
+            title = "Gr&#225;fico de barra";
+
+        } else {
+            // fallback
+            imgElement.src = "/Siete/Includes/css/images/cart_graficar.png";
+            title = "Gr&#225;fico de barra";
+        }
+
+        $('#btnChangeTypeGraph')
+            .attr('data-original-title', title)
+            .attr('title', title)
+            .tooltip('dispose')
+            .tooltip({
+                placement: 'top',
+                trigger: 'hover',
+                html: true
+            });
+
+        $('#btnChangeTypeGraph').mouseover();
+    }
+
+    function EnableClickcheck() {
+
+        $(".chkGrid").click(function () {
+            $.saveItem($(this));
+        })
+    }
+
+    function GetFavoritos() {
+        var opt = {
+            title: "Compartir Link",
+            url: "/Siete/ES/Siete/GetFavoritos",
+            params: {
+                __RequestVerificationToken: getVToken(),
+                codCuadro: "CCNN2018_P0_V2",
+                URL: window.location.href
+            },
+            size: "modal-lg",
+            callback: function () {
+
+            }
+        }
+
+        GetModalContent(opt);
+    }
+
+    function GraficarCuadroSearch(tGrafico) {
+        var cuadro = GetStore("CCNN2018_P0_V2", { cuadro_id: 0, items: [] });
+
+        if (cuadro.items.length > 0) {
+
+            var opt = {
+                title: "",
+                url: "/Siete/ES/Siete/Graficar",
+                params: {
+                    Series: JSON.stringify(cuadro.items),
+                    idCuadro: "CCNN2018_P0_V2",
+                    IsCanasta: false,
+                    IsCuadro: true,
+                    decimales: "0",
+                    frecuencia: "QUARTERLY",
+                    fechaMinima: "2013",
+                    fechaMaxima: "2026",
+                    fechaInicio: "2013",
+                    fechaFin: "2026",
+                    fechaDiaria: "2026",
+                    calculo: "NONE",
+                    fechaBase: "01-01-1996",
+                    unidad: "Miles de millones de pesos",
+                    __RequestVerificationToken: getVToken(),
+                    vistaOrigen: "CuadroSearch",
+                    tipoGrafico: tGrafico
+                },
+                size: "modal-xl",
+                callback: function () {
+
+                }
+            }
+
+            GetContentGraficoCuadroSearch(opt);
+        }
+    }
+
+    function ExportarExcelCuadro() {
+
+        $('#modalExport').modal('toggle');
+    }
+
+    function ExecuteExportExcel() {
+        if ($(".radioExport:checked").length == 0) {
+            showBlockUIError("Debe seleccionar una opción");
+            return false;
+        }
+
+        var IsVertical = $("#radioExportV").is(":checked");
+
+        var IsFullSeries = $("#checkExportFull").is(":checked");
+
+        $("#IsVertical").val(IsVertical);
+        $("#IsFullSeries").val(IsFullSeries);
+
+        var cuadro = GetStore("CCNN2018_P0_V2", { cuadro_id: 0, items: [] });
+        var seriesStr = JSON.stringify(cuadro.items);
+
+        $("#Export_SeriesText").val(seriesStr);
+
+        $("#SoloSeries").val('N');
+
+        CloseDialog();
+
+        $("#frmExportExcel").submit();
+    }
+
+    function SaveNewSerie() {
+
+        var _name = $.trim($("#nameSerieNew:visible").val());
+
+        if (_name == "") {
+            showBlockUIError("Debe indicar Nombre Serie");
+            return false;
+        }
+
+        var params = {
+            __RequestVerificationToken: getVToken(),
+            name: _name,
+            idCapitulo: "CAP_CCNN",
+            idMenuTree: "MN_CCNN76",
+            idCuadro: "CCNN2018_P0_V2",
+            idSerie: "F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T"
+        };
+
+        var before = function () { }
+
+        var callback = function () {
+
+            CloseDialog();
+
+            xAlert({ title: "Agregar Serie", html: "La Serie ha sido agregada" });
+
+        }
+
+        xJsonObj("/Siete/ES/Siete/CreateCanastaSerieSearch", params, before, callback);
+
+    }
+
+    function BorrarMiSerie() {
+
+        var optBtn = {
+            title: "Eliminar Serie",
+            msg1: "¿Confirma <b>eliminar</b> la Serie?<br>Esta acción no se puede deshacer.",
+            msg2: "La Serie ha sido eliminada",
+            url: "/Siete/ES/Siete/ActionSiete",
+            params: {
+                __RequestVerificationToken: getVToken(),
+                action: "EliminarMiSerie",
+                key: "0"
+            },
+            callback: function () {
+
+                SelfRedirect();
+            },
+            alert: "alert-danger"
+        }
+
+        xDialogConfirmAction(optBtn);
+    }
+
+</script>
+
+<style type="text/css">
+    /* Fullscreen: el contenedor ocupa toda la pantalla */
+    #graficoCuadroSearch:fullscreen, #graficoCuadroSearch:-webkit-full-screen {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        overflow: hidden;
+        z-index: 999999;
+    }
+
+    /* Quita padding del modal y haz que el área del chart llene todo */
+    #graficoCuadroSearch:fullscreen .modal-body, #graficoCuadroSearch:-webkit-full-screen .modal-body {
+        position: absolute;
+        inset: 0;
+        padding: 0 !important;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    /* Oculta botones arriba */
+    #graficoCuadroSearch:fullscreen .chart-tools, #graficoCuadroSearch:-webkit-full-screen .chart-tools {
+        display: none !important;
+    }
+
+    /* Solo el wrapper absoluto */
+    #graficoCuadroSearch:fullscreen .chart-container-wrapper, #graficoCuadroSearch:-webkit-full-screen .chart-container-wrapper {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Estos solo a 100% (SIN absolute) */
+    #graficoCuadroSearch:fullscreen #container, #graficoCuadroSearch:fullscreen .highcharts-container, #graficoCuadroSearch:fullscreen svg.highcharts-root, #graficoCuadroSearch:-webkit-full-screen #container, #graficoCuadroSearch:-webkit-full-screen .highcharts-container, #graficoCuadroSearch:-webkit-full-screen svg.highcharts-root {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    #graficoCuadroSearch {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+        #graficoCuadroSearch #container {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            display: block !important;
+            box-sizing: border-box !important;
+        }
+
+    /* Wrappers del chart */
+    #modal-grafico,
+    #fullscreen-target,
+    #container {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Wrapper intermedio */
+    #graficoCuadroSearch .chart-container-wrapper,
+    #fullscreen-target {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        display: block;
+        box-sizing: border-box;
+    }
+</style>
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/Siete/Includes/css/cuadro-search.css">
+
+
+
+<div class="wrapper d-flex align-items-stretch div-fondo-without-menu" style="overflow-x: hidden;">
+
+
+
+
+    <div class="p-4 p-md-5 pt-5 div-cont-without-menu" id="divCont">
+
+        <!--INICIO ENCABEZADO-->
+        <div class="flex-container">
+            <div class="flex-item flex-item-enc-1">
+                <span class="text-enc-1">
+                    PIB volumen a precios del a&#241;o anterior encadenado,  desestacionalizado,  series empalmadas, referencia 2018 (miles de millones de pesos encadenados)
+                </span>
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <div class="flex-item flex-item-obs">
+                <span class="text-enc-2">
+                    Observaciones
+                </span>
+            </div>
+            <div class="flex-item flex-item-uni">
+                <span class="text-enc-2">
+                    Unidad
+                </span>
+            </div>
+            <div class="flex-item flex-item-fre">
+                <span class="text-enc-2">
+                    Frecuencia
+                </span>
+            </div>
+            <div class="flex-item flex-item-idSerie">
+                <span class="text-enc-2">
+                    C&#243;digo de serie
+                </span>
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <div class="flex-item flex-item-obs flex-item-det-obs">
+                <p class="text-enc-3">
+                    II.2026: <b>53.912</b><br />
+                    <button type="button" id="btnMostrarObs" class="btn-plano " data-toggle="popover">(+ otras obs.)</button><br />
+                    Actualizado: 18.Ago.2026
+                </p>
+            </div>
+            <div class="flex-item flex-item-uni flex-item-det-uni">
+                <span class="text-enc-3">
+                    Miles de millones de pesos
+                </span>
+            </div>
+            <div class="flex-item flex-item-fre flex-item-det-fre">
+                <span class="text-enc-3">
+                    Trimestral
+                </span>
+            </div>
+            <div class="flex-item flex-item-idSerie flex-item-det-idSerie">
+                <span class="text-enc-3">
+                    F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T
+                </span>
+            </div>
+            <div class="flex-item flex-item-botonera flex-item-det-botonera">
+                <button type="button" id="btnChangeTypeGraph" data-type-graph="line" class="btn btn-default x-title-t" title="Gr&#225;fico de barra">
+                    <img id="iconChangeTypeGraph" src="/Siete/Includes/css/images/cart_graficar.png" alt="" />
+                </button>
+
+                <button type="button" onclick="ExportarExcelCuadro()" class="btn btn-default x-title-t" title="Exportar a Excel">
+                    <img src="/Siete/Includes/css/images/cart_excel.png" alt="" />
+                </button>
+
+                    <button type="button" onclick="GetFavoritos()" class="btn btn-default x-title-t" title="Compartir Link">
+                        <img src="/Siete/Includes/css/images/share.png" alt="" />
+                    </button>
+
+
+            </div>
+        </div>
+        <!--FIN ENCABEZADO-->
+
+        <div class="flex-item flex-item-separador"></div>
+
+        <!--INICIO GRAFICO-->
+        <div class="flex-container">
+            <div id="graficoCuadroSearch" class="flex-item flex-item-enc-3"></div>
+        </div>
+        <!--FIN GRAFICO-->
+
+        <div class="flex-item flex-item-separador"></div>
+
+        <!--INICIO NOTAS-->
+        <div class="flex-container">
+            <div class="flex-item flex-item-enc-2">
+                <span class="text-enc-1">NOTAS</span>
+            </div>
+
+            <div class="flex-item flex-item-separador"></div>
+
+                <div class="flex-item flex-item-notas-1">
+                    <span class="pr-0 text-enc-2">Fuente:</span>
+                    <span class="pl-1 text-enc-3">Banco Central de Chile</span>
+                    <span class="pl-4 pr-0 text-enc-2">&#218;ltima actualizaci&#243;n:</span>
+                    <span class="pl-1 text-enc-3">18.Ago.2026</span>
+                </div>
+
+
+
+                <div class="flex-item flex-item-notas-1">
+                    <span class="pr-0 text-enc-2">Unidad:</span>
+                    <span class="pl-1 text-enc-3">Miles de millones de pesos</span>
+                </div>
+                            <div class="flex-item flex-item-notas-1">
+                    <span class="pr-0 text-enc-2">Frecuencia:</span>
+                    <span class="pl-1 text-enc-3">Trimestral</span>
+                </div>
+
+            <div class="flex-container">
+                            <div class="flex-item flex-item-metadatos-1">
+                                <span class="pr-0 text-enc-2">Desfase publicación:</span>
+                                <span class="pl-1 text-enc-3">48 días terminado el trimestre
+</span>
+                            </div>
+                            <div class="flex-item flex-item-metadatos-1">
+                                <span class="pr-0 text-enc-2">Contacto:</span>
+                                <span class="pl-1 text-enc-3"><a runat="server" id="HtmlAnchorContacto"  target="_blank" href="https://contactocentral.bcentral.cl/
+">contactocentral.bcentral.cl</a></span>
+                            </div>
+                            <div class="flex-item flex-item-metadatos-1">
+                                <span class="pr-0 text-enc-2">Metodología:</span>
+                                <span class="pl-1 text-enc-3"><a runat="server" id="HtmlAnchorSitiosDeInteres"  target="_blank" href=" https://www.bcentral.cl/web/banco-central/cuentas-nacionales-trimestrales-doc-de-interes
+">Cuentas Nacionales</a></span>
+                            </div>
+            </div>
+
+            <div class="flex-item flex-item-separador"></div>
+
+            <ul class="no-bullets" style="list-style-type: none; padding: 0 0 0 0;">
+                        <li>
+                            <span class="text-enc-3">La serie desestacionalizada del PIB trimestral se obtiene a partir de la agregación temporal del IMACEC desestacionalizado.
+</span>
+                        </li>
+                        <li class="li-espacio-blanco"></li>
+            </ul>
+        </div>
+        <!--FIN NOTAS-->
+        <!--INICIO TABLAS RELACIONADAS-->
+        <div class="flex-container">
+            <div class="flex-item flex-item-enc-2">
+                <span class="text-enc-1">TABLAS RELACIONADAS</span>
+            </div>
+
+            <div class="flex-item flex-item-separador"></div>
+
+            <ul class="no-bullets" style="list-style-type: none; padding: 0 0 2em 0;">
+                        <li>
+                            <a class="release-table series-focus fg-release-table-link-gtm" href="/Siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_P0_V2?id5=SI&amp;idSerie=F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T" target="_blank">
+                                <i class="fa fa-table fg-release-table-link-gtm"></i>
+                                1. Producto interno bruto, referencia 2018 (miles de millones de pesos)
+                            </a>
+                        </li>
+                        <li>
+                            <a class="release-table series-focus fg-release-table-link-gtm" href="/Siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_G_VE?id5=SI&amp;idSerie=F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T" target="_blank">
+                                <i class="fa fa-table fg-release-table-link-gtm"></i>
+                                2. Gasto del producto interno bruto, volumen a precios del a&#241;o anterior encadenado, series empalmadas, desestacionalizado, referencia 2018 (miles de millones de pesos encadenados)
+                            </a>
+                        </li>
+                        <li>
+                            <a class="release-table series-focus fg-release-table-link-gtm" href="/Siete/ES/Siete/Cuadro/CAP_ESTADIST_MACRO/MN_EST_MACRO_IV/PEM_ACTyDDA_IndMacT_2_2018?id5=SI&amp;idSerie=F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T" target="_blank">
+                                <i class="fa fa-table fg-release-table-link-gtm"></i>
+                                3. Indicadores macroecon&#243;micos trimestrales, referencia 2018
+                            </a>
+                        </li>
+                        <li>
+                            <a class="release-table series-focus fg-release-table-link-gtm" href="/Siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_P_VE?id5=SI&amp;idSerie=F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T" target="_blank">
+                                <i class="fa fa-table fg-release-table-link-gtm"></i>
+                                4. Producto interno bruto por clase de actividad econ&#243;mica, volumen a precios del a&#241;o anterior encadenado, series empalmadas, desestacionalizado, referencia 2018 (miles de millones de pesos encadenados)
+                            </a>
+                        </li>
+                        <li>
+                            <a class="release-table series-focus fg-release-table-link-gtm" href="/Siete/ES/Siete/Cuadro/CAP_IND_VIVIENDA/MN_IND_VIVIENDA/CCNN2018_P0_V2?id5=SI&amp;idSerie=F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T" target="_blank">
+                                <i class="fa fa-table fg-release-table-link-gtm"></i>
+                                5. Producto interno bruto, referencia 2018 (miles de millones de pesos)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+        <!--FIN TABLAS RELACIONADAS-->
+
+        <div class="flex-item flex-item-separador"></div>
+
+        <!--INICIO CHECKBOX OCULTO CON DATOS DE LA SERIE NECESARIO PARA DIBUJAR EL GRÁFICO-->
+        <div class="flex-item">
+                        <input type="checkbox" class="chkGrid" id="chkSeries"
+                               data-index="2"
+                               data-cuadro="CCNN2018_P0_V2"
+                               data-name="PIB volumen a precios del a&#241;o anterior encadenado (desestacionalizado)"
+                               data-nameeng="GDP, chained volume at previous year prices (seasonally adjusted)"
+                               data-header="F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T"
+                               data-frecuencia=""
+                               data-calc="NONE"
+                               data-key="F032"
+                               data-serie="F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T"
+                               data-observed="SUMMED"
+                               data-decimales="0"
+                               value="false" />
+        </div>
+        <!--FIN CHECKBOX OCULTO CON DATOS DE LA SERIE NECESARIO PARA DIBUJAR EL GRÁFICO-->
+        <!--INICIO EXPORTAR A EXCEL-->
+        <div class="modal fade" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="lblmodalExport" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-primary">
+                        <h5 class="modal-title" id="lblmodalExport">Base de Datos Estad&#237;sticos - Exportar serie a excel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="">
+                        <fieldset class="x-fieldset">
+                            <legend class="bold">Exportar a Excel</legend>
+
+                            <div class="form-check" style=visibility:visible;>
+                                <input class="form-check-input radioExport"  type="radio" name="radioExport" id="radioExportH" value="true">
+                                <label class="form-check-label" for="radioExportH">Horizontal</label>
+                            </div>
+                            <div class="form-check" style=visibility:visible;>
+                                <input class="form-check-input radioExport"  type="radio" name="radioExport" id="radioExportV" value="true">
+                                <label class="form-check-label" for="radioExportV">Vertical</label>
+                            </div>
+                            <div class="form-check" style=visibility:hidden;height:0px;>
+                                <input class="form-check-input radioExport"  type="radio" name="checkExport" id="checkExportOneYear" value="true">
+                                <label class="form-check-label" for="checkExport">A&#241;o seleccionado</label>
+                            </div>
+                            <div class="form-check" style=visibility:hidden;height:0px;>
+                                <input class="form-check-input radioExport" type="radio" name="checkExport" id="checkExportFull" value="true">
+                                <label class="form-check-label" for="checkExport">Todos los a&#241;os (M&#225;x. 25 series)</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="ExecuteExportExcel()">Aceptar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--FIN EXPORTAR A EXCEL-->
+        <!--INICIO MOSTRAR MODAL CON LAS OBSERVACIONES-->
+        <div class="modal fade" id="modalMostrarAllObs" tabindex="-1" role="dialog" aria-labelledby="lblmodalMostrarAllObs" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-primary">
+                        <h5 class="modal-title" id="lblmodalExport">Base de Datos Estad&#237;sticos - Observaciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="listaObsHtmlAll" class="tabla-obs"><thead><tr><th><b>FECHA</b></th><th><b>VALOR</b></th></tr></thead><tbody><tr><td>II.2026</td><td>53.912</td></tr><tr><td>I.2026</td><td>53.920</td></tr><tr><td>IV.2025</td><td>54.057</td></tr><tr><td>III.2025</td><td>53.851</td></tr><tr><td>II.2025</td><td>54.090</td></tr><tr><td>I.2025</td><td>53.722</td></tr><tr><td>IV.2024</td><td>53.252</td></tr><tr><td>III.2024</td><td>52.804</td></tr><tr><td>II.2024</td><td>51.978</td></tr><tr><td>I.2024</td><td>52.219</td></tr><tr><td>IV.2023</td><td>51.594</td></tr><tr><td>III.2023</td><td>51.487</td></tr><tr><td>II.2023</td><td>51.073</td></tr><tr><td>I.2023</td><td>50.791</td></tr><tr><td>IV.2022</td><td>50.574</td></tr><tr><td>III.2022</td><td>50.684</td></tr><tr><td>II.2022</td><td>51.156</td></tr><tr><td>I.2022</td><td>50.945</td></tr><tr><td>IV.2021</td><td>51.628</td></tr><tr><td>III.2021</td><td>50.733</td></tr><tr><td>II.2021</td><td>48.720</td></tr><tr><td>I.2021</td><td>48.135</td></tr><tr><td>IV.2020</td><td>46.321</td></tr><tr><td>III.2020</td><td>43.457</td></tr><tr><td>II.2020</td><td>41.401</td></tr><tr><td>I.2020</td><td>47.333</td></tr><tr><td>IV.2019</td><td>46.366</td></tr><tr><td>III.2019</td><td>48.281</td></tr><tr><td>II.2019</td><td>48.373</td></tr><tr><td>I.2019</td><td>47.724</td></tr><tr><td>IV.2018</td><td>47.916</td></tr><tr><td>III.2018</td><td>47.335</td></tr><tr><td>II.2018</td><td>47.482</td></tr><tr><td>I.2018</td><td>46.969</td></tr><tr><td>IV.2017</td><td>46.408</td></tr><tr><td>III.2017</td><td>46.090</td></tr><tr><td>II.2017</td><td>45.240</td></tr><tr><td>I.2017</td><td>44.642</td></tr><tr><td>IV.2016</td><td>44.931</td></tr><tr><td>III.2016</td><td>44.962</td></tr><tr><td>II.2016</td><td>44.684</td></tr><tr><td>I.2016</td><td>44.840</td></tr><tr><td>IV.2015</td><td>44.407</td></tr><tr><td>III.2015</td><td>44.065</td></tr><tr><td>II.2015</td><td>44.261</td></tr><tr><td>I.2015</td><td>43.845</td></tr><tr><td>IV.2014</td><td>43.560</td></tr><tr><td>III.2014</td><td>43.099</td></tr><tr><td>II.2014</td><td>43.283</td></tr><tr><td>I.2014</td><td>42.938</td></tr><tr><td>IV.2013</td><td>42.811</td></tr><tr><td>III.2013</td><td>42.664</td></tr><tr><td>II.2013</td><td>42.404</td></tr><tr><td>I.2013</td><td>42.052</td></tr><tr><td>IV.2012</td><td>41.696</td></tr><tr><td>III.2012</td><td>41.450</td></tr><tr><td>II.2012</td><td>41.131</td></tr><tr><td>I.2012</td><td>40.382</td></tr><tr><td>IV.2011</td><td>39.569</td></tr><tr><td>III.2011</td><td>38.727</td></tr><tr><td>II.2011</td><td>38.480</td></tr><tr><td>I.2011</td><td>37.935</td></tr><tr><td>IV.2010</td><td>37.498</td></tr><tr><td>III.2010</td><td>37.057</td></tr><tr><td>II.2010</td><td>36.207</td></tr><tr><td>I.2010</td><td>35.019</td></tr><tr><td>IV.2009</td><td>34.906</td></tr><tr><td>III.2009</td><td>34.481</td></tr><tr><td>II.2009</td><td>34.074</td></tr><tr><td>I.2009</td><td>34.273</td></tr><tr><td>IV.2008</td><td>34.441</td></tr><tr><td>III.2008</td><td>34.720</td></tr><tr><td>II.2008</td><td>35.005</td></tr><tr><td>I.2008</td><td>34.970</td></tr><tr><td>IV.2007</td><td>34.249</td></tr><tr><td>III.2007</td><td>33.617</td></tr><tr><td>II.2007</td><td>33.525</td></tr><tr><td>I.2007</td><td>33.187</td></tr><tr><td>IV.2006</td><td>32.850</td></tr><tr><td>III.2006</td><td>32.164</td></tr><tr><td>II.2006</td><td>31.732</td></tr><tr><td>I.2006</td><td>31.086</td></tr><tr><td>IV.2005</td><td>30.808</td></tr><tr><td>III.2005</td><td>30.442</td></tr><tr><td>II.2005</td><td>29.719</td></tr><tr><td>I.2005</td><td>29.234</td></tr><tr><td>IV.2004</td><td>29.201</td></tr><tr><td>III.2004</td><td>28.734</td></tr><tr><td>II.2004</td><td>28.001</td></tr><tr><td>I.2004</td><td>27.473</td></tr><tr><td>IV.2003</td><td>26.906</td></tr><tr><td>III.2003</td><td>26.761</td></tr><tr><td>II.2003</td><td>26.586</td></tr><tr><td>I.2003</td><td>26.307</td></tr><tr><td>IV.2002</td><td>25.939</td></tr><tr><td>III.2002</td><td>25.567</td></tr><tr><td>II.2002</td><td>25.292</td></tr><tr><td>I.2002</td><td>25.088</td></tr><tr><td>IV.2001</td><td>24.879</td></tr><tr><td>III.2001</td><td>24.725</td></tr><tr><td>II.2001</td><td>24.783</td></tr><tr><td>I.2001</td><td>24.545</td></tr><tr><td>IV.2000</td><td>24.376</td></tr><tr><td>III.2000</td><td>24.093</td></tr><tr><td>II.2000</td><td>23.724</td></tr><tr><td>I.2000</td><td>23.671</td></tr><tr><td>IV.1999</td><td>23.450</td></tr><tr><td>III.1999</td><td>22.848</td></tr><tr><td>II.1999</td><td>22.376</td></tr><tr><td>I.1999</td><td>22.315</td></tr><tr><td>IV.1998</td><td>22.311</td></tr><tr><td>III.1998</td><td>23.057</td></tr><tr><td>II.1998</td><td>23.213</td></tr><tr><td>I.1998</td><td>22.826</td></tr><tr><td>IV.1997</td><td>22.644</td></tr><tr><td>III.1997</td><td>22.172</td></tr><tr><td>II.1997</td><td>21.682</td></tr><tr><td>I.1997</td><td>21.240</td></tr><tr><td>IV.1996</td><td>20.769</td></tr><tr><td>III.1996</td><td>20.475</td></tr><tr><td>II.1996</td><td>20.273</td></tr><tr><td>I.1996</td><td>20.074</td></tr></tbody></table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Volver</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--FIN MOSTRAR MODAL CON LAS OBSERVACIONES-->
+        <!--INICIO MOSTRAR POPOVER CON MIS SERIES-->
+        <div style="display:none">
+            <div class="" id="divPopMisSeries">
+
+            </div>
+        </div>
+        <!--FIN MOSTRAR POPOVER CON MIS SERIES-->
+        <!--INICIO MOSTRAR MODAL CON LAS SERIES-->
+        <div class="modal fade" id="modalCreateSerie" tabindex="-1" role="dialog" aria-labelledby="modalCreateSerieLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 600px;" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCreateSerieLabel">Crear una Serie</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Nombre Serie</span>
+                        <input type="text" class="form-control" id="nameSerieNew" value="PIB volumen a precios del a&#241;o anterior encadenado,  desestacionalizado,  series empalmadas, referencia 2018 (miles de millones de pesos encadenados)" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="SaveNewSerie();" id="saveSerie">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAddFav" tabindex="-1" role="dialog" aria-labelledby="lblmodalAddFav" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-primary">
+                        <h5 class="modal-title" id="lblmodalAddFav">⭐ Agregar a favoritos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="">
+
+                        <p>Gr&#225;fico agregado correctamente</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="GetMisGraficos();" id="saveCuadro">Ver en Mis Gr&#225;ficos</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--FIN MOSTRAR MODAL CON LAS SERIES-->
+    </div>
+</div>
+
+<form id="frmExportExcel" action="/Siete/ES/Siete/DownloadExcel" method="post" target="_blank">
+    <input name="__RequestVerificationToken" type="hidden" value="Ni3EFGumm1VVrz5Z4ryJflam_cUpPL6TLAnBsbsVmYHPJphZN1cBh_PIBlpj-VHFIncs-ON3hih87oqhF5F9lfLN5Ng1" />
+    <input type="hidden" id="IsVertical" name="IsVertical" value="false" />
+    <input type="hidden" id="IsFullSeries" name="IsFullSeries" value="false" />
+    <input type="hidden" id="codCuadro" name="codCuadro" value="CCNN2018_P0_V2" />
+    <input type="hidden" id="Export_SeriesText" name="Series" value="" />
+    <input type="hidden" id="Export_frecuencia" name="frecuencia" value="QUARTERLY" />
+    <input type="hidden" id="Export_calculo" name="calculo" value="NONE" />
+    <input type="hidden" id="Export_FechaInicio" name="fechaInicio" value="" />
+    <!--<input type="hidden" id="Export_FechaDiaria" name="fechaDiaria" value="2013" />-->
+    <input type="hidden" id="Export_FechaDiaria" name="fechaDiaria" value="" />
+    <input type="hidden" id="Export_FechaTermino" name="fechaTermino" value="" />
+    <input type="hidden" id="Export_VistaOrigen" name="VistaOrigen" value="CuadroSearch" />
+    <input type="hidden" id="Export_Metadato" name="Metadato" value="[{&quot;Codigo&quot;:&quot;Fuente&quot;,&quot;Valor&quot;:&quot;Banco Central de Chile&quot;},{&quot;Codigo&quot;:&quot;&#218;ltima actualizaci&#243;n&quot;,&quot;Valor&quot;:&quot;18.Ago.2026&quot;},{&quot;Codigo&quot;:&quot;Unidad&quot;,&quot;Valor&quot;:&quot;Miles de millones de pesos&quot;},{&quot;Codigo&quot;:&quot;Frecuencia&quot;,&quot;Valor&quot;:&quot;Trimestral&quot;},{&quot;Codigo&quot;:&quot;Desfase publicaci&#243;n&quot;,&quot;Valor&quot;:&quot;48 d&#237;as terminado el trimestre\n&quot;},{&quot;Codigo&quot;:&quot;Contacto&quot;,&quot;Valor&quot;:&quot;contactocentral.bcentral.cl\nhttps://contactocentral.bcentral.cl/\n&quot;},{&quot;Codigo&quot;:&quot;Metodolog&#237;a&quot;,&quot;Valor&quot;:&quot;Cuentas Nacionales\n https://www.bcentral.cl/web/banco-central/cuentas-nacionales-trimestrales-doc-de-interes\n&quot;},{&quot;Codigo&quot;:&quot;Nota&quot;,&quot;Valor&quot;:&quot;La serie desestacionalizada del PIB trimestral se obtiene a partir de la agregaci&#243;n temporal del IMACEC desestacionalizado.\n&quot;}]" />
+    <input type="hidden" id="SoloSeries" name="SoloSeries" value="" />
+</form>
+
+<!--<input id="prueba" name="prueba" value="0" />-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        //POPOVER OBSERVACIONES
+
+        var mostrarObs = document.getElementById('btnMostrarObs');
+
+        // Crear el popover
+        var popoverListaObs = new bootstrap.Popover(mostrarObs, {
+            html: true,
+            trigger: 'manual',
+            placement: 'bottom',
+            content: `
+            <ul><li>II.2026: <b>53.912</b></li><li>I.2026: <b>53.920</b></li><li>IV.2025: <b>54.057</b></li><li>III.2025: <b>53.851</b></li><li>II.2025: <b>54.090</b></li><li>I.2025: <b>53.722</b></li><li>IV.2024: <b>53.252</b></li><br><li><a href="#" id="btnMostrarAllObs" class="button-link">Ver todas</a></li></ul>
+        `,
+        });
+
+        oTable = $('#listaObsHtmlAll').DataTable({
+            responsive: false,
+            ordering: false,
+            search: false,
+            info: true,
+            language: {
+                "sInfo": "_START_ al _END_ total _TOTAL_ reg.",
+                "sInfoEmpty": "0 al 0 total 0 reg.",
+            }
+        });
+
+        //new $.fn.dataTable.FixedHeader(oTable);
+
+
+        // Escucha clic en el botón para mostrar el popover
+        mostrarObs.addEventListener('click', function (event) {
+            popoverListaObs.show(); // Muestra el popover
+            event.stopPropagation() // Detiene la propagación del evento
+
+            document.getElementById("btnMostrarAllObs").addEventListener("click", function (event) {
+                event.preventDefault(); // Evita la acción predeterminada del hipervínculo
+                ShowAllObs();
+                popoverListaObs.hide(); // Oculta el popover
+            });
+        });
+
+
+        //POPOVER SERIES
+
+        // Verificar si el botón existe en el DOM
+        var mostrarSeries = document.getElementById('btnMostrarSeries');
+
+        if (mostrarSeries) {
+
+            // Crear el popover si el botón existe
+            var popoverListaSeries = new bootstrap.Popover(mostrarSeries, {
+                html: true,
+                trigger: 'manual',
+                placement: 'bottom',
+                content: $("#divPopMisSeries"),
+            });
+
+            // Escucha clic en el botón para mostrar el popover
+            mostrarSeries.addEventListener('click', function (event) {
+
+                var $divPopMisSeries = $("#divPopMisSeries");
+                $divPopMisSeries.html("");
+
+                var before = function () { $divPopMisSeries.html(divLoaderHtml() + "<br><br>"); };
+                var params = {
+                    __RequestVerificationToken: getVToken(),
+                    vistaOrigen: "CuadroSearch",
+                    key: 0
+                };
+
+                xAjaxHtml("/Siete/ES/SIETE/GetPopMisSeries", params, before, function () {
+                    $divPopMisSeries.html(DataHTM);
+
+                    $(".popover-header:visible").text("Mis Series");
+
+                    let existeSerie = false;
+                    if (existeSerie) {
+                        document.getElementById('link_agregar_a_mis_series').style.visibility = "hidden";
+                        document.getElementById('separador_agregar_a_mis_series').style.visibility = "hidden";
+                    }
+                });
+
+                popoverListaSeries.show();
+                event.stopPropagation() // Detiene la propagación del evento
+
+            });
+        }
+
+        // Cerrar popovers al hacer clic fuera de ellos
+        document.addEventListener('click', function (event) {
+            popoverListaObs.hide();
+
+            var mostrarSeries = document.getElementById('btnMostrarSeries');
+
+            if (mostrarSeries) {
+                popoverListaSeries.hide();
+            }
+        });
+
+    });
+</script>
+
+
+    <script>
+        Config.IsIPAD = "False".bool()
+    </script>
+
+
+    <footer id="footer" class="footer" style="">
+
+        <div class="container-corp position-relative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-12">
+                        <div class="footer-section">
+                            <ul class="footer-links">
+
+                                <li class="footer-item">
+                                    <a title="Central en tu Vida" class="footer-link iconoExterno " href="https://www.centralentuvida.cl/" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Central en tu Vida', 'clic link')">Central en tu Vida</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Billetes y Monedas" class="footer-link iconoExterno " href="https://www.billetesymonedas.cl/" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Central en tu Vida', 'clic link')">Billetes y Monedas</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Museo Numism&#225;tico" class="footer-link iconoExterno " href="https://www.museobancocentral.cl/" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Central en tu Vida', 'clic link')">Museo Numism&#225;tico</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Base de Datos Estad&#237;sticos" class="footer-link iconoExterno " href="https://si3.bcentral.cl/siete" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Central en tu Vida', 'clic link')">Base de Datos Estad&#237;sticos</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Biblioteca" class="footer-link iconoExterno " href="https://portalbiblioteca.bcentral.cl/" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Central en tu Vida', 'clic link')">Biblioteca</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Repositorio Digital" class="footer-link iconoExterno " href="https://repositoriodigital.bcentral.cl/" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Central en tu Vida', 'clic link')">Repositorio Digital</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Glosario" class="footer-link iconoExterno " href="https://si3.bcentral.cl/estadisticas/Principal1/enlaces/aplicaciones/index.html" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Central en tu Vida', 'clic link')">Glosario</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="footer-section">
+                            <ul class="footer-links">
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Oportunidades de Trabajo" class="footer-link  " href="https://www.bcentral.cl/web/banco-central/el-banco/trabaja-en-el-bc/oportunidades-de-trabajo" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Oportunidades de Trabajo', 'clic link')">Oportunidades de Trabajo</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Transparencia Activa" class="footer-link  " href="https://www.bcentral.cl/web/banco-central/el-banco/transparencia/transparencia-activa" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Oportunidades de Trabajo', 'clic link')">Transparencia Activa</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Acceso a la Informaci&#243;n" class="footer-link  " href="https://www.bcentral.cl/web/banco-central/el-banco/transparencia/acceso-a-la-informacion" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Oportunidades de Trabajo', 'clic link')">Acceso a la Informaci&#243;n</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Ley de Lobby" class="footer-link  " href="https://www.bcentral.cl/web/banco-central/ley-del-lobby" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Oportunidades de Trabajo', 'clic link')">Ley de Lobby</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Ley Org&#225;nica Constitucional" class="footer-link iconoExterno " href="https://www.leychile.cl/Navegar?idNorma=30216" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Oportunidades de Trabajo', 'clic link')">Ley Org&#225;nica Constitucional</a>
+                                </li>
+
+
+
+
+                                <li class="footer-item">
+                                    <a title="Estrategia Nacional ALA/CFT" class="footer-link iconoExterno " href="https://www.estrategiaantilavado.cl/" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Oportunidades de Trabajo', 'clic link')">Estrategia Nacional ALA/CFT</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="footer-section">
+                            <ul class="footer-links">
+
+                                <li class="footer-item">
+                                    <a title="Cont&#225;ctenos" class="footer-link  " href="https://contactocentral.bcentral.cl/" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')">Cont&#225;ctenos</a>
+                                </li>
+
+                                <li class="footer-item">
+                                    <a title="Preguntas Frecuentes" class="footer-link  " href="https://www.bcentral.cl/web/banco-central/preguntas-frecuentes" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')">Preguntas Frecuentes</a>
+                                </li>
+
+                                <li class="footer-item">
+                                    <a title="Cat&#225;logo de pinturas" class="footer-link iconoExterno " href="https://coleccion.bcentral.cl/web/coleccion-de-pinturas" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')">Cat&#225;logo de pinturas</a>
+                                </li>
+
+                                <li class="footer-item">
+                                    <a title="Recorrido virtual Edificio BCCh" class="footer-link iconoExterno " href="https://my.matterport.com/show/?m=isFyFcFnTJe" target="_blank" data-senna-off="true" onclick="javascript: marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')"
+                                        style="width: 280px;display: inline-block;">Recorrido virtual Edificio BCCh</a>
+                                </li>
+
+                                <li class="footer-item">
+                                    <a title="Recorrido virtual Museo" class="footer-link iconoExterno " href="https://www.museobancocentral.cl/tour_virtual.html" target="_blank" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')">Recorrido virtual Museo</a>
+                                </li>
+
+                                <li class="footer-item">
+                                    <a title="Suscripci&#243;n" class="footer-link  " href="https://www.bcentral.cl/web/banco-central/suscripcion" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')">Suscripci&#243;n</a>
+                                </li>
+
+                                <li class="footer-item">
+                                    <a title="Condiciones de uso" class="footer-link  " href="https://www.bcentral.cl/web/banco-central/condiciones-de-uso" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')">Condiciones de uso</a>
+                                </li>
+
+                                <li class="footer-item">
+                                    <a title="Mapa web" class="footer-link  " href="https://www.bcentral.cl/web/banco-central/mapa-web" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')">Mapa web</a>
+                                </li>
+
+                                <li class="footer-item">
+                                    <a title="Transmisi&#243;n en vivo" class="footer-link iconoExterno " href="https://www.youtube.com/watch?v=uXVmVXBtSiM" target="_self" data-senna-off="true" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Contacto', 'clic link')">Transmisi&#243;n en vivo</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="footer-rrss ac">
+                            <ul style="width: 340px;">
+
+                                <li class="social-item">
+                                    <a class="social-link iconoExterno" href="https://www.youtube.com/user/BancoCentralChile" target="_blank" data-senna-off="true" title="Youtube" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Youtube', 'clic link')">
+                                        <img alt="Youtube" disablewebedit="True" src="/Siete/Includes/css/images/youtube.png">
+                                    </a>
+                                </li>
+
+                                <li class="social-item">
+                                    <a class="social-link iconoExterno" href="https://www.flickr.com/photos/bancocentraldechile/" target="_blank" data-senna-off="true" title="Flickr" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Youtube', 'clic link')">
+                                        <img alt="Flickr" disablewebedit="True" src="/Siete/Includes/css/images/flickr.png">
+                                    </a>
+                                </li>
+
+                                <li class="social-item">
+                                    <a class="social-link iconoExterno" href="https://twitter.com/bcentralchile" target="_blank" data-senna-off="true" title="Twitter" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Youtube', 'clic link')">
+                                        <img alt="Twitter" disablewebedit="True" src="/Siete/Includes/css/images/twitter.png">
+                                    </a>
+                                </li>
+
+                                <li class="social-item">
+                                    <a class="social-link iconoExterno" href="https://www.instagram.com/bancocentralchile/" target="_blank" data-senna-off="true" title="Instagram" onclick="javascript:marcaje_google_analytics(this, 'FOOT-Youtube', 'clic link')">
+                                        <img alt="Instagram" disablewebedit="True" src="/Siete/Includes/css/images/instagram.png" />
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+
+                                
+
+                    <div class="mb-3 mt-8">
+                        <a class="footer-logo db" onclick="">
+                            <img alt="Banco Central de Chile" class="visible-desk" src="/Siete/Includes/css/images/logoFooter.png" style="height: 87px;">
+                        </a>
+                        
+                        
+                    </div>
+
+                    <div class="col-12">
+                        <span class="db ar" style="font-size: .55rem;text-align: right;color: #7d7c7c;">v1.0.2.0</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        
+    </footer>
+
+    <script type="text/javascript">
+
+        ; (function ($) {
+            $(function () {
+
+                callMenuButton();
+                fullHeight();
+                KeepAlive();
+
+                moment.locale(Config.lngDate);
+
+                SetLogo();
+
+                $(window).resize(function () {
+                    SetLogo();
+                });
+
+            });
+        })(jQuery);
+
+        function SetLogo() {
+
+            var width = $(".wrapper").width();
+
+
+            if (!$(".navbar-collapse").hasClass("show")) {
+
+                if (width >= 975) {
+
+                    $(".logoMovil").hide();
+                } else {
+                    $(".logoMovil").show();
+                }
+            }
+
+            if ($(".wrapper").length == 0) {
+                width = $(".container-fluid").width();
+
+                if (width >= 975 || $(".navbar-brand img").is(":visible")) {
+
+                    $(".logoMovil").hide();
+                } else {
+                    $(".logoMovil").show();
+                }
+            }
+
+            if (width < 510) {
+                $(".logoMovil").css("top", "44px");
+            } else {
+                $(".logoMovil").css("top", "24px");
+            }
+        }
+
+        function ChangeLang() {
+
+            var IsEnglish = "False".bool();
+
+            var URL = "/Siete/en";
+
+            if (IsEnglish) {
+                URL = "/Siete/";
+            }
+
+            LinkRedirect(URL);
+        }
+
+        function validateSearch() {
+
+            var criterio = $.trim($("#criterio").val());
+
+            if (criterio == "") {
+                showBlockUIError("Debe ingresar un criterio de búsqueda");
+                return false;
+            } else {
+                //console.log("ok");
+                return true;
+            }
+        }
+
+        function GetContacto() {
+
+            var opt = {
+                title: "Cont&#225;ctenos",
+                url: "/Siete/ES/Main/GetContacto",
+                params: {
+                    __RequestVerificationToken: getVToken()
+                },
+                size: "modal-lg",
+                callback: function () {
+
+                }
+            }
+
+            GetModalContent(opt);
+        }
+
+        function GetMisEstadisticas() {
+
+            var opt = {
+                title: "Mis Estad&#237;sticas",
+                url: "/Siete/ES/Main/GetMisEstadisticas",
+                params: {
+                    __RequestVerificationToken: getVToken()
+                },
+                size: "modal-lg",
+                callback: function () {
+
+                }
+            }
+
+            GetModalContent(opt);
+        }
+
+
+        function KeepAlive() {
+
+            var time_out = parseInt("180000");
+            setInterval('GetKeepAlive()', time_out);
+
+        }
+
+        function GetKeepAlive() {
+            var params = {
+                __RequestVerificationToken: getVToken(),
+                action: "KeepAlive"
+            };
+
+            var before = function () { }
+
+            var callback = function () { }
+
+            xJsonObj("/Siete/ES/Siete/ActionSiete", params, before, callback);
+        }
+
+    </script>
+
+    <script>
+
+    function buscar_cross_browser(e) {
+        var texto_a_buscar = '';
+        //texto_a_buscar = document.form1.txtBoxBuscador.value; // PRUEBAS 29-Jun-2011
+        texto_a_buscar = document.getElementById("criterio").value;
+
+        texto_a_buscar = trim(texto_a_buscar);
+
+        var tecla = (document.all) ? e.keyCode : e.which;
+        //alert('tecla: ' + tecla);
+
+        if (IsCaracterEspecial(tecla)) {
+            return false;
+        }
+
+        else if (tecla == 13) {
+            if (texto_a_buscar.length > 0 && texto_a_buscar.length < 255) {
+                // Texto es igual a blanco o texto Mayor a 255
+                if ("yes" == "yes")
+                {
+                    link_ir();
+                }
+                else
+                {
+                    $('#frmBusca').submit();
+                }
+
+            }
+            return false;
+        }
+        return true;
+    }
+
+    function IsCaracterEspecial(tecla) {
+        // Función qie devuelve un true en caso que el caracter ingresado por teclado
+        //  sea un caracter especial, caso contrario devuelve un false
+        // La lista de caracteres válidos es la siguiente:
+        if ((tecla >= "a".charCodeAt(0) && tecla <= "z".charCodeAt(0))
+            || (tecla >= "A".charCodeAt(0) && tecla <= "Z".charCodeAt(0))
+            || (tecla >= "0".charCodeAt(0) && tecla <= "9".charCodeAt(0))
+            || (tecla == " ".charCodeAt(0))
+            || (tecla == 225)
+            || (tecla == 233)
+            || (tecla == 237)
+            || (tecla == 243)
+            || (tecla == 250)
+            || (tecla == 241)
+            // Todas las vocales en mayúsculas y con acento + Ñ
+            || (tecla == 193)
+            || (tecla == 201)
+            || (tecla == 205)
+            || (tecla == 211)
+            || (tecla == 218)
+            || (tecla == 209)
+            || (tecla == 13)
+            // Se acepta el punto en el buscador por texto libre como tmb
+            // en el que busca por código de serie
+            // 19-Ago-2010 Por FSánchez
+            || (tecla == 46)
+        ) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    // Descripción: Función que elimina espacios en blanco
+    function trim(texto) {
+        return texto.replace(/^\s+/g, '').replace(/\s+$/g, '')
+    }
+
+    </script>
+
+
+
+    
+    <script type="text/javascript">
+    function link_ir() {
+
+        var idioma = "";
+
+        var IsEnglish = "False";
+
+        //alert("False");
+        //alert("es-CL");
+
+        if (IsEnglish.toLocaleLowerCase() === "true") {
+            idioma = "&Idioma=EN";
+        }
+        else
+        {
+            idioma = "&Idioma=ES";
+        }
+
+        //var valor_option = document.getElementById("option_order").value;
+        var link = "https://si3.bcentral.cl/Search/Buscar/Index/?st=" + document.getElementById('criterio').value + idioma; // + valor_option;
+
+        console.log(link);
+
+        //window.location.href = link;
+        window.open(link, '_blank');
+    }
+    </script>
+
+
+
+    <script src="/Siete/Includes/datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/Siete/Includes/datepicker/bootstrap-datepicker.locales.js"></script>
+<script src="/Siete/Includes/js/highstock-v12.js"></script>
+<script src="/Siete/Includes/js/modules/exporting-v12.js"></script>
+<script src="/Siete/Includes/js/modules/accessibility.js"></script>
+<script src="/Siete/Includes/js/modules/export-data.js"></script>
+<script src="/Siete/Includes/js/modules/offline-exporting.js"></script>
+<script src="/Siete/Includes/js/modules/series-label.js"></script>
+<script src="/Siete/Includes/js/modules/pptxgen.bundle.js"></script>
+<script src="/Siete/Includes/js/export-csv.js"></script>
+
+
+    <style>
+        .logoMovil {
+            display: none;
+            position: absolute;
+            top: 24px;
+            width: auto;
+            max-height: 40px;
+            left: 12px;
+        }
+    </style>
+
+    <div class="">
+        <a href="https://si3.bcentral.cl/siete/"><img class="logoMovil" src="/Siete/Includes/css/images/layout_set_logo.png"></a>
+    </div>
+
+
+    
+
+
+<script type="text/javascript">
+
+    ; (function ($) {
+        $(function () {
+
+
+            $("#btnIngresar").on("click", GetIniciarSesion);
+            $("#btnRegistro").on("click", GetRegistrarse);
+
+        });
+    })(jQuery);
+
+
+    window.addEventListener('message', function (e) {
+
+        const data = e.data;
+
+        if (typeof data !== 'string') {
+            return;
+        }
+
+        let decoded;
+
+        try {
+            decoded = JSON.parse(data);
+        } catch {
+            return;
+        }
+
+        if (!decoded || !decoded.action) {
+            return;
+        }
+
+        if (decoded.action == 'closeDialog') {
+            DialogClose();
+        }
+
+        if (decoded.action == 'refresh') {
+            SelfRedirect();
+        }
+
+        if (decoded.action == 'modal') {
+            SetActiveModalSSO(decoded.key, decoded.user, decoded.tmp)
+        }
+
+        if (decoded.action == 'logout') {
+            LogoutSSO()
+        }
+
+        
+    });
+
+    function SetActiveModalSSO(index, user, tmp) {
+
+        DialogClose();
+
+        if (index === 1) {
+            GetIniciarSesion();
+        }
+
+        if (index === 2) {
+            GetRegistrarse();
+        }
+
+        if (index === 3) {
+            GetRecuperarPass();
+        }
+
+        if (index === 4) {
+            GetCambiaPass(user);
+        }
+    }
+
+    function GetIniciarSesion() {
+
+        DialogClose();
+        var urlLogin = "https://si3.bcentral.cl/ACuser/Account/Login/?appId=cod_bde";
+
+        var $divModal = $("#modalLogin");
+
+        $divModal.modal({
+            keyboard: false,
+            backdrop: 'static'
+        })
+
+        $divModal.on('shown.bs.modal', function (e) {
+            $(this).find('iframe').attr('src', urlLogin)
+        })
+
+        $divModal.on('hidden.bs.modal', function (e) {
+            $(this).find('iframe').attr('src', "about:blank");
+        });
+    }
+
+    function GetRegistrarse() {
+
+
+        DialogClose();
+        var urlLogin = "https://si3.bcentral.cl/ACuser/Account/Registro/?appId=cod_bde";
+
+        var $divModal = $("#modalRegister");
+
+        $divModal.modal({
+            keyboard: false,
+            backdrop: 'static'
+        })
+
+        $divModal.on('shown.bs.modal', function (e) {
+            $(this).find('iframe').attr('src', urlLogin);
+        })
+
+        $divModal.on('hidden.bs.modal', function (e) {
+            $(this).find('iframe').attr('src', "about:blank");
+        });
+    }
+
+    function GetRecuperarPass() {
+
+        DialogClose();
+        var urlLogin = "https://si3.bcentral.cl/ACuser/Account/Recuperar/?appId=cod_bde";
+
+        var $divModal = $("#modalRecuperar");
+
+        $divModal.modal({
+            keyboard: false,
+            backdrop: 'static'
+        })
+
+        $divModal.on('shown.bs.modal', function (e) {
+            $(this).find('iframe').attr('src', urlLogin)
+        })
+
+        $divModal.on('hidden.bs.modal', function (e) {
+            $(this).find('iframe').attr('src', "about:blank");
+        });
+    }
+
+    function GetCambiaPass(user, tmp)
+    {
+        DialogClose();
+        var urlLogin = "https://si3.bcentral.cl/ACuser/Account/Modificar?appId=cod_bde&userKey=" + user + "&forgot=1&tmp=" + 0;
+
+        var $divModal = $("#modalCambiaPass");
+
+        $divModal.modal({
+            keyboard: false,
+            backdrop: 'static'
+        })
+
+        $divModal.on('shown.bs.modal', function (e) {
+            $(this).find('iframe').attr('src', urlLogin)
+        })
+
+        $divModal.on('hidden.bs.modal', function (e) {
+            $(this).find('iframe').attr('src', "about:blank");
+        });
+    }
+
+
+    function LogoutSSO() {
+
+        $.removeCookie('AccesoCentral_Token', { path: '/' });
+        $('#frmLogout').submit();
+    }
+
+</script>
+
+<style>
+
+    .frameSSO {
+        display: block;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100% !important;
+        border: 0;
+    }
+
+    .frameModificar {
+        position: relative;
+/*        top: 0;
+        left: 0;*/
+        height: 100%;
+        width: 100% !important;
+        border: 0;
+    }
+
+    .holds-the-iframe {
+        background: url(https://si3.bcentral.cl/siete//Includes/css/images/ajax-loader_2.gif) center center no-repeat;
+        min-height: 200px;
+        height: 100%;
+    }
+
+    .modal-login .modal-body {
+        position: relative;
+        overflow-y: auto;
+        height: min(400px, calc(100vh - 120px));
+    }
+
+    .modal-register .modal-body {
+        position: relative;
+        overflow-y: auto;
+        min-height: 300px;
+        height: min(calc(100vh - 120px), 670px);
+    }
+
+    .modal-recover-password .modal-body {
+        position: relative;
+        overflow-y: auto;
+        height: min(400px, calc(100vh - 120px));
+    }
+
+    .modal-change-password .modal-body {
+        position: relative;
+        overflow-y: auto;
+        min-height: 520px !important;
+        max-height: 600px !important;
+    }
+
+    @media (max-height: 400px) {
+        .modal-dialog.modal-register {
+            align-items: flex-start !important;
+            margin: 0.5rem auto;
+        }
+
+        .modal-register .modal-body {
+            height: auto !important;
+            min-height: 200px;
+        }
+    }
+</style>
+
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="lblmodalLogin" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-login modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h5 class="modal-title" id="lblmodalLogin">Usuario Registrado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:0">
+
+                <div class="holds-the-iframe">
+                    <iframe id="iframeLogin" class="frameSSO" src="" style="" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalRegister" tabindex="-1" role="dialog" aria-labelledby="lblmodalRegister" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-register modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h5 class="modal-title" id="lblmodalRegister">Registrarse</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+
+                <div class="holds-the-iframe">
+                    <iframe id="iframeRegister" class="frameSSO" src="" style="" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalRecuperar" tabindex="-1" role="dialog" aria-labelledby="lblmodalRecuperar" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-recover-password modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h5 class="modal-title" id="lblmodalRecuperar">Recuperar Contrase&#241;a</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:0">
+
+                <div class="holds-the-iframe">
+                    <iframe id="iframeRecuperar" class="frameSSO" src="" style="" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalCambiaPass" tabindex="-1" role="dialog" aria-labelledby="lblmodalCambiaPass" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-change-password modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <h5 class="modal-title" id="lblmodalCambiaPass">Cambiar Contrase&#241;a</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:0">
+
+                <div class="holds-the-iframe">
+                    <iframe id="iframeCambiaPass" class="frameSSO" src="" style="" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<form action="https://si3.bcentral.cl/ACuser/Account/Logout/" id="frmLogout" method="get">
+    <input type="hidden" name="appId" value="cod_bde" />
+    <input type="hidden" name="referer" value="https://si3.bcentral.cl/siete/" />
+</form>
+
+<script type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=102099948" async></script></body>
+
+
+</html>

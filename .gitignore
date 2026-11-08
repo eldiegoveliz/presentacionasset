@@ -4,3 +4,4 @@ __pycache__/
 .ipynb_checkpoints/
 .DS_Store
 entrega_fees.zip
+data/oficial/pdf_cache/

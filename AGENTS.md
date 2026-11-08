@@ -13,9 +13,9 @@ Los requisitos del profesor, las instrucciones del usuario y las propuestas del 
 ## Forma de trabajo
 
 - Trabajar en el checkout existente. No crear worktrees salvo petición explícita del usuario.
-- El destinatario es el Comité Financiero. Responder para ambos fondos si están bien invertidos y qué cambiar de su política, con razones.
+- El destinatario es el Comité Financiero. El encargo académico completo cubre ambos fondos, pero el usuario delimitó esta implementación a FEES y sus alternativas. No añadir FRP a este alcance.
 - Evaluar cada fondo de acuerdo con su mandato, horizonte, liquidez y riesgos. Verificar estos elementos en fuentes oficiales antes de tratarlos como hechos. No juzgar una política solamente por su retorno histórico.
-- El usuario exige una referencia y una cartera por cada una de sus cuatro hipótesis. Los supuestos técnicos están en config.json y requieren revisión académica del equipo.
+- El usuario exige FEES histórico, una cartera por cada una de sus cuatro hipótesis y una quinta mezcla optimizada para proteger recursos reales en CLP durante contracciones chilenas. Los supuestos técnicos están en config.json y requieren revisión académica del equipo.
 - No inventar datos, fuentes, resultados, integrantes, firmas ni verificaciones. Separar hechos, supuestos e hipótesis. Citar la fuente y fecha de los datos y de las políticas utilizadas.
 - Declarar los supuestos y evaluar la sensibilidad de las conclusiones. No usar información futura para construir decisiones históricas; documentar moneda, retornos, frecuencia y tratamiento de datos faltantes.
 - Toda cifra, tabla y gráfico del memo debe provenir del notebook o de una fuente citada. Conservar trazabilidad entre resultados y entregables.
@@ -28,8 +28,10 @@ Los requisitos del profesor, las instrucciones del usuario y las propuestas del 
 
 El usuario amplió la autorización para investigar las reglas del FEES, descargar datos reales y desarrollar un análisis sencillo de sus cuatro hipótesis. La aclaración posterior pide incluir puts y MBS en la simulación, una cartera por hipótesis. Mostrar su estado normativo: simular un instrumento fuera de política no equivale a autorizar su ejecución. No usar GitHub Actions.
 
-Las reglas verificadas están en `docs/reglas-fees.md`. El código compara la referencia y cuatro carteras con proxies del bloque USD de 69%, sin presentarlos como réplica del fondo. H2 usa primas teóricas y cobre continuo; no llamarlo backtest observado de opciones. H1, H2 y H4 se rotulan como cambios hipotéticos de política. Preservar los pesos estratégicos no certifica elegibilidad de instrumentos ni cumplimiento ex ante. Los supuestos están en `config.json` y `docs/metodologia.md`.
+Las reglas verificadas están en `docs/reglas-fees.md`. La referencia es el FEES observado completo, no la antigua proxy del 69%. Las alternativas son núcleo FEES con satélites, y H2 usa puts sintéticas de 12 meses valoradas mensualmente; no son contratos históricos COMEX observados. Se convierten los retornos con dólar observado diario BCCh y se deflactan con IPC. La quinta alternativa selecciona pesos antes de cada año y publica aparte los pesos finales.
 
-Al cambiar el análisis, regenerar el notebook con `python crear_notebook.py` y ejecutar `python analisis.py` y `python verificar.py`. Conservar los datos congelados y su trazabilidad. No reemplazar los archivos de datos sin solicitud explícita o uso deliberado de `datos.py --actualizar`.
+Conservar el filtro normativo. La existencia de bandas MBS 13%–17% publicadas en informes anuales 2023/2024 corrige el resumen anterior; no equivale a elegibilidad ni certificación ex ante. No presentar la mejor mezcla de una rejilla como óptimo universal ni afirmar anticiclicidad si el resultado no la demuestra.
+
+Al cambiar el análisis, ejecutar `python analisis.py`, `python verificar.py` y `python validar_notebook.py`; este último regenera y ejecuta el notebook y prepara la entrega. Conservar los datos congelados y su trazabilidad. No reemplazar los archivos de datos sin solicitud explícita o uso deliberado de `datos.py --actualizar`.
 
 El análisis del FRP y el memo académico final quedan fuera de esta etapa. No atribuir revisiones o firmas al equipo.

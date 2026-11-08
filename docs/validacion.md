@@ -1,30 +1,41 @@
-# Validación de la entrega
+# Validación de la entrega anticíclica
 
-Verificación ejecutada por el asistente el 8 de noviembre de 2026. No equivale a revisión del equipo ni certificación del custodio.
+Validación del asistente, no revisión académica ni certificación del custodio. Entorno Python 3.11, con versiones exactas en requirements-lock.txt.
 
-## Flujo de datos y cálculos
+## Fuentes realmente utilizadas
 
-Se ejecutaron `python datos.py`, `python analisis.py` y `python verificar.py` con Python 3.11. El entorno exacto está en `requirements-lock.txt`; las dependencias de instalación están en `requirements.txt`.
+Se obtuvieron 153 retornos mensuales FEES, enero 2014–septiembre 2026. Cada número extraído de la tabla coincide con la explicación en prosa del informe correspondiente. Se validó la portada antes de aceptar un documento. Julio de 2016 usa DIPRES porque el enlace de Hacienda devolvía el mes anterior.
 
-- Yahoo entregó siete ETFs con 3.248 observaciones diarias cada uno, desde el 2/12/2013 hasta el 30/10/2026.
-- USD/CLP contiene 3.370 filas y ocho días sin cotización, conservados como faltantes. Se usa el último cierre observado del mes.
-- Se añadieron HG=F y DGS1MO sin reemplazar los ETF congelados. HG=F contiene 3.253 observaciones. FRED DGS1MO descuenta las primas; DGS2/DGS10 sirven como contexto. Sus variaciones no se usan como retornos de bonos.
-- Se obtuvieron 154 retornos mensuales desde enero de 2014, y 82 desde enero de 2020 para la muestra principal.
-- Se comprobaron fechas comunes, meses completos y distribuciones. La máxima diferencia diaria entre ajuste Yahoo y reconstrucción con cierre más distribución fue menor a 3 pb, dentro del umbral de 10 pb fijado por el código. El detalle está en `results/calidad_datos.csv`.
-- Se inspeccionaron los gráficos generados de riqueza y puts para comprobar leyendas, unidades y visibilidad de las cinco carteras. Los cinco PNG se generaron con 1.600 × 800 píxeles.
+Se conserva extracción textual, fecha, URL, página, evidencia y hash del PDF. Las páginas BCCh conservan dólar observado diario, IPC mensual y PIB trimestral, con sus hashes. No se usa el tipo de cambio Yahoo para la conversión del fondo. Los PDF completos se mantienen en caché local, excluida del ZIP y Git, sin impedir la reproducción con los archivos extraídos entregados.
 
-Las dieciocho pruebas de `verificar.py` pasaron. Cubren pérdida inicial, retorno compuesto, costos, pesos y clasificación normativa, cinco carteras distintas, prima Black-76 con un caso numérico cerrado, financiación desde BIL, payoff, rechazo de primas no financiables, ausencia de datos futuros en la entrada, cobertura cero equivalente a referencia, moneda CLP, hashes y resultados reales. La carga del análisis se probó con las solicitudes HTTP bloqueadas.
+La referencia generada coincide con los retornos oficiales. El saldo de la hoja Datos Evo. Hist. del Excel de septiembre de 2026 se convierte por separado: no se utiliza como retorno. Los ETF congelados se preservaron; se amplió únicamente cobre mediante descarga explícita desde 2010 para el calentamiento de volatilidad.
 
-## Notebook y archivos entregados
+## Comprobaciones económicas
 
-Para repetir la comprobación: `python validar_notebook.py`. El script genera un kernel temporal con el Python actual, ejecuta la entrega, compara las nueve salidas y guarda el ZIP actualizado.
+Se ejecutan 24 pruebas mediante `python verificar.py`. Comprueban:
 
-El notebook se ejecutó completo mediante `nbclient` en un kernel nuevo, desde una carpeta temporal creada al extraer `entrega_fees.zip`. Se borró `results/` antes de ejecutar, de modo que todas las salidas se reconstruyeran. La instalación de paquetes se ejecutó con `PIP_NO_INDEX=1` sobre el entorno instalado, sin acceder a índices externos. No hubo celdas con error.
+- los 153 retornos oficiales contra su prosa y los hashes;
+- valor oficial verificable del dólar observado y carga sin red ni Yahoo FX;
+- conversión compuesta USD/CLP e inflación;
+- cartera anual con pesos que fluctúan y rebalanceo en enero;
+- motor vectorizado de mezclas contra tenencias individuales;
+- put anual, renovación semestral de sensibilidad y strike/cantidad fijos;
+- financiación de prima, pago único, nocional cero y opción pendiente al corte;
+- prima de compra inalterada por precios posteriores;
+- restricciones de pesos, selección sin trimestres futuros e historia mínima;
+- PIB con 90 días anteriores a las fechas de decisión;
+- separación del presupuesto invertido y nocional subyacente.
 
-Se compararon byte por byte nueve archivos regenerados frente a la ejecución del script: `metricas.csv`, `retornos_carteras_mensuales.csv`, `metricas_clp.csv`, `correlaciones.csv`, `incertidumbre.csv`, `informe.md`, `puts_auditoria.csv`, `sensibilidad_puts.csv` y `sensibilidad_mbs.csv`. Coincidieron. Esto comprueba un kernel limpio con archivos entregados, no una ejecución dentro del servicio web de Google Colab.
+La evaluación de ciclo solo usa trimestres completos con PIB disponible. H5 queda sin valores antes de disponer de entrenamiento suficiente: no se rellena artificialmente con FEES. Los pesos finales se guardan aparte de la curva progresiva. Se conserva sensibilidad de límites y exclusión de contracciones.
 
-El notebook tiene código visible generado desde `analisis.py`. Se conservaron las salidas de la ejecución. El ZIP contiene código, datos, documentación, resultados y notebook; excluye `.git`, `.venv` y configuración de autenticación.
+## Notebook y gráficos
 
-## Límites de la validación
+`python validar_notebook.py` regenera el notebook, crea un ZIP, lo extrae a una carpeta temporal y elimina todos sus resultados. Usa un kernel temporal con el Python actual y los paquetes instalados, con PIP_NO_INDEX=1. Ejecuta todas las celdas y las pruebas; compara doce archivos regenerados byte por byte con el script. Conserva el notebook ejecutado y actualiza la entrega ZIP.
 
-No hay primas históricas observadas: se simulan opciones europeas sobre el proxy continuo, con primas Black-76. Los pagos, primas, fricción y financiación se guardan por mes. Se prueban 27 combinaciones de supuestos y pesos MBS de 10/15/20%. No se replica el 31% extranjero del FEES. No se verificó el tracking error ex ante ni la elegibilidad de un portafolio ejecutable. La incertidumbre y las sensibilidades no convierten el backtest exploratorio en una prueba independiente de las hipótesis.
+Esto verifica un kernel nuevo con los datos entregados. No se afirma haber ejecutado dentro del servicio web de Google Colab. La primera celda acepta archivos entregados o el archivo público de la rama GitHub, sin rutas privadas.
+
+Los gráficos separan FEES observado, saldo efectivo, rebalanceos simulados, PIB, contracciones y puts. Las comparaciones de riqueza de las seis estrategias empiezan en la misma fecha y capital. Los cambios de política marcados no se presentan como todas las fechas de rebalanceo real.
+
+## Qué no demuestra la verificación
+
+La optimización es exhaustiva dentro de una rejilla, no un óptimo universal. Usa PIB revisado, decisiones de diseño retrospectivas, pocos episodios y primas sintéticas. Un resultado pequeño o una solución concentrada no se presenta como cartera anticíclica demostrada. La validación no certifica TE ex ante, contratos negociables, liquidez de venta, cobertura fiscal completa ni autorizaciones normativas.

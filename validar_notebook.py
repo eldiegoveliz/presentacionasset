@@ -39,12 +39,14 @@ with tempfile.TemporaryDirectory(prefix="fees-notebook-") as tmp:
     finally:
         if gestor.has_kernel:
             gestor.shutdown_kernel(now=True)
-    salidas = ["metricas.csv", "retornos_carteras_mensuales.csv", "metricas_clp.csv", "correlaciones.csv",
-               "incertidumbre.csv", "informe.md", "puts_auditoria.csv", "sensibilidad_puts.csv", "sensibilidad_mbs.csv"]
+    salidas = ["retornos_carteras_usd.csv", "retornos_carteras_clp.csv", "retornos_carteras_clp_real.csv",
+               "ciclo_contracciones.csv", "pesos_optimos_finales.csv", "pesos_optimos_anuales.csv",
+               "puts_auditoria.csv", "retornos_trimestrales_clp_real.csv", "sensibilidad_excluir_contraccion.csv",
+               "incertidumbre_ciclo.csv", "informe.md", "exposicion_optima.csv"]
     for archivo in salidas:
         if (proyecto / "results" / archivo).read_bytes() != (RAIZ / "results" / archivo).read_bytes():
             raise AssertionError(f"El notebook y el script difieren: {archivo}")
     nbformat.write(nb, RAIZ / "notebooks/fees.ipynb")
-    print("Notebook completo en kernel limpio; nueve salidas idénticas byte por byte.")
+    print("Notebook completo en kernel limpio; doce salidas idénticas byte por byte.")
 
 subprocess.run([sys.executable, str(RAIZ / "preparar_entrega.py")], check=True)

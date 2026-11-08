@@ -1,6 +1,0 @@
-cartera,hipotesis,estado_normativo,evidencia
-Referencia proxy USD,Referencia,Referencia proxy; cumplimiento no certificado,Retornos ETF proxy
-H1 Mas letras,1. Menor dependencia de bonos largos,Requiere cambiar asignacion y evaluar riesgo ex ante,Retornos ETF proxy
-H2 Puts cobre (modelo),2. Cobertura con puts de cobre,Instrumento fuera de la politica consultada; simulacion teorica,"Primas teoricas, subyacente continuo proxy"
-H3 Treasury corto,3. Menor duracion Treasury,Pesos de clases conservados; TE ex ante no verificado,Retornos ETF proxy
-H4 Menos MBS,4. Menor ponderacion MBS,Requiere cambiar el 15% estrategico de MBS,Retornos ETF proxy

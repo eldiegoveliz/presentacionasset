@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">        
+        <meta http-equiv="cache-control" CONTENT="no-cache">
+        <meta http-equiv="Cache-Control" content="no-store" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Expires" content="-1">
+
+        <!--meta name="viewport" content="orientation=portrait, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"-->
+        <!--meta name="viewport" content="width=device-width, orientation=portrait, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"-->
+
+        <script type="text/javascript">
+            var sessionLang = "esp";   
+            var keepAliveUrl = 'https://si3.bcentral.cl/Bdemovil/BDE/KeepAliveAJAX';
+            var mediaQuerisIe10 = '/Bdemovil/Content/html/css/mediaqueries-ie10mobile.css';
+            var mediaQuerisIeX = '/Bdemovil/Content/html/css/mediaqueries-ieXotro.css';
+            var mediaQueris = '/Bdemovil/Content/html/css/mediaqueries.min2.css';
+            var uaa = navigator.userAgent.toLowerCase();
+            var ess4mini = uaa.indexOf("gt-i9195") > -1;
+            
+    var codigoAnalytics = 'UA-26456613-11';
+    
+
+        </script>
+
+        <!-- Include the CSS -->
+        <link href='/Bdemovil/Content/html/css/bootstrap.min2.css' rel="stylesheet" />
+        <link href="/Bdemovil/Content/html/css/estilos?v=cCBe93z5KdjI3fVVSIdzd6MhSL4CRsALjVIFLyCr9NA1" rel="stylesheet"/>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="js/html5shiv.js"></script>
+            <script src="js/respond.min.js"></script>
+        <![endif]-->
+        <!--[if IE 9]>
+            <style type="text/css">
+            #wrap {height:100%}
+            /*#main .content {position: relative;top:0px !important;}*/
+            #main .content {position: absolute;}
+            #main .content {filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebebeb', endColorstr='#FFFFFF',GradientType=0 );}
+            </style>
+        <![endif]-->
+        <!--[if lte IE 8]>
+            <style type="text/css">
+            #wrap {display:table;height:100%}
+            </style>
+        <![endif]-->
+        <!-- Scripts -->
+        <script src="/Bdemovil/Content/scripts/layoutc?v=Ox_Z6Z5ncEnsyQv01L6lx402i51LOb3m8WytBQbsGDA1"></script>
+
+        <script src="/Bdemovil/Content/scripts/layout2?v=SCiEllbFCwk2Rms7XRkimjMDKYJDE0RU4Et63XCLvtg1"></script>
+
+        <script src="/Bdemovil/Content/html/js/snap.min.js"></script>
+        <title>Banco Central</title>
+
+        <!-- webapp homescreen link -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" sizes="36x36" href='/Bdemovil/Content/html/img/ico-ld.png' />
+        <link rel="apple-touch-icon" sizes="57x57" href='/Bdemovil/Content/html/img/ico-md.png' />
+        <link rel="apple-touch-icon" sizes="72x72" href='/Bdemovil/Content/html/img/ico-hd.png' />
+        <link rel="apple-touch-icon" sizes="114x114" href='/Bdemovil/Content/html/img/ico-xhd.png' />
+        <link rel="apple-touch-icon" sizes="144x144" href='/Bdemovil/Content/html/img/ico-xxhd.png' />
+        <!-- /webapp homescreen link -->
+    </head>
+    <body>
+        <div style="width: 100%;float: left;overflow-x: hidden;position: absolute;left: 0;top: 0;height: 100%;">
+            <!-- Primero va el menú principal que va oculto -->
+            <div class="snap-drawers hide">
+    	        <div class="snap-drawer snap-drawer-left active-drawer" id="left-drawer">
+    		        <div class="menuTitle">
+                        <h2><text id="titleMenu"></text></h2>
+    		        </div>
+    	            <div class="panel-group" id="accordion">
+                                                 <div class="panel panel-default">
+                                                     <div class="panel-heading">
+                                                         <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="window.location.href = '/Bdemovil/BDE/IndicadoresDiarios?menuId=MI&amp;parentMenuName=Indicadores%20diarios'">
+                                                                <div class="imageico">
+                                                                    <img src='/Bdemovil/Content/html/img/ico-MI.png' class="img-responsive">
+                                                                </div>
+Indicadores diarios                                                                </a>
+                                                        </h4>
+                                                  </div>
+                                                  <div id="collapseOne" class="panel-collapse collapse">
+                                                         <div class="panel-body">
+                                                             <ul>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                 <div class="panel panel-default">
+                                                     <div class="panel-heading">
+                                                         <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                                                <div class="imageico">
+                                                                    <img src='/Bdemovil/Content/html/img/ico-MS.png' class="img-responsive">
+                                                                </div>
+Series más consultadas                                                                </a>
+                                                        </h4>
+                                                  </div>
+                                                  <div id="collapseTwo" class="panel-collapse collapse">
+                                                         <div class="panel-body">
+                                                             <ul>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_TC1?nombreItem=D%C3%B3lar%20observado%20&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=MS1">D&#243;lar observado </a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_PR1?nombreItem=IPC%2C%20variaci%C3%B3n%20mensual&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=MS2">IPC, variaci&#243;n mensual</a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_CN6_2018?nombreItem=PIB%2C%20variaci%C3%B3n%20anual&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=637829661021845970">PIB, variaci&#243;n anual</a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_TI1?nombreItem=Tasa%20de%20pol%C3%ADtica%20monetaria%20%28TPM%29&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=MS4">Tasa de pol&#237;tica monetaria (TPM)</a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_CN1_2018?nombreItem=IMACEC%2C%20variaci%C3%B3n%20anual&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=637829662501224389">IMACEC, variaci&#243;n anual</a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_CN5B_2018?nombreItem=IMACEC%20no%20minero%2C%20variaci%C3%B3n%20anual&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=637829663193391567">IMACEC no minero, variaci&#243;n anual</a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_ML3?nombreItem=Tasa%20de%20desempleo&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=MS6">Tasa de desempleo</a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_SE9?nombreItem=Reservas%20internacionales%20%28millones%20de%20d%C3%B3lares%29&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=MS7">Reservas internacionales (millones de d&#243;lares)</a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_PR11?nombreItem=Unidad%20de%20Fomento%20%28UF%29&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=MS8">Unidad de Fomento (UF)</a></li>
+                                                     <li><a href="/Bdemovil/BDE/Series/MOV_SC_PR12?nombreItem=Unidad%20tributaria%20mensual%20%28UTM%29&amp;nombrePadre=Series%20m%C3%A1s%20consultadas&amp;idPadre=x&amp;parametroMenu=Index&amp;idMenuTree=MS9">Unidad tributaria mensual (UTM)</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                 <div class="panel panel-default">
+                                                     <div class="panel-heading">
+                                                         <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                                <div class="imageico">
+                                                                    <img src='/Bdemovil/Content/html/img/ico-MB.png' class="img-responsive">
+                                                                </div>
+Base de datos                                                                </a>
+                                                        </h4>
+                                                  </div>
+                                                  <div id="collapseThree" class="panel-collapse collapse">
+                                                         <div class="panel-body">
+                                                             <ul>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_CN&amp;parentMenuName=Cuentas%20nacionales">Cuentas nacionales</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=637915046997939560&amp;parentMenuName=PIB%20regional">PIB regional</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_SE&amp;parentMenuName=Sector%20externo">Sector externo</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_PR&amp;parentMenuName=Precios">Precios</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_EM&amp;parentMenuName=Estad%C3%ADsticas%20monetarias%20y%20financieras">Estad&#237;sticas monetarias y financieras</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=637825174960412028&amp;parentMenuName=Derivados%20y%20Spot">Derivados y Spot</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_TI&amp;parentMenuName=Tasas%20de%20inter%C3%A9s">Tasas de inter&#233;s</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_TC&amp;parentMenuName=Tipos%20de%20cambio">Tipos de cambio</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_EI&amp;parentMenuName=Econom%C3%ADa%20internacional">Econom&#237;a internacional</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_EE&amp;parentMenuName=Encuesta%20de%20expectativas%20econ%C3%B3micas">Encuesta de expectativas econ&#243;micas</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_ML&amp;parentMenuName=Mercado%20laboral%20">Mercado laboral </a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_IS&amp;parentMenuName=Indicadores%20sectoriales">Indicadores sectoriales</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=637946799359326910&amp;parentMenuName=Estad%C3%ADsticas%20de%20g%C3%A9nero">Estad&#237;sticas de g&#233;nero</a></li>
+                                                     <li><a href="/Bdemovil/BDE/ViewCategoria?menuId=MB_FP&amp;parentMenuName=Finanzas%20p%C3%BAblicas">Finanzas p&#250;blicas</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                 <div class="panel panel-default">
+                                                     <div class="panel-heading">
+                                                         <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" onclick="window.location.href = '/Bdemovil/BDE/ViewFavoritos?menuId=FA'">
+                                                                <div class="imageico">
+                                                                    <img src='/Bdemovil/Content/html/img/ico-FA.png' class="img-responsive">
+                                                                </div>
+Favoritos                                                                </a>
+                                                        </h4>
+                                                  </div>
+                                                  <div id="collapseFour" class="panel-collapse collapse">
+                                                         <div class="panel-body">
+                                                             <ul>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                 <div class="panel panel-default">
+                                                     <div class="panel-heading">
+                                                         <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" onclick="window.location.href = '/Bdemovil/BDE/ViewTwitter?menuId=NO&amp;parentMenuName=Novedades'">
+                                                                <div class="imageico">
+                                                                    <img src='/Bdemovil/Content/html/img/ico-NO.png' class="img-responsive">
+                                                                </div>
+Novedades                                                                </a>
+                                                        </h4>
+                                                  </div>
+                                                  <div id="collapseFive" class="panel-collapse collapse">
+                                                         <div class="panel-body">
+                                                             <ul>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                 <div class="panel panel-default">
+                                                     <div class="panel-heading">
+                                                         <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" onclick="window.location.assign('https://contactocentral.bcentral.cl/');">
+                                                                <div class="imageico">
+                                                                    <img src='/Bdemovil/Content/html/img/ico-CO.png' class="img-responsive">
+                                                                </div>
+Contáctenos                                                                </a>
+                                                        </h4>
+                                                  </div>
+                                                  <div id="collapseSix" class="panel-collapse collapse">
+                                                         <div class="panel-body">
+                                                             <ul>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                 <div class="panel panel-default">
+                                                     <div class="panel-heading">
+                                                         <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" onclick="window.location.href = '/Bdemovil/BDE/CambioValorSession'">
+                                                                <div class="imageico">
+                                                                    <img src='/Bdemovil/Content/html/img/ico-LA.png' class="img-responsive">
+                                                                </div>
+English                                                                </a>
+                                                        </h4>
+                                                  </div>
+                                                  <div id="collapseSeven" class="panel-collapse collapse">
+                                                         <div class="panel-body">
+                                                             <ul>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                 <div class="panel panel-default">
+                                                     <div class="panel-heading">
+                                                         <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseEight" onclick="window.location.assign('https://si3.bcentral.cl/Siete');">
+                                                                <div class="imageico">
+                                                                    <img src='/Bdemovil/Content/html/img/ico-DE.png' class="img-responsive">
+                                                                </div>
+Versión completa                                                                </a>
+                                                        </h4>
+                                                  </div>
+                                                  <div id="collapseEight" class="panel-collapse collapse">
+                                                         <div class="panel-body">
+                                                             <ul>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+            </div>
+            <!-- fin menú -->
+            <!-- Contenido -->
+            
+
+
+
+<script>
+    var razorCaptchaImage = '/Bdemovil/BDE/CaptchaImage?';
+    var razorFrecuencia = "MENSUAL";
+    var razorArrayDatos = ["[1072926000000,-0.2]","[1075604400000,0]","[1078110000000,0.4]","[1080792000000,0.4]","[1083384000000,0.5]","[1086062400000,0.4]","[1088654400000,0.2]","[1091332800000,0.4]","[1094011200000,0.1]","[1096603200000,0.3]","[1099278000000,0.3]","[1101870000000,-0.4]","[1104548400000,-0.3]","[1107226800000,-0.1]","[1109646000000,0.6]","[1112328000000,0.9]","[1114920000000,0.3]","[1117598400000,0.4]","[1120190400000,0.6]","[1122868800000,0.3]","[1125547200000,1]","[1128139200000,0.5]","[1130814000000,-0.2]","[1133406000000,-0.3]","[1136084400000,0.1]","[1138762800000,-0.1]","[1141182000000,0.6]","[1143864000000,0.6]","[1146456000000,0.2]","[1149134400000,0.6]","[1151726400000,0.5]","[1154404800000,0.3]","[1157083200000,0]","[1159675200000,-0.3]","[1162350000000,-0.2]","[1164942000000,0.1]","[1167620400000,0.3]","[1170298800000,-0.2]","[1172718000000,0.4]","[1175400000000,0.6]","[1177992000000,0.6]","[1180670400000,0.9]","[1183262400000,1.1]","[1185940800000,1.1]","[1188619200000,1.1]","[1191211200000,0.3]","[1193886000000,0.8]","[1196478000000,0.5]","[1199156400000,0]","[1201834800000,0.4]","[1204340400000,0.8]","[1207022400000,0.4]","[1209614400000,1.2]","[1212292800000,1.5]","[1214884800000,1.1]","[1217563200000,0.9]","[1220241600000,1.1]","[1222833600000,0.9]","[1225508400000,-0.1]","[1228100400000,-1.2]","[1230778800000,-0.8]","[1233457200000,-0.4]","[1235876400000,0.4]","[1238558400000,-0.2]","[1241150400000,-0.3]","[1243828800000,0.3]","[1246420800000,-0.4]","[1249099200000,-0.4]","[1251777600000,1]","[1254369600000,0]","[1257044400000,-0.5]","[1259636400000,-0.3]","[1262314800000,0.5]","[1264993200000,0.3]","[1267412400000,0.1]","[1270090800000,0.5]","[1272686400000,0.4]","[1275364800000,0]","[1277956800000,0.6]","[1280635200000,-0.1]","[1283313600000,0.4]","[1285905600000,0.1]","[1288580400000,0.1]","[1291172400000,0.1]","[1293850800000,0.3]","[1296529200000,0.2]","[1298948400000,0.8]","[1301626800000,0.3]","[1304218800000,0.4]","[1306900800000,0.2]","[1309492800000,0.1]","[1312171200000,0.2]","[1314846000000,0.5]","[1317438000000,0.5]","[1320116400000,0.3]","[1322708400000,0.6]","[1325386800000,0.1]","[1328065200000,0.4]","[1330570800000,0.2]","[1333249200000,0.1]","[1335844800000,0]","[1338523200000,-0.3]","[1341115200000,0]","[1343793600000,0.2]","[1346472000000,0.8]","[1349060400000,0.6]","[1351738800000,-0.5]","[1354330800000,0]","[1357009200000,0.2]","[1359687600000,0.1]","[1362106800000,0.4]","[1364785200000,-0.5]","[1367380800000,0]","[1370059200000,0.6]","[1372651200000,0.3]","[1375329600000,0.2]","[1378008000000,0.5]","[1380596400000,0.1]","[1383274800000,0.4]","[1385866800000,0.6]","[1388545200000,0.2]","[1391223600000,0.5]","[1393642800000,0.8]","[1396321200000,0.6]","[1398916800000,0.3]","[1401595200000,0.1]","[1404187200000,0.2]","[1406865600000,0.3]","[1409544000000,0.8]","[1412132400000,1]","[1414810800000,0]","[1417402800000,-0.4]","[1420081200000,0.1]","[1422759600000,0.4]","[1425178800000,0.6]","[1427857200000,0.6]","[1430449200000,0.2]","[1433127600000,0.5]","[1435719600000,0.4]","[1438398000000,0.7]","[1441076400000,0.5]","[1443668400000,0.4]","[1446346800000,0]","[1448938800000,0]","[1451617200000,0.5]","[1454295600000,0.3]","[1456801200000,0.4]","[1459479600000,0.3]","[1462071600000,0.2]","[1464753600000,0.4]","[1467345600000,0.2]","[1470024000000,0]","[1472698800000,0.2]","[1475290800000,0.2]","[1477969200000,0.1]","[1480561200000,-0.2]","[1483239600000,0.5]","[1485918000000,0.2]","[1488337200000,0.4]","[1491015600000,0.2]","[1493607600000,0.1]","[1496289600000,-0.4]","[1498881600000,0.2]","[1501560000000,0.2]","[1504234800000,-0.2]","[1506826800000,0.6]","[1509505200000,0.1]","[1512097200000,0.1]","[1514775600000,0.5]","[1517454000000,0]","[1519873200000,0.2]","[1522551600000,0.3]","[1525143600000,0.3]","[1527825600000,0.1]","[1530417600000,0.4]","[1533096000000,0.2]","[1535770800000,0.3]","[1538362800000,0.4]","[1541041200000,0]","[1543633200000,-0.1]","[1546311600000,0.1]","[1548990000000,0]","[1551409200000,0.5]","[1554087600000,0.3]","[1556683200000,0.6]","[1559361600000,0]","[1561953600000,0.2]","[1564632000000,0.2]","[1567310400000,0]","[1569898800000,0.8]","[1572577200000,0.1]","[1575169200000,0.1]","[1577847600000,0.6]","[1580526000000,0.4]","[1583031600000,0.3]","[1585710000000,0]","[1588305600000,-0.1]","[1590984000000,-0.1]","[1593576000000,0.1]","[1596254400000,0.1]","[1598932800000,0.6]","[1601521200000,0.7]","[1604199600000,-0.1]","[1606791600000,0.3]","[1609470000000,0.7]","[1612148400000,0.2]","[1614567600000,0.4]","[1617246000000,0.4]","[1619841600000,0.3]","[1622520000000,0.1]","[1625112000000,0.8]","[1627790400000,0.4]","[1630468800000,1.2]","[1633057200000,1.3]","[1635735600000,0.5]","[1638327600000,0.8]","[1641006000000,1.2]","[1643684400000,0.3]","[1646103600000,1.9]","[1648782000000,1.4]","[1651377600000,1.2]","[1654056000000,0.9]","[1656648000000,1.4]","[1659326400000,1.2]","[1662004800000,0.9]","[1664593200000,0.5]","[1667271600000,1]","[1669863600000,0.3]","[1672542000000,0.8]","[1675220400000,-0.1]","[1677639600000,1.1]","[1680318000000,0.3]","[1682913600000,0.1]","[1685592000000,-0.2]","[1688184000000,0.4]","[1690862400000,0.1]","[1693540800000,0.7]","[1696129200000,0.4]","[1698807600000,0.7]","[1701399600000,-0.5]","[1704078000000,0.7]","[1706756400000,0.6]","[1709262000000,0.4]","[1711940400000,0.5]","[1714536000000,0.3]","[1717214400000,-0.1]","[1719806400000,0.7]","[1722484800000,0.3]","[1725163200000,0.1]","[1727751600000,1]","[1730430000000,0.2]","[1733022000000,-0.2]","[1735700400000,1.1]","[1738378800000,0.4]","[1740798000000,0.5]","[1743476400000,0.2]","[1746072000000,0.2]","[1748750400000,-0.4]","[1751342400000,0.9]","[1754020800000,0]","[1756699200000,0.4]","[1759287600000,0]","[1761966000000,0.3]","[1764558000000,-0.2]","[1767236400000,0.4]","[1769914800000,0]","[1772334000000,1]","[1775012400000,1.3]","[1777608000000,0.2]","[1780286400000,0]","[1782878400000,0.1]","[1785556800000,0.6]","[1788235200000,0.4]","[1790823600000,0.5]"];
+    var razorId = "MOV_SC_PR1";
+    var razorContenido = null;
+    var razorNombreDefinicion = "IPC General, variación mensual";
+    var razorUnidad = "Porcentaje";
+    var razorSendEmail = "/Bdemovil/BDE/SendEmail";
+    var razorFechaInicio = 1325386800000;
+    var razorFechaFin = 1790823600000;
+    var razorViewAllData = "/Bdemovil/BDE/SeriesData/MOV_SC_PR1";
+    var razorHighchartDecimal = "1";
+
+</script>
+
+<script src="/Bdemovil/Content/scripts/series?v=SQViVz7ZRmVExlOAUMbME72X6pZcpGZVUaKvQa0hawA1"></script>
+;
+
+<script>
+    var _Captcha1;
+    var _Captcha2;
+
+    var verifyCaptcha1 = function (response) {
+
+    };
+
+    var verifyCaptcha2 = function (response) {
+
+    }; 
+
+    var CaptchaCallback = function () {
+
+        _Captcha1 = grecaptcha.render('divCaptcha', {
+            'sitekey': '6LeORMAUAAAAAEQfKzhgo42kRjt5gcgAPxHQ1lLq',
+            'callback': verifyCaptcha1
+        });
+
+        _Captcha2 = grecaptcha.render('divCaptchaC', {
+            'sitekey': '6LeORMAUAAAAAEQfKzhgo42kRjt5gcgAPxHQ1lLq',
+            'callback': verifyCaptcha2
+        });
+    };
+</script>
+<script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
+
+<script>
+    ; (function ($) {
+        $(function () {
+
+            //var UrlPage = window.location.href;
+            $("#urlGraficoC").val("L0ZZTURYM0FuL0lpRC9vdzc3aTUvOUVaVVFNWXg3Uw==");
+            $("#urlGraficoT").val("L0ZZTURYM0FuL0lpRC9vdzc3aTUvOUVaVVFNWXg3Uw==");
+
+            $("#idC").val("by5ycEl1ZTkxbA==");
+            $("#idT").val("by5ycEl1ZTkxbA==");
+
+            //
+
+        });
+    })(jQuery);
+</script>
+
+<div id="content" class="snap-content" >
+	<div id="wrap">
+		<div id="main">
+            <header class="header">
+				<nav class="navbar navbar-default" role="navigation">					
+					<div class="navbar-header">
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-1 col-sm-1">									
+									<button class="button trigger" id="toggle-left">
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+								</div>
+								<div class="col-xs-1 col-sm-2"></div>
+								<div class="col-xs-8 col-sm-6">
+									<a class="navbar-brand" href="/Bdemovil/"><img src='/Bdemovil/Content/html/img/logo.png' class="img-responsive"></a>
+								</div>
+                                <div class="vmover col-xs-2 col-sm-3">
+                                    <a class="rArrow getDown hide" href="" id="rArrowH"></a>
+                                </div>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</header>
+			<!-- content -->
+            <div class="content">
+			    <div class="container">
+				<div class="col-xs-12">
+					<div class="row">
+                        <div id="topDiv"></div>
+						<div class="col-xs-12 border-btm">
+							<div class="col-xs-10">
+								<h3><a style="color:#4a535d;" href="/Bdemovil/BDE/IndicadoresDiarios"><img src='/Bdemovil/Content/html/img/arrow.png' class="backBtn img-responsive" alt="arrow"></a></h3>
+							</div>
+							<div class="col-xs-2">
+								<a class="addFav"><i class="fa fa-star-o" id="star" data-fav-name="" style="cursor:pointer"></i></a>
+							</div>
+						</div>
+					</div>
+					
+					<div class="dailyIndicators">
+						<div class="row">
+							<div id="container" class="hcharts"></div>
+						</div>						
+						<div class="row">
+							<div class="panelTab">
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs">
+									<li><a href="#notes" class="btn btn-primary btn-lg" data-toggle="tab"><text id="textNotas"></text></a></li>
+									<li><a href="#email" class="btn btn-primary btn-lg" data-toggle="tab"><text id="textEmail"></text></a></li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div class="tab-pane fade" id="notes">
+										<table class="tableInfo table table-bordered">
+											<thead>
+												<tr>
+													<th colspan="2"><text id="textMetadatos"></text></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>
+														<p><strong><text id="textNombreDefinicion"></text></strong></p>
+														<p>IPC General, variaci&#243;n mensual</p>
+													</td>
+													<td>
+														<p><strong><text id="textUltimaActualizacion"></text></strong></p>
+														<p>06-nov-2026</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<p><strong><text id="textUnidad"></text></strong></p>
+														<p>Porcentaje</p>
+													</td>
+													<td rowspan="2">
+														<p><strong><text id="textUltimaObservacion"></text></strong></p>
+														<p>oct-2026</p>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<p><strong><text id="textFrecuencia"></text></strong></p>
+														<p>Mensual</p>
+													</td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<th colspan="2"><text id="textNotasMeta"></text></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td colspan="2">IPC: &#205;ndice de precios al consumidor (IPC).   Fuente: Instituto Nacional de Estad&#237;sticas (INE)</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="tab-pane fade" id="email">
+                                    <!-- formulario de correo para tablet -->
+										<h4><text id="textTitulo"></text></h4>
+										<div class="hidden-xs">
+											<form role="form" class="contacto form-inline" id="contact-formT">
+                                                <div class="row">
+                                                    <div class="form-group col-md-12 col-sm-12">
+                                                        <div class="row">
+												            
+												            <div class="form-group col-md-6 col-sm-6">
+													            <label for="exampleInputEmail1"><h4><text id="textInputEmail"></text></h4></label>
+													            <input type="email" class="form-control input-lg" name="varTo" id="varToT" placeholder="Ingrese su Correo" autocomplete>
+												            </div>
+                                                        </div>
+                                                     </div>
+                                                </div>
+
+                                                <div>
+                                                
+                                                	<div class="row" style="padding-top: 20px;">
+                                                		<div class="col-sm-12">
+	                                                        <h4><text id="textoCaptcha"></text></h4>
+	                                                    </div>
+	                                                </div>
+                                                    <div class="row">
+	                                                    <div class="captcha" id="divCaptcha1">
+                                                            <div class="col-sm-1">
+                                                            	
+                                                            </div>
+                                                            <div class="col-md-2 col-sm-2">
+                                                                
+                                                                <div id="divCaptcha"></div>
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-4">
+                                                                
+                                                            </div>
+		                                                    <div class="col-md-5 col-sm-5">
+		                                                        <input type="hidden" name="id" id="idT" value="" />
+                                                                
+                                                                <input type="hidden" name="urlGrafico" id="urlGraficoT" />
+                                                                
+															    <button type="button" class="btn btn-primary btn-lg pull-right" id="btnSendEmailT"><text id="textBtnEnviar"></text></button>
+														    </div>
+													    </div>
+	                                                </div>
+                                                </div>
+											</form>
+										</div>
+										<!-- formulario de correo para cellphone -->
+										<div class="visible-xs">
+											<form role="form" class="contacto form-inline" id="contact-formC">
+												
+												<div class="form-group">
+													<label for="exampleInputEmail1"><h4><text id="textInputEmailC"></text></h4></label>
+													<input type="email" class="form-control input-sm" name="varTo" id="varToC" placeholder="Ingrese su Correo" autocomplete>
+												</div>
+                                                
+                                                <div class="form-group">
+                                                
+                                                    <div class="row">
+	                                                    <div class="col-xs-12" id="divCaptcha23">
+													    	<h4><text id="textoCaptchaC"></text></h4>
+	                                                    </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="captcha" id="divCaptcha2">
+                                                            
+                                                            <div class="col-xs-12">
+                                                                
+                                                                <div id="divCaptchaC"></div>
+                                                            </div> 
+                                                            
+                                                            <div class="col-xs-12">
+                                                                <input type="hidden" name="id" id="idC" value="" />
+                                                                
+                                                                <input type="hidden" name="urlGrafico" id="urlGraficoC" />
+                                                                
+                                                                <button type="button" class="btn btn-primary btn-sm" id="btnSendEmailC"><text id="textBtnEnviarC"></text></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+                        <div class="row">
+							<table class="tableTitledata table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th class="col-xs-6 text-center"><text id="textPeriodo"></text></th>
+										<th class="col-xs-6 text-center"><text id="textValor"></text></th>
+									</tr>
+								</thead>
+							</table>
+							<div id="datosSeriesContainer">
+								<table class="tableInfo table table-bordered" id="datosSeries">
+									<tbody class="scrollTable">
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">oct-2026</td>
+                                                   <td class="col-xs-6 text-right">0,5</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">sep-2026</td>
+                                                   <td class="col-xs-6 text-right">0,4</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">ago-2026</td>
+                                                   <td class="col-xs-6 text-right">0,6</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">jul-2026</td>
+                                                   <td class="col-xs-6 text-right">0,1</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">jun-2026</td>
+                                                   <td class="col-xs-6 text-right">0,0</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">may-2026</td>
+                                                   <td class="col-xs-6 text-right">0,2</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">abr-2026</td>
+                                                   <td class="col-xs-6 text-right">1,3</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">mar-2026</td>
+                                                   <td class="col-xs-6 text-right">1,0</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">feb-2026</td>
+                                                   <td class="col-xs-6 text-right">0,0</td>
+                                               </tr>
+                                               <tr>
+                                                   <td class="col-xs-6 text-center">ene-2026</td>
+                                                   <td class="col-xs-6 text-right">0,4</td>
+                                               </tr>
+
+									</tbody>
+								</table>                                
+							</div>
+                            <div>
+                                <button id="viewAllData" class="btn btn-primary btn-md collapsed"></button>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+	<footer id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+                        <div class="lang pull-right"><a href='#' onclick="window.location.assign('https://www.bcentral.cl/web/banco-central/condiciones-de-uso');" id="link"></a></div>
+
+                    
+				</div>
+			</div>
+		</div>
+
+       
+	</footer>
+
+
+<script>
+    var sessionLang = "esp";   
+</script>
+            </div>
+		</div>
+	</div>
+</div>
+
+            <!-- Fin contenido -->
+        </div>        
+    </body>
+</html>

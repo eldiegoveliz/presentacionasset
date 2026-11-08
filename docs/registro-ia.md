@@ -85,6 +85,34 @@ Pero y la idea de puts? No es solo una simulación con 4 hipótesis. Una simulac
 
 La inclusión de escenarios hipotéticos no se registra como autorización real para cambiar las directrices del FEES. El filtro normativo se conserva junto a la comparación económica.
 
+## Enfoque anticíclico, datos oficiales y quinta alternativa
+
+Esta actualización reemplaza el diseño de puts mensuales y la comparación de una proxy parcial con el FEES completo. Las secciones anteriores son registro histórico, no especificación vigente.
+
+| Herramienta, modelo y versión | Prompts utilizados | Qué se incorporó al entregable | Errores detectados en el output | Cómo se verificó el resultado | Qué cambió el equipo | Limitaciones que persisten |
+| --- | --- | --- | --- | --- | --- | --- |
+| T3 Code mediante Codex, gpt-6.1-sol, esfuerzo high; revisión adicional no informada. | P6 y P7 literales, abajo. | Retornos oficiales FEES, FX diario BCCh, PIB e IPC; carteras completas núcleo/satélite; rebalanceo anual; puts 12/6 meses mantenidas y valoradas mensualmente; búsqueda H5 en rejilla y evaluación temporal; saldo efectivo y gráficos de ciclo; notebook, pruebas y documentación. | El usuario corrigió el objetivo: evaluar crisis cíclicas y un horizonte de cobertura mayor. La afirmación anterior de que no existían bandas MBS publicadas era demasiado fuerte: informes anuales publican 13%–17%. Se detectó que el enlace Hacienda de julio 2016 devolvía junio; se reemplazó con DIPRES. La extracción tuvo que distinguir enlaces PDF y versión-pdf y espacios Unicode. Un control sintáctico detectó signos de parche en el generador inicial, corregidos antes de entregar resultados. Una prueba encontró que el registro de tenencias no admitía columnas numéricas; se corrigió el constructor del diccionario. Se retiraron restricciones de peso que forzaban diversificación aparente y se conservaron como sensibilidad. La revisión visual detectó que el panel de PIB quedaba vacío por mezclar unidades temporales de pandas y matplotlib; ambos paneles se trazaron con fechas matplotlib consistentes. | Se cotejaron los 153 retornos contra la prosa de sus documentos; portadas, URLs y hashes conservados. Las pruebas verifican financiación, vencimiento fijo, información anterior, rebalanceo anual, conversión compuesta y núcleo observado. Se ejecuta el notebook en kernel temporal y se comparan doce salidas byte por byte; detalles en docs/validacion.md. | El usuario delimitó FEES y sus cuatro alternativas, pidió H5 y autorizó aplicar las correcciones. Los satélites, porcentajes, criterio maximin, rejilla 5%, rezago PIB de 90 días y tope H2 25% son decisiones técnicas del asistente. No hay revisión de los integrantes ni firmas informadas. | PIB revisado, pocas contracciones e hipótesis diseñadas mirando el pasado. Primas/futuros sintéticos, no contratos COMEX observados; riesgo de base del cobre continuo. Rebalances reales incorporados en retornos, sin calendario operativo exhaustivo. Pesos del fondo cambian históricamente. La mejor mezcla de la rejilla no garantiza anticiclicidad, estabilidad ni cumplimiento ex ante. |
+
+### P6 — definición del objetivo
+
+```text
+Okay, unas cosas
+
+Quiero el grafico que muestre los rendimientos del fees con sus rebalances. Por que pits mensuales? Si haces hedges así, deberían ser de más plazo.
+
+No quiero saber tanto el rendimiento total, sino su comportamiento ante malas situaciones cíclicas. Quizá seria bueno ver comparando el pib de chile y los fondos, además de traducir los activos de los fondos de USD a CLP con datos del tipode cambio diario del banco central.
+
+Con estas instrucciones: ¿que harías?, dejemoslo claro para ambos.
+```
+
+### P7 — alcance y autorización de implementación
+
+```text
+Solo el fees y sus 4 alternativas. ¿Podríamos hacer una optimización final para ver que nuevo portafolio (quinta alternativa) seria mejor usando el fees histórico y las 4 alternativas? Pesos (weights en el nuevo quinto portafolio) del fees y las 4 alternativas para ver que es mejor con el objetivo de mantener pesos anticiclicos.
+
+Si te gusta la idea, entonces haz las correcciones de las que hablamos hasta ahora y aplica el portfolio óptimo con las hipótesis.
+```
+
 ## Cierre del anexo para el entregable final
 
 Completar y firmar solamente después de revisar todos los usos de IA del entregable, incluidos los de los demás integrantes y herramientas. No atribuir a los integrantes verificaciones hechas únicamente por el asistente.

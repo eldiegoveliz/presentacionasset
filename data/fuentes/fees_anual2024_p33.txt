@@ -1,0 +1,67 @@
+Informe Anual de los Fondos Soberanos 33
+Administración: El portafolio de letras del tesoro y bonos sobe-
+ranos y el de bonos soberanos indexados a inflación es adminis-
+trado por el BCCh.  El portafolio de MBS de agencias de EE.UU. 
+es gestionado por administradores externos.  
+Límite de tracking error ex ante24: Se ha definido un límite de 
+tracking error ex ante de 25 puntos base para el portafolio de ren-
+ta fija soberana. Para el portafolio de MBS de agencias de EE.UU. 
+el promedio mensual no podrá superar 20 puntos base, siempre y 
+cuando el valor máximo diario no supere 30 puntos base.
+Monedas, emisores e instrumentos elegibles: Para cada 
+clase de activo son elegibles sólo las monedas que forman parte 
+del comparador referencial correspondiente. Para los emisores 
+e instrumentos se permiten principalmente los incluidos en el 
+comparador referencial. Sin perjuicio de lo anterior, para cada 
+clase de activo existen algunos emisores e instrumentos elegi -
+bles que no están incluidos en el comparador referencial corres-
+pondiente y que se permiten para otorgar más flexibilidad a los 
+administradores en la gestión de sus carteras. A continuación, 
+se presentan los más importantes:
+• MBS de agencias de EE.UU.: Instrumentos de deuda emi -
+tidos o garantizados por el gobierno de EE.UU. o por agen -
+cias emisoras de MBS, futuros de tasas de interés y TBAs25.
+Apalancamiento y uso de derivados:  En el fondo no se 
+permite el apalancamiento 26. Respecto al uso de derivados, se 
+permite el uso de forwards y swaps solamente para cobertura 
+cambiaria, y el uso de futuros para ganar exposición a parte del 
+comparador referencial o reducir las diferencias con respecto a 
+este. El monto nocional total en derivados no puede exceder al 
+10% del portafolio.
+24 El  tracking error ex ante es una estimación de la desviación estándar de la diferencia en-
+tre los retornos del portafolio y del comparador referencial. Mientras menor es el tracking 
+error ex ante más pasiva es la gestión del portafolio.
+25 TBA o To Be Announced: Corresponde a forwards de MBS. El término TBA se deriva del 
+hecho de que el MBS que se entregará en el futuro para cumplir con la operación no está 
+designado en el momento en que se realiza la transacción, si no que se anuncia 48 horas 
+antes de la fecha de liquidación establecida.
+26 Apalancamiento se refiere a la compra de activos mediante el endeudamiento.
+Política de rebalanceo:  Se debe converger a la asignación 
+estratégica de activos en caso de aporte/retiro al fondo o si una 
+clase de activo sobrepasa el rango de ± 2% permitido para ella 
+durante treinta días consecutivos (véase Cuadro 3).
+Pautas de inversión: En las pautas de inversión, que se encuen-
+tran publicadas en el sitio web del Ministerio 27, se proporciona 
+información adicional acerca de la política de inversión del FEES, 
+incluyendo, por ejemplo, las restricciones especiales para inver-
+sión en determinados países, otros límites relevantes y otros as-
+pectos asociados a su gestión.
+7.2 Valor de Mercado
+El valor de mercado del FEES al cierre de 2024 fue de US$ 3.618 
+millones, comparado con los US$ 6.030 millones al cierre de 
+2023. La variación en el valor del FEES se debió principalmente 
+a retiros de US$ 2.407 millones, y a pérdidas financieras netas 
+de las inversiones por US$ 5 millones. Desde su inicio, el 6 de 
+marzo de 2007, el FEES ha recibido aportes de capital por la 
+suma de US$ 27.763 millones, ha sido objeto de retiros por US$ 
+28.293 millones y ha generado ganancias financieras netas de 
+US$ 4.148 millones (véanse Cuadros 4 y 5). 
+27 https://www.hacienda.cl/areas-de-trabajo/finanzas-internacionales/fondos-soberanos/
+fondo-de-estabilizacion-economica-y-social/politica-de-inversion.
+Política de rebalanceo del FEES (porcentaje del portafolio)
+Clase de activo Asignación estratégica de activos Rango de desviación permitido
+Renta fija soberana 85 83 - 87
+MBS de agencias de 
+EE.UU. 15 13 - 17
+Fuente: Ministerio de Hacienda de Chile
+C3

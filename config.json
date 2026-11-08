@@ -1,20 +1,72 @@
 {
   "inicio_descarga": "2013-12-01",
-  "inicio_analisis": "2020-01-01",
+  "inicio_analisis": "2014-01-01",
   "corte": "2026-10-31",
-  "etfs": ["BIL", "SHY", "IEI", "IEF", "STIP", "MBB", "SPY"],
+  "etfs": [
+    "BIL",
+    "SHY",
+    "IEI",
+    "IEF",
+    "STIP",
+    "MBB",
+    "SPY"
+  ],
   "tipo_cambio": "CLP=X",
-  "pesos_fondo_usd": {"BIL": 0.10, "SHY": 0.13333333333333333, "IEI": 0.13333333333333333, "IEF": 0.13333333333333333, "STIP": 0.04, "MBB": 0.15},
   "cobre": "HG=F",
   "carteras": [
-    {"nombre": "Referencia proxy USD", "hipotesis": "Referencia", "tipo": "referencia", "origen": null, "destino": null, "traspaso": 0.0},
-    {"nombre": "H1 Mas letras", "hipotesis": "1. Menor dependencia de bonos largos", "tipo": "liquidez", "origen": "IEF", "destino": "BIL", "traspaso": 0.10},
-    {"nombre": "H2 Puts cobre (modelo)", "hipotesis": "2. Cobertura con puts de cobre", "tipo": "puts", "origen": null, "destino": null, "traspaso": 0.0},
-    {"nombre": "H3 Treasury corto", "hipotesis": "3. Menor duracion Treasury", "tipo": "duracion", "origen": "IEF", "destino": "SHY", "traspaso": 0.02},
-    {"nombre": "H4 Menos MBS", "hipotesis": "4. Menor ponderacion MBS", "tipo": "mbs", "origen": "MBB", "destino": "BIL", "traspaso": 0.05}
+    {
+      "nombre": "FEES historico",
+      "tipo": "referencia"
+    },
+    {
+      "nombre": "H1 Mas letras",
+      "tipo": "letras",
+      "satelite": "BIL",
+      "peso_satelite": 0.1
+    },
+    {
+      "nombre": "H2 Puts 12m (modelo)",
+      "tipo": "puts"
+    },
+    {
+      "nombre": "H3 Treasury corto",
+      "tipo": "corto",
+      "satelite": "SHY",
+      "peso_satelite": 0.2
+    },
+    {
+      "nombre": "H4 Mas MBS",
+      "tipo": "mbs",
+      "satelite": "MBB",
+      "peso_satelite": 0.1
+    }
   ],
-  "puts": {"nocional_sobre_fondo": 0.10, "strike_sobre_futuro": 0.95, "plazo_anios": 0.08333333333333333, "ventana_vol_dias": 63, "multiplicador_vol": 1.25, "friccion_sobre_prima": 0.10},
+  "puts": {
+    "nocional": 0.1,
+    "strike_relativo": 0.95,
+    "plazo_meses": 12,
+    "ventana_vol_meses": 24,
+    "multiplicador_vol": 1.25,
+    "friccion_sobre_prima": 0.1
+  },
   "costo_por_dolar_transado": 0.0005,
   "bootstrap_repeticiones": 2000,
-  "semilla": 20261108
+  "semilla": 20261108,
+  "series_fred": [
+    "DGS1MO",
+    "DGS6MO",
+    "DGS1",
+    "DGS2",
+    "DGS10"
+  ],
+  "optimizacion": {
+    "paso": 0.05,
+    "peso_min_fees": 0.0,
+    "peso_max_estrategia": 1.0,
+    "peso_max_puts": 0.25,
+    "min_trimestres": 20,
+    "min_contracciones": 3,
+    "rezago_pib_dias": 90,
+    "costo_rebalanceo": 0.0005
+  }
 }

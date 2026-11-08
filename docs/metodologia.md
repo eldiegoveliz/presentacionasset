@@ -1,76 +1,72 @@
-# Metodología: una cartera por hipótesis
+# Metodología anticíclica del FEES
 
-Actualización del 8 de noviembre de 2026 tras la corrección del usuario. La primera implementación comparaba solo tres variantes de duración y dejaba puts y MBS fuera del cálculo. Ese diseño no correspondía a la solicitud y fue reemplazado.
+El usuario delimitó el análisis a FEES y cuatro alternativas, y autorizó una quinta combinación optimizada. Esta actualización reemplaza las carteras parciales del 69%, el tipo de cambio Yahoo y las puts renovadas mensualmente. Las decisiones técnicas siguientes son del asistente, no revisiones ni firmas del equipo.
 
-## Alcance e interpretación
+## Referencia y presupuestos completos
 
-El usuario pide una simulación con una cartera por cada una de sus cuatro hipótesis, más una referencia. También exige documentar y respetar las reglas del FEES. Para conservar ambas cosas, el análisis calcula los escenarios económicos y muestra el filtro normativo: una hipótesis fuera de la política vigente no se presenta como cartera ejecutable autorizada.
+El FEES observado usa 153 retornos mensuales netos, enero de 2014 a septiembre de 2026, de informes oficiales. No se obtiene rendimiento a partir del cambio del saldo, que contiene aportes y retiros. Se coteja cada retorno de la tabla con la explicación en prosa del informe. Los PDF redondean a 0,01 puntos porcentuales.
 
-El curso exige FEES y FRP; esta etapa solo aborda FEES. La referencia sigue cubriendo el bloque USD de 69% de la asignación. Europa 19%, Japón 9% y China 3% no se replican. Sus exposiciones se suponen iguales entre escenarios, pero no se inventan retornos ni métricas del fondo completo.
+Las alternativas son presupuestos completos con núcleo FEES y satélites. Así se comparan series del mismo capital, evitando mezclar el fondo completo con una proxy parcial:
 
-## Cinco carteras
+| Estrategia | Regla |
+| --- | --- |
+| H1 | FEES 90%, BIL 10% |
+| H2 | FEES con put de 12 meses, nocional subyacente 10%, prima financiada vendiendo FEES |
+| H3 | FEES 80%, SHY 20% |
+| H4 | FEES 90%, MBB 10% |
 
-Los cambios se expresan como puntos porcentuales sobre el FEES completo. Los cálculos del bloque dividen los pesos de activos por 0,69.
+H1, H3 y H4 rebalancean en enero y dejan fluctuar pesos el resto del año. Esto es un calendario de simulación, no una afirmación sobre las fechas operativas reales. Se cobra 5 pb por dólar comprado o vendido, incluida compra inicial. El FEES observado ya incluye sus comisiones. La quinta mezcla añade 5 pb por dólar reasignado entre estrategias; se declara esta capa adicional.
 
-| Cartera | Diseño propuesto por el asistente | Estado normativo |
-| --- | --- | --- |
-| Referencia | BIL 10%, Treasury 40% en tercios SHY/IEI/IEF, STIP 4%, MBB 15% | Proxy de asignación, no réplica ni elegibilidad certificada |
-| H1 Más letras | Mover 10 pp de IEF a BIL | Cambia letras a 20% y Treasury a 30%; requiere cambiar asignación y evaluar riesgo |
-| H2 Puts de cobre | Mantener la base y comprar puts mensuales de nocional 10%, strike 95%, pagadas con BIL | Instrumento fuera de la política consultada; resultado teórico |
-| H3 Treasury corto | Mover 2 pp de IEF a SHY | Conserva clases; cumplimiento ex ante no verificado |
-| H4 Menos MBS | Mover 5 pp de MBB a BIL: MBS 10%, letras 15% | Cambia el 15% estratégico MBS |
+El significado de H3 es aumentar exposición a Treasury corto, no mantener artificialmente 40% de un índice Treasury reconstruido. H4 prueba más MBS sobre el fondo completo, dado que el FEES no tenía MBS antes de noviembre de 2023. La reducción de 2 pp desde diciembre de 2023 se conserva como sensibilidad de atribución marginal `r_FEES + 0,02 × (r_BIL − r_MBB)`, no como cartera real reconstruida ni réplica exacta de la clase MBS oficial. No se usa para elegir H5.
 
-H1 traduce la inquietud sobre correlación en menor exposición a bonos largos y más letras. Es una operacionalización del asistente, no una cartera definida expresamente por el usuario. SPY sigue siendo solo diagnóstico; no se añaden acciones al FEES. H1 cambia la clase asignada, mientras H3 cambia el tramo de madurez manteniendo 40% Treasury.
+El histórico FEES refleja políticas que cambiaron e incluyó acciones antes del fin del mandato en septiembre de 2021. No se afirma que toda su historia corresponde a su actual política de bonos. Sus operaciones y rebalanceos ya afectan los retornos oficiales. Las fechas documentadas de fin de gestión de acciones e inicio MBS se señalan en la gráfica; no se inventa un calendario exhaustivo de rebalanceos.
 
-Los parámetros son supuestos exploratorios, no estimaciones óptimas ni decisiones ya revisadas por el equipo. Se conocía la historia de los ETF al corregir el diseño. Por eso no se presenta como una preregistración ni validación fuera de muestra.
+## Datos oficiales, moneda y ciclo
 
-## Datos
+El dólar observado diario se extrae de la página pública BCCh, serie F073.TCO.PRE.Z.D. Se conserva la fecha chilena de cada observación y se toma el último valor publicado disponible en cada mes. Este indicador refleja transacciones del día hábil anterior; no equivale al cierre FX internacional de Hacienda. No se espera identidad con el retorno CLP publicado por Hacienda.
 
-| Series | Uso | Limitación |
-| --- | --- | --- |
-| BIL, SHY, IEI, IEF, STIP, MBB | Letras, tres tramos Treasury, TIPS y MBS; cierre ajustado Yahoo | No replican exactamente los índices oficiales. STIP es 0–5 años frente a TIPS oficial 1–10. Los tercios Treasury son supuestos. |
-| SPY | Correlación con bonos | Diagnóstico externo, nunca pesa en carteras |
-| HG=F | Cierre diario continuo del cobre para el modelo | Puede cambiar de contrato entre fechas; no es un futuro identificado ni retorno de una posición negociable |
-| DGS1MO | Proxy de tasa anual de descuento para la put | Tasa cotizada Treasury aproximada como continua; no es retorno de inversión |
-| DGS2, DGS10 | Contexto de tasas | No se convierten sus variaciones en retornos |
-| CLP=X | Conversión ilustrativa USD/CLP | Cotización Yahoo distinta del dólar observado oficial y con otro horario |
-
-Se descargan datos desde diciembre de 2013 hasta octubre de 2026. La muestra principal tiene 82 meses, enero de 2020 a octubre de 2026. La correlación anterior a 2020 usa 2014–2019. Para comparar las cinco carteras en un período anterior se usa 2015–2019, con suficiente calentamiento de volatilidad del cobre.
-
-Los ETF conservan las descargas congeladas de la primera versión. Se añadieron HG=F y DGS1MO sin reemplazarlas. Los JSON originales, CSV, URLs y hashes están en `data/`. No se rellenan precios de ETF ni se inventan primas. Las fechas ETF deben coincidir y cada mes exige un cierre observado a no más de siete días del fin de mes. FX, cobre y tasas conservan sus calendarios propios, sin interpolación.
-
-Yahoo ya ajusta cierres y distribuciones por splits. Se valida el retorno ajustado con cierre más distribución; BIL tuvo un reverse split en 2017 y no se aplica dos veces. Los cocientes de ajustados aproximan distribuciones reinvertidas, netas de gastos internos del ETF.
-
-## Prima y financiación de puts
-
-La cartera H2 es una simulación paramétrica de opciones europeas hipotéticas sobre el proxy continuo. No se descargaron primas históricas observadas por contrato, strike y vencimiento. Las especificaciones negociables de COMEX no se reemplazan por estos supuestos.
-
-Para cada mes se usa el precio al cierre del mes anterior como futuro inicial F, strike K = 0,95 × F y plazo T = 1/12. La volatilidad histórica usa los últimos 63 cambios logarítmicos diarios disponibles a ese cierre, anualizados con raíz de 252. Se multiplica por 1,25 para la volatilidad de valoración. Ese incremento de 25% es un supuesto, no una observación de volatilidad implícita. Se usa la última DGS1MO del mes anterior, dividida por 100.
-
-La prima se calcula con [Black (1976)](https://doi.org/10.1016/0304-405X(76)90024-6):
+El IPC mensual se obtiene de BCCh con fuente INE. El PIB es volumen encadenado desestacionalizado trimestral, serie F032.PIB.FLU.R.CLP.EP18.Z.Z.1.T. Retornos trimestrales solo se forman con tres meses completos y se comparan hasta el último PIB publicado, junio de 2026. No se interpola el PIB ni se crean retornos diarios del FEES.
 
 ```text
-d1 = [ln(F/K) + 0,5 × sigma² × T] / [sigma × raíz(T)]
-d2 = d1 − sigma × raíz(T)
-prima = exp(−rT) × [K × N(−d2) − F × N(−d1)]
+1 + r_CLP = (1 + r_USD) × FX_fin / FX_inicio
+1 + r_CLP_real = (1 + r_CLP) / (1 + inflación_mensual)
+contracción = crecimiento trimestral del PIB real desestacionalizado < 0
 ```
 
-Con h = 10% de nocional sobre el capital total hipotético, la prima relativa es `h × prima/F` y el pago relativo es `h × max(K − F_final, 0)/F`. Se asumen cantidades fraccionarias; no se redondea a contratos enteros de 25.000 libras. No se mantiene una posición descubierta en futuros.
+Se usa el mayor período común 2014–septiembre de 2026; el período de evaluación de H5 comienza después de reunir historia suficiente. El saldo efectivo en USD se extrae de la hoja Datos Evo. Hist. del Excel de septiembre de 2026 y se convierte a CLP corrientes. Esa gráfica incluye flujos y se presenta separada de la rentabilidad sin flujos.
 
-La fricción adicional es 10% de la prima, supuesto separado de los 5 pb por dólar transado en ETF. Prima y fricción salen de BIL, con lo que dejan de ganar el retorno de letras durante el mes. El pago al vencimiento se suma a BIL. El siguiente mes se rebalancea desde las tenencias efectivas, incluidos los pagos o pérdidas del seguro. El código rechaza primas que superen las letras disponibles y evita endeudamiento.
+El control de portadas detectó que el enlace de Hacienda de julio de 2016 devolvía junio. Se reemplazó por el documento correcto de DIPRES. No se rellenó ese retorno ni se reutilizó el de junio. Los archivos extraídos, referencias y hashes están en data/oficial; los PDF completos permanecen en una caché local excluida de Git y del ZIP. El cobre se amplió desde 2010 mediante descarga explícita para disponer de volatilidad anterior a 2014; los otros ETF congelados se conservaron.
 
-El nocional se mide sobre el capital posterior al costo de rebalanceo de activos de ese mes. No es un peso de capital que se sume al 69%. El CSV `puts_auditoria.csv` muestra cada flujo y la diferencia final frente a la referencia. Con nocional cero se reproduce la cartera base, comprobado en pruebas.
+## Put larga y valoración mensual
 
-El cambio de vencimientos del proxy continuo puede crear o borrar pagos que no existirían en un contrato real. Tampoco se modelan ejercicio americano, entrega física, strikes negociados, estructura de volatilidad, spreads reales ni vencimientos oficiales. El modelo europeo no estima esos efectos. Sus retornos e intervalos no prueban desempeño histórico ejecutable de puts reales.
+Se compra una opción sintética de 12 meses al comenzar enero. Mantiene cantidad y strike hasta vencer; su valoración mensual usa el plazo residual. Al vencimiento el pago se incorpora al capital y se renueva. Una opción aún no vencida al corte conserva valor teórico, no se liquida artificialmente a cero. El modelo liquida en efectivo y no simula entrega física ni ejercicio americano.
 
-## Comparación y sensibilidad
+No se consiguieron primas ni curvas históricas por contrato COMEX identificado. Se emplea HG=F como proxy de spot para un futuro sintético de vencimiento fijo `F(t,T) = proxy(t) × exp(r × (T−t))`, suponiendo almacenaje menos conveniencia cero. El cambio de contratos del proxy puede distorsionar ese spot supuesto. No se afirma que el modelo replique futuros u opciones negociables ni que haya eliminado riesgo de base.
 
-Rebalanceo mensual a objetivos fijos y sin flujos fiscales. Costos de activos: 5 pb por dólar de compras más ventas, incluida la inversión inicial; sensibilidad 0 y 10 pb. No se divide el volumen por dos. El calendario es un supuesto del ejercicio: la norma oficial instruye rebalanceos por flujos y al menos uno anual sin ellos.
+La prima usa Black-76 europeo. El strike es 95% del futuro sintético inicial y el nocional 10% del capital previo a la compra. La volatilidad usa 24 retornos mensuales anteriores, anualizada con raíz de 12 y multiplicada por 1,25. Se congela para ese contrato: no se utiliza volatilidad futura para fijar la prima inicial. La tasa es la última DGS1 del mes anterior al comprar y la tasa observada del mes al valorar. La sensibilidad de seis meses usa DGS6MO. La renovación y compra no se confunden con una nueva valoración.
 
-Se reportan CAGR, volatilidad anualizada con raíz de 12, caída máxima desde cierres mensuales incluyendo capital inicial y peor mes. Se convierten las mismas cinco series a CLP. Para H1 y H3 se muestra el TE histórico incremental del mandato soberano, dividiendo el retorno activo por 85%. No es el TE ex ante del custodio ni incorpora error de réplica del índice.
+Prima, fricción de 10% de la prima y costo de vender capital para financiarla salen del FEES. La porción vendida deja de ganar su retorno. Se registra valor del núcleo, opción, primas, vencimiento y riqueza. Con nocional cero se reproduce el FEES observado. El pago se cuenta una vez y no hay endeudamiento.
 
-Para puts se calculan todas las 27 combinaciones de strikes 90/95/100%, multiplicadores de volatilidad 1/1,25/1,5 y nocionales 5/10/20%. Para MBS se muestran 10/15/20%, con la diferencia en BIL. No se elige un ganador para redefinir las carteras principales.
+La sensibilidad varía plazo 6/12 meses y multiplicador de volatilidad 1/1,25/1,5, manteniendo H2 fuera de una selección oportunista de supuestos.
 
-El bootstrap pareado por bloques circulares usa 2.000 repeticiones, semilla 20261108 y bloques de 3, 6 y 12 meses. Sus intervalos son individuales para diferencias de medias mensuales multiplicadas por 12, no diferencias de CAGR. No corrigen pruebas múltiples, sesgo de diseño ni error de modelo de opciones.
+## Optimización y evaluación temporal
 
-La protección fiscal del cobre requiere ingresos tributarios, producción y retiros del fondo, que aquí no se modelan. Una put puede pagar en meses de caída del cobre y aun así reducir el retorno promedio o aumentar pérdidas de la cartera financiera. Esa distinción forma parte de la conclusión.
+H5 asigna pesos a cinco estrategias: FEES, H1, H2, H3, H4. Suman 100%, son no negativos y no hay deuda. La rejilla tiene pasos de 5%. En el caso principal se permite hasta 100% por estrategia sin puts; H2 tiene un tope de 25% del presupuesto por incertidumbre de modelo. No se impone que las cinco tengan peso positivo ni se fuerzan mínimos en FEES explícito: las alternativas ya comparten el núcleo.
+
+Se maximiza el peor retorno trimestral en CLP real entre contracciones conocidas del PIB. Se desempata por mejor retorno medio en contracciones y, en un empate adicional, menor concentración. No se maximiza CAGR ni se exige correlación negativa mediante una identidad artificial.
+
+Para cada año, solo se usan retornos de trimestres anteriores y PIB con cierre al menos 90 días antes de la decisión. Se exige un mínimo de 20 trimestres y tres contracciones. Las mezclas candidatas se simulan con rebalanceo anual y pesos que fluctúan, no con promedios de retornos que supongan rebalanceo mensual. La curva de H5 usa los pesos elegidos antes de cada año; los pesos finales se publican aparte y no se aplican hacia atrás.
+
+El PIB disponible es revisado, no primeras publicaciones archivadas. El rezago conservador evita incorporar trimestres futuros pero no elimina sesgo por revisiones. Las hipótesis se diseñaron con conocimiento del pasado. Por ello se llama evaluación temporal retrospectiva, sin prometer una prueba independiente en tiempo real.
+
+Se vuelve a optimizar retirando una contracción cada vez. También se muestra una versión de límites prudentes: mínimo 20% de FEES explícito y máximo 60% por estrategia. Es una sensibilidad de restricciones, no normativa oficial ni una mezcla que deba ser superior. Los límites pueden dominar el resultado.
+
+El bootstrap descriptivo por bloques de cuatro trimestres usa 2.000 repeticiones para la diferencia de media en contracciones H5 menos FEES. No reestima toda la selección ni incluye error de valoración de opciones. Hay pocos episodios adversos. No se hacen afirmaciones de significancia conjunta.
+
+## Interpretación
+
+Las estrategias no son cinco activos independientes. Se publican tanto los pesos de presupuesto como la exposición aproximada subyacente: núcleo FEES, BIL, SHY y MBB adicional, antes de financiar la prima. El nocional de put no se suma a los pesos de activos.
+
+El resultado debe juzgarse por pérdidas en contracciones, peor trimestre, recuperación y recursos reales. Una mejora pequeña o un peso cero en puts es un resultado válido; no se fabrica una mezcla para favorecer las hipótesis. Si sigue habiendo pérdidas en contracciones y correlación positiva con PIB, no se declara que el portafolio sea anticíclico demostrado.
+
+Las reglas y el estado normativo permanecen visibles. No se han modelado ingresos fiscales, producción de cobre ni necesidades concretas de caja. Tampoco se certifica TE ex ante o ejecutabilidad de carteras. El alcance es FEES; FRP no se incluye por instrucción expresa.
