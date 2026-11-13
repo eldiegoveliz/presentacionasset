@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 from datos import RAIZ, leer_config
-from datos_oficiales import extraer_retorno, bcch_movil
+from datos_oficiales import extraer_retorno, bcch_movil, validar_periodo_informe
 from carteras import cartera_anual, put_larga, precio_put_black76, riqueza_y_caida
 from optimizacion import generar_pesos, simular_mezclas, elegir_pesos
 from analisis import cargar_datos
@@ -157,6 +157,23 @@ class DatosYEntrega(unittest.TestCase):
             m = re.search(r"[Ll]a rentabilidad.{0,70}?(?:mes|mensual).{0,60}?fue.{0,15}?(-?\d+[,.]\d+)\s*%\s*en\s*d[oó]lares",texto,re.S)
             self.assertIsNotNone(m,p.name)
             self.assertAlmostEqual(float(m[1].replace(",","."))/100,d["retorno_usd"])
+
+    def test_periodo_en_titulo_no_en_tablas(self):
+        fecha = pd.Timestamp("2023-02-28")
+        with self.assertRaises(ValueError):
+            validar_periodo_informe("Informe Ejecutivo Mensual a Marzo de 2023\nTabla histórica febrero 2023", fecha)
+        for p in (RAIZ/"data/oficial/fees_textos").glob("*.txt"):
+            validar_periodo_informe(p.read_text(), pd.Timestamp(p.stem)+pd.offsets.MonthEnd(0))
+
+    def test_mensuales_concilian_con_anuales_oficiales(self):
+        # Retornos YTD de los informes de diciembre conservados en fees_textos.
+        oficiales = {2014:-1.67, 2015:-1.78, 2016:1.74, 2017:7.00, 2018:-.41, 2019:4.77,
+                     2020:8.03, 2021:-4.92, 2022:-12.37, 2023:2.36, 2024:-.13, 2025:7.49}
+        r = pd.read_csv(RAIZ/"data/oficial/fees_mensual.csv", index_col=0, parse_dates=True).retorno_usd
+        anual = ((1+r).resample("YE").prod()-1)*100
+        for anio, valor in oficiales.items():
+            # Hasta doce redondeos mensuales de 0,005 pp, más el anual.
+            self.assertLess(abs(anual.loc[str(anio)].iloc[0]-valor), .07, str(anio))
 
     def test_hashes_oficiales_y_mercado(self):
         for archivo in ["data/metadatos.json","data/oficial/metadatos.json"]:

@@ -77,12 +77,12 @@ La siguiente comparación usa el mismo período temporal para las seis carteras 
 
 |                      |   media_contraccion_pct |   peor_contraccion_pct |   trimestres_contraccion_con_perdida |   media_expansion_pct |   correlacion_PIB |   contracciones_observadas |
 |:---------------------|------------------------:|-----------------------:|-------------------------------------:|----------------------:|------------------:|---------------------------:|
-| FEES historico       |                  -4.096 |                -14.922 |                                    6 |                 1.515 |             0.085 |                          8 |
-| H1 Mas letras        |                  -3.983 |                -14.478 |                                    6 |                 1.546 |             0.085 |                          8 |
-| H2 Puts 12m (modelo) |                  -4.46  |                -15.31  |                                    6 |                 1.461 |             0.111 |                          8 |
-| H3 Treasury corto    |                  -4.021 |                -14.485 |                                    6 |                 1.577 |             0.088 |                          8 |
-| H4 Mas MBS           |                  -4.096 |                -14.918 |                                    6 |                 1.521 |             0.087 |                          8 |
-| H5 Optimo temporal   |                  -4.028 |                -14.485 |                                    6 |                 1.594 |             0.088 |                          8 |
+| FEES historico       |                  -4.096 |                -14.922 |                                    6 |                 1.175 |             0.085 |                          8 |
+| H1 Mas letras        |                  -3.983 |                -14.478 |                                    6 |                 1.241 |             0.085 |                          8 |
+| H2 Puts 12m (modelo) |                  -4.46  |                -15.31  |                                    6 |                 1.122 |             0.11  |                          8 |
+| H3 Treasury corto    |                  -4.021 |                -14.485 |                                    6 |                 1.306 |             0.088 |                          8 |
+| H4 Mas MBS           |                  -4.096 |                -14.918 |                                    6 |                 1.216 |             0.087 |                          8 |
+| H5 Optimo temporal   |                  -4.028 |                -14.485 |                                    6 |                 1.289 |             0.088 |                          8 |
 
 En la evaluación temporal, H5 registra pérdidas en 6 de 8 contracciones. Su retorno medio en contracciones es -4.028% y el peor es -14.485%. Su correlación con el crecimiento del PIB es 0.088. **No se demuestra un portafolio anticíclico que preserve capital en todas las contracciones.** La selección mejora el objetivo de entrenamiento bajo límites, pero su protección observada es limitada. Las estrategias comparten gran parte del núcleo y la exposición al tipo de cambio.
 
@@ -96,12 +96,12 @@ Como contexto, estas métricas mensuales usan el mismo período de evaluación y
 
 |                      |   retorno_anual_pct |   volatilidad_anual_pct |   caida_max_mensual_pct |   peor_mes_pct |
 |:---------------------|--------------------:|------------------------:|------------------------:|---------------:|
-| FEES historico       |              -1.117 |                  11.743 |                 -29.474 |         -7.711 |
-| H1 Mas letras        |              -0.877 |                  11.789 |                 -28.585 |         -7.323 |
-| H2 Puts 12m (modelo) |              -1.781 |                  12.095 |                 -31.41  |         -7.573 |
-| H3 Treasury corto    |              -0.865 |                  11.844 |                 -28.59  |         -7.276 |
-| H4 Mas MBS           |              -1.15  |                  11.729 |                 -29.453 |         -7.715 |
-| H5 Optimo temporal   |              -0.824 |                  11.851 |                 -28.586 |         -7.276 |
+| FEES historico       |              -2.052 |                  11.498 |                 -32.077 |         -7.711 |
+| H1 Mas letras        |              -1.722 |                  11.57  |                 -30.993 |         -7.323 |
+| H2 Puts 12m (modelo) |              -2.71  |                  11.85  |                 -33.802 |         -7.573 |
+| H3 Treasury corto    |              -1.618 |                  11.666 |                 -30.977 |         -7.276 |
+| H4 Mas MBS           |              -1.992 |                  11.532 |                 -32.042 |         -7.715 |
+| H5 Optimo temporal   |              -1.669 |                  11.634 |                 -30.993 |         -7.276 |
 
 ![Riqueza real](figuras/riqueza_real.png)
 
@@ -123,12 +123,12 @@ La siguiente sensibilidad mantiene H2 separado de la optimización: plazos 6/12 
 
 |   plazo_meses |   multiplicador_vol |   media_contraccion_pct |   peor_contraccion_pct |   trimestres_contraccion_con_perdida |   media_expansion_pct |   correlacion_PIB |   contracciones_observadas |
 |--------------:|--------------------:|------------------------:|-----------------------:|-------------------------------------:|----------------------:|------------------:|---------------------------:|
-|             6 |                1    |                  -1.175 |                -15.236 |                                   10 |                 1.183 |             0.066 |                         17 |
-|             6 |                1.25 |                  -1.239 |                -15.31  |                                   10 |                 1.112 |             0.064 |                         17 |
-|             6 |                1.5  |                  -1.305 |                -15.375 |                                   10 |                 1.039 |             0.063 |                         17 |
-|            12 |                1    |                  -1.116 |                -15.258 |                                   10 |                 1.209 |             0.06  |                         17 |
-|            12 |                1.25 |                  -1.166 |                -15.31  |                                   10 |                 1.161 |             0.058 |                         17 |
-|            12 |                1.5  |                  -1.215 |                -15.355 |                                   10 |                 1.111 |             0.057 |                         17 |
+|             6 |                1    |                  -1.175 |                -15.236 |                                   10 |                 0.998 |             0.065 |                         17 |
+|             6 |                1.25 |                  -1.239 |                -15.31  |                                   10 |                 0.927 |             0.063 |                         17 |
+|             6 |                1.5  |                  -1.305 |                -15.375 |                                   10 |                 0.855 |             0.062 |                         17 |
+|            12 |                1    |                  -1.116 |                -15.258 |                                   10 |                 1.024 |             0.059 |                         17 |
+|            12 |                1.25 |                  -1.166 |                -15.31  |                                   10 |                 0.976 |             0.057 |                         17 |
+|            12 |                1.5  |                  -1.215 |                -15.355 |                                   10 |                 0.926 |             0.056 |                         17 |
 
 ## Admisibilidad y límites
 

@@ -50,7 +50,7 @@ python datos.py
 
 Ambos usan caché. `python datos.py --actualizar --solo-cobre` amplía únicamente el cobre desde 2010 para el calentamiento de volatilidad. Una descarga nueva puede contener revisiones y exige repetir el análisis. No se necesitan claves ni GitHub Actions. Las páginas y extracciones oficiales están en `data/oficial/`; los PDF descargados completos se guardan en una caché local excluida de Git y del ZIP.
 
-Se detectó un enlace de Hacienda de julio 2016 que devolvía junio. El script utiliza el informe correcto de DIPRES y valida la portada. Los informes anuales 2023/2024 publican bandas MBS 13%–17%; esta información corrige la conclusión anterior de que no existían bandas publicadas.
+Se detectaron enlaces de Hacienda de julio 2016 y febrero 2023 que devolvían otro mes. El script utiliza los informes correctos de DIPRES, valida el período exacto del título incluso en caché y concilia los meses con los retornos anuales oficiales. La corrección de febrero 2023 y sus efectos están en [validación](docs/validacion.md). Los informes anuales 2023/2024 publican bandas MBS 13%–17%; esta información corrige la conclusión anterior de que no existían bandas publicadas.
 
 ## Colab y archivos
 

@@ -64,6 +64,13 @@ def extraer_retorno(texto):
     return valor, m[0]
 
 
+def validar_periodo_informe(texto, fecha):
+    """Leer el período del título; un mes citado en otra tabla no identifica el informe."""
+    titulo = re.search(r"Informe\s+Ejecutivo\s+Mensual\s+a\s+(\w+)\s+(?:de\s+)?(\d{4})", texto[:400], re.I)
+    if not titulo or (titulo[1].lower(), int(titulo[2])) != (MESES[fecha.month-1], fecha.year):
+        raise ValueError(f"Portada no corresponde a {fecha.date()}")
+
+
 def descargar_mes(elemento):
     fecha, urls = elemento
     url = urls[0]
@@ -72,6 +79,7 @@ def descargar_mes(elemento):
     meta_path = texto_path.with_suffix(".json")
     if texto_path.exists() and meta_path.exists():
         meta = json.loads(meta_path.read_text())
+        validar_periodo_informe(texto_path.read_text(), fecha)
         return meta
     if cache.exists():
         contenido = cache.read_bytes()
@@ -94,9 +102,7 @@ def descargar_mes(elemento):
     reader = PdfReader(io.BytesIO(contenido))
     textos = [p.extract_text() or "" for p in reader.pages]
     texto = "\n".join(f"PAGINA {i+1}\n{t}" for i, t in enumerate(textos))
-    portada = texto[:700].lower()
-    if MESES[fecha.month-1] not in portada or str(fecha.year) not in portada:
-        raise ValueError(f"Portada no corresponde a {fecha.date()}: {portada[:150]}")
+    validar_periodo_informe(texto, fecha)
     retorno, evidencia = extraer_retorno(texto)
     pagina = next(i+1 for i, t in enumerate(textos) if re.search(r"Retorno\s+en\s+USD", t, re.I))
     meta = {"fecha": str(fecha.date()), "retorno_usd": retorno, "url": url, "pagina": pagina,
@@ -152,6 +158,8 @@ def descargar():
     # El enlace de Hacienda para julio 2016 devuelve el informe de junio.
     # DIPRES conserva el informe correcto; validar siempre mes y año de portada.
     enlaces[pd.Timestamp("2016-07-31")] = ["https://www.dipres.gob.cl/598/articles-149467_doc_pdf.pdf"]
+    # El enlace de febrero 2023 devuelve marzo; no reutilizar el documento.
+    enlaces[pd.Timestamp("2023-02-28")] = ["https://www.dipres.gob.cl/598/articles-307285_doc_pdf.pdf"]
     esperados = pd.date_range("2014-01-31", "2026-09-30", freq="ME")
     faltantes = esperados.difference(pd.DatetimeIndex(enlaces))
     if len(faltantes):

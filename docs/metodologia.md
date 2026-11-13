@@ -35,7 +35,7 @@ contracción = crecimiento trimestral del PIB real desestacionalizado < 0
 
 Se usa el mayor período común 2014–septiembre de 2026; el período de evaluación de H5 comienza después de reunir historia suficiente. El saldo efectivo en USD se extrae de la hoja Datos Evo. Hist. del Excel de septiembre de 2026 y se convierte a CLP corrientes. Esa gráfica incluye flujos y se presenta separada de la rentabilidad sin flujos.
 
-El control de portadas detectó que el enlace de Hacienda de julio de 2016 devolvía junio. Se reemplazó por el documento correcto de DIPRES. No se rellenó ese retorno ni se reutilizó el de junio. Los archivos extraídos, referencias y hashes están en data/oficial; los PDF completos permanecen en una caché local excluida de Git y del ZIP. El cobre se amplió desde 2010 mediante descarga explícita para disponer de volatilidad anterior a 2014; los otros ETF congelados se conservaron.
+Se detectaron enlaces de Hacienda de julio de 2016 y febrero de 2023 que devolvían otro mes. Se reemplazaron por los documentos correctos de DIPRES. La validación exige el mes y año del título, también en caché; buscar solo palabras en la primera página no basta. Además se concilian los doce años completos con sus retornos anuales publicados, admitiendo redondeo. El error de febrero 2023 y la corrección están registrados en docs/validacion.md. Los archivos extraídos, referencias y hashes están en data/oficial; los PDF completos permanecen en una caché local excluida de Git y del ZIP. El cobre se amplió desde 2010 mediante descarga explícita para disponer de volatilidad anterior a 2014; los otros ETF congelados se conservaron.
 
 ## Put larga y valoración mensual
 

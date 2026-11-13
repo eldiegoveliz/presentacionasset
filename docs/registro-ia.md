@@ -113,6 +113,14 @@ Solo el fees y sus 4 alternativas. ¿Podríamos hacer una optimización final pa
 Si te gusta la idea, entonces haz las correcciones de las que hablamos hasta ahora y aplica el portfolio óptimo con las hipótesis.
 ```
 
+## Revisión cruzada y corrección de febrero de 2023 — 13 de noviembre de 2026
+
+Prompt relevante literal: «Que mierda estan haciendo? Esta bien? Te mando chat:». El usuario pidió revisar dos notebooks externos. Sus archivos, enlaces y conversación privada no se incorporan al repositorio público.
+
+| Herramienta, modelo y versión | Prompts utilizados | Qué se incorporó al entregable | Errores detectados en el output | Cómo se verificó el resultado | Qué cambió el equipo | Limitaciones que persisten |
+| --- | --- | --- | --- | --- | --- | --- |
+| T3 Code mediante Codex, gpt-6.1-sol, esfuerzo high; Google Drive para lectura y web para fuentes oficiales. | Extracto literal anterior; revisión del código y contraste entre series anuales y mensuales. | Corrección del mes febrero 2023, validación del período en el título y de caché, prueba de conciliación anual, resultados y notebook regenerados. | Nuestro conjunto mensual asignaba el PDF de marzo a febrero (+3,33% en vez de -3,09%). El control buscaba palabras sueltas en la portada y las pruebas comparaban datos dentro del mismo documento equivocado. El acumulado anual incorrecto era 9,139%, frente al 2,36% oficial. | Dos pruebas nuevas reprodujeron el fallo antes de corregir datos. Informe DIPRES de febrero 2023 articles-307285_doc_pdf.pdf; auditoría del título de los 153 documentos; conciliación 2014–2025 con informes de diciembre; análisis y notebook completos regenerados. | La corrección y verificación son del asistente. No se atribuye revisión académica o validación a los integrantes. | Las limitaciones del modelo y del PIB revisado continúan. Que pasen pruebas no certifica la totalidad de los datos ni un portafolio ejecutable. |
+
 ## Cierre del anexo para el entregable final
 
 Completar y firmar solamente después de revisar todos los usos de IA del entregable, incluidos los de los demás integrantes y herramientas. No atribuir a los integrantes verificaciones hechas únicamente por el asistente.

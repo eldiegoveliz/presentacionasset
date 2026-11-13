@@ -4,7 +4,9 @@ Validación del asistente, no revisión académica ni certificación del custodi
 
 ## Fuentes realmente utilizadas
 
-Se obtuvieron 153 retornos mensuales FEES, enero 2014–septiembre 2026. Cada número extraído de la tabla coincide con la explicación en prosa del informe correspondiente. Se validó la portada antes de aceptar un documento. Julio de 2016 usa DIPRES porque el enlace de Hacienda devolvía el mes anterior.
+Se obtuvieron 153 retornos mensuales FEES, enero 2014–septiembre 2026. Cada número extraído de la tabla coincide con la explicación en prosa del informe correspondiente. Se exige mes y año en el título del informe, también al leer caché. Julio de 2016 y febrero de 2023 usan DIPRES porque sus enlaces de Hacienda devolvían otro mes.
+
+Corrección del 13 de noviembre de 2026: la validación anterior buscaba el nombre del mes entre los primeros 700 caracteres. Aceptó marzo como febrero de 2023 porque el texto incluía una referencia a febrero. Los dos archivos tenían el mismo hash. Se sustituyó únicamente febrero con el documento DIPRES correcto: -3,09%, en lugar de +3,33%. Se auditaron los 153 títulos y se añadió conciliación de los doce años completos contra sus retornos oficiales anuales (tolerancia 0,07 pp por redondeo). El acumulado 2023 pasó de 9,139% a aproximadamente 2,36%. Se regeneraron todos los resultados; los pesos finales H5 y las métricas principales de contracciones permanecen iguales. Cambian riqueza, métricas generales y retornos de expansión. Las 24 pruebas anteriores no detectaban una asignación del documento al mes incorrecto; su aprobación no demostraba que esa asignación fuera válida.
 
 Se conserva extracción textual, fecha, URL, página, evidencia y hash del PDF. Las páginas BCCh conservan dólar observado diario, IPC mensual y PIB trimestral, con sus hashes. No se usa el tipo de cambio Yahoo para la conversión del fondo. Los PDF completos se mantienen en caché local, excluida del ZIP y Git, sin impedir la reproducción con los archivos extraídos entregados.
 
@@ -12,9 +14,10 @@ La referencia generada coincide con los retornos oficiales. El saldo de la hoja 
 
 ## Comprobaciones económicas
 
-Se ejecutan 24 pruebas mediante `python verificar.py`. Comprueban:
+Se ejecutan 26 pruebas mediante `python verificar.py`. Comprueban:
 
 - los 153 retornos oficiales contra su prosa y los hashes;
+- el período exacto del título y la conciliación anual de los meses;
 - valor oficial verificable del dólar observado y carga sin red ni Yahoo FX;
 - conversión compuesta USD/CLP e inflación;
 - cartera anual con pesos que fluctúan y rebalanceo en enero;

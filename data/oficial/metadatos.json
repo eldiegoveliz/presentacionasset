@@ -37,7 +37,7 @@
     "data/oficial/bcch_dolar.csv": "34383454c42ad6276d4fda0ada594a23005cf47e5324dcfcdf1e39844a110eab",
     "data/oficial/bcch_ipc.csv": "a72d2f66e9aec76007ab758a8ce5a664c29e80bd688bd1f83ef1bf83b0413646",
     "data/oficial/bcch_pib.csv": "0549174b8a47f4e45a8c41f525c76f736f61ccd6fecba6808c47a39449f785a8",
-    "data/oficial/fees_mensual.csv": "cb426e294d7bb74e9467d1d29adaef7476947f772b39bcd8838f4d8c9d8647d2",
+    "data/oficial/fees_mensual.csv": "a1cc0347b8c517e40a6a07d06b2b8bac94518eb596d4e731cae5d6d6530866a0",
     "data/oficial/fees_saldos.csv": "fc65569f109da98de563257f34ac60a7871dda60d7e28ee4cbcd312d3dfce828",
     "data/oficial/fees_textos/2014-01.json": "9a3ff37a920d4e8ed5bf70fd9752789e66eb9ee52529b32af9860c86c72deea4",
     "data/oficial/fees_textos/2014-01.txt": "f08646395a8c49df963941e537bd59fb7546156a9db57af6408f791c20b69fdf",
@@ -257,8 +257,8 @@
     "data/oficial/fees_textos/2022-12.txt": "275d51412c89dae17b882165dcab5e9bf5326fbab2169bd803fa3e5635f25e8e",
     "data/oficial/fees_textos/2023-01.json": "cfe3258779b0bbfcd6ff5fa0c18f477e2c86f4fe3fc5d35eb0eac621df2c3ac5",
     "data/oficial/fees_textos/2023-01.txt": "9b305c1316d29b31ea300f2df4eff76b5d5228799d5b411c14d1dad00b2a6104",
-    "data/oficial/fees_textos/2023-02.json": "0ea8f3d780d7cf8ef3ddb0c88160e5df9457a8af38c3035cd34b3343926f5836",
-    "data/oficial/fees_textos/2023-02.txt": "954d693dae8445b2bd0e4f8379e337f8e845d3bc37b870276becdf8e51199b6f",
+    "data/oficial/fees_textos/2023-02.json": "7b7af2d84a3c7338b705835d11f8919e0881e3bda14e36b7a3d83d736ca828a9",
+    "data/oficial/fees_textos/2023-02.txt": "064a897189d8a8211052461729e91316c922d90815b9de8e0df9811e28bd21bd",
     "data/oficial/fees_textos/2023-03.json": "7dc82108248f8f4e986843f0b9a10393121468e80b6a778574abecd6f73297d1",
     "data/oficial/fees_textos/2023-03.txt": "954d693dae8445b2bd0e4f8379e337f8e845d3bc37b870276becdf8e51199b6f",
     "data/oficial/fees_textos/2023-04.json": "81a404ac227330f049fde9efde1e63c0436d812790b086dd97ff8b70c710b1d9",
@@ -355,5 +355,10 @@
     "data/oficial/paginas/hacienda_lista_3.html": "c8d152a1f4b5245b317f87ce3dcd5f6edfa9bbd7b9bac531f91422b1d753a92d",
     "data/oficial/paginas/hacienda_lista_4.html": "16695ece8424fc1882d65d488241d05c1cea719baaed26c7308da919f9b7ddef",
     "data/oficial/paginas/hacienda_lista_5.html": "34204b2ed708bad6b29f03fdeb85c211dd3fd433c8e5fe0224393881ec2b91cb"
+  },
+  "correccion_2026_11_13": {
+    "periodo": "2023-02",
+    "url": "https://www.dipres.gob.cl/598/articles-307285_doc_pdf.pdf",
+    "motivo": "El enlace Hacienda de febrero devolv\u00eda marzo. Se valida el t\u00edtulo exacto y se concilia anualmente."
   }
 }
