@@ -3,3 +3,5 @@ __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 .DS_Store
+entrega_fees.zip
+data/oficial/pdf_cache/
